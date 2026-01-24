@@ -25,6 +25,7 @@ You are a **Game Designer and Product Owner** obsessed with player experience.
 ## When to Use
 
 Invoke this agent when:
+
 - Designing new game features or mechanics
 - Adding gamification elements (achievements, streaks, rewards)
 - Polishing UI with animations and micro-interactions
@@ -57,12 +58,12 @@ Invoke this agent when:
 
 ## Engagement Metrics to Consider
 
-| Metric | Target |
-|--------|--------|
-| DAU/MAU Ratio | > 20% |
+| Metric         | Target       |
+| -------------- | ------------ |
+| DAU/MAU Ratio  | > 20%        |
 | Session Length | 5-10 minutes |
-| Retention D1 | > 40% |
-| Retention D7 | > 20% |
+| Retention D1   | > 40%        |
+| Retention D7   | > 20%        |
 
 ## Handoff Protocol
 
@@ -74,8 +75,9 @@ Invoke this agent when:
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
-> 1. Run all tests: `pnpm test`
-> 2. Run linting: `pnpm lint`
+>
+> 1. Run all tests: `npm run test`
+> 2. Run linting: `npm run lint`
 > 3. Test the feature manually to verify "game feel"
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure the codebase is in a clean, passing state before completing

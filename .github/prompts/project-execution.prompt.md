@@ -39,17 +39,19 @@ These rules are ABSOLUTE and must NEVER be violated:
 
 ```bash
 # ❌ NEVER DO THIS
-pnpm init                    # Interactive - asks questions
 npm init                     # Interactive - asks questions
+pnpm init                    # Interactive - asks questions
 yarn init                    # Interactive - asks questions
+bun init                     # May ask questions
 git clean -i                 # Interactive clean
 rm -i                        # Interactive remove
 any command with -i flag     # Usually means interactive
 
 # ✅ ALWAYS USE NON-INTERACTIVE ALTERNATIVES
-pnpm init -y                 # Auto-accept defaults
 npm init -y                  # Auto-accept defaults
-git clean -fd                # Force, non-interactive (but see rule 2!)
+pnpm init -y                 # Auto-accept defaults
+yarn init -y                 # Auto-accept defaults
+bun init -y                  # Auto-accept defaults
 ```
 
 If a command might prompt for input, either:
@@ -100,9 +102,10 @@ This is a **template repository**. The working directory will ALWAYS contain tem
 
 ```bash
 # ❌ WILL FAIL - These require empty directories
+npm create vite@latest .              # Fails: directory not empty
 pnpm create vite .                    # Fails: directory not empty
 npx create-react-app .                # Fails: directory not empty
-pnpm create next-app .                # Fails: directory not empty
+npx create-next-app .                 # Fails: directory not empty
 
 # ❌ DO NOT try to "fix" by cleaning
 rm -rf *                              # FORBIDDEN - deletes template
@@ -111,16 +114,18 @@ git clean -fd                         # FORBIDDEN - deletes template
 # ✅ CORRECT APPROACH - Scaffold to temp dir, then merge
 mkdir _temp_scaffold
 cd _temp_scaffold
-pnpm create vite . --template vanilla-ts -y
+npm create vite@latest . -- --template vanilla-ts  # or pnpm/yarn/bun
 cd ..
 # Copy files carefully, preserving template files
 cp -n _temp_scaffold/* .              # -n = no clobber
 cp -rn _temp_scaffold/src .           # Copy src if it doesn't exist
 rm -rf _temp_scaffold
 
-# ✅ ALTERNATIVE - Manual setup (preferred)
-pnpm init -y                          # Initialize package.json
-pnpm add -D vite typescript           # Add dependencies manually
+# ✅ ALTERNATIVE - Manual setup (preferred, use your package manager)
+npm init -y                           # Initialize package.json
+npm install -D vite typescript        # Add dependencies manually
+# pnpm: pnpm init -y && pnpm add -D vite typescript
+# yarn: yarn init -y && yarn add -D vite typescript
 # Create src/, tsconfig.json, vite.config.ts manually
 ```
 
@@ -166,7 +171,7 @@ For each work item:
 1. @software-developer: Implement feature with tests
 2. @qa-engineer: Review tests, add edge cases
 3. @visual-designer: Polish UI (if applicable)
-4. Run verification: pnpm test && pnpm lint && pnpm typecheck
+4. Run verification: npm run test && npm run lint && npm run typecheck
 ```
 
 ### Phase 4: Integration
@@ -237,12 +242,32 @@ Track progress with this format:
 **EVERY implementation session MUST end with:**
 
 ```bash
-pnpm test        # All tests pass
-pnpm lint        # No lint errors
-pnpm typecheck   # No type errors
+# Use your package manager (npm, pnpm, yarn, or bun)
+npm run test        # All tests pass
+npm run lint        # No lint errors
+npm run typecheck   # No type errors
 ```
 
 If any fail, **fix before proceeding**.
+
+### Package.json Script Verification
+
+**Before declaring any work complete**, verify ALL scripts in package.json run successfully:
+
+```bash
+# List all defined scripts
+cat package.json | grep -A 50 '"scripts"'
+
+# Test each script - use your package manager (npm run, pnpm, yarn, bun)
+npm run dev          # Dev server starts (Ctrl+C to exit)
+npm run build        # Completes without errors
+npm run preview      # Works after build (if exists)
+npm run test         # All tests pass
+npm run lint         # No errors
+npm run typecheck    # No errors (if exists)
+```
+
+**A broken script = broken delivery.** Fix all scripts before completing.
 
 ## Handling Blockers
 
@@ -295,21 +320,36 @@ Before running ANY terminal command:
 2. **Check if it deletes files** - Could it affect `.nexus/`? If yes, exclude it or use safer alternatives
 3. **Check if it's destructive** - `git clean`, `git reset --hard`, `rm -rf` require extreme caution
 
+### Detect Package Manager
+
+Before running commands, detect the project's package manager:
+
+```bash
+# Check for lockfiles to determine package manager
+if [ -f "pnpm-lock.yaml" ]; then PM="pnpm"
+elif [ -f "yarn.lock" ]; then PM="yarn"
+elif [ -f "bun.lockb" ]; then PM="bun"
+else PM="npm"; fi
+echo "Using: $PM"
+```
+
+### Common Commands (use your package manager)
+
 ```bash
 # Development
-pnpm dev              # Start dev server
-pnpm build            # Production build
+npm run dev              # Start dev server
+npm run build            # Production build
 
 # Testing
-pnpm test             # Run all tests
-pnpm test:e2e         # E2E tests
-pnpm test -- --watch  # Watch mode
-pnpm test:coverage    # Coverage report
+npm run test             # Run all tests
+npm run test:e2e         # E2E tests
+npm run test -- --watch  # Watch mode
+npm run test:coverage    # Coverage report
 
 # Quality
-pnpm lint             # ESLint
-pnpm typecheck        # TypeScript
-pnpm lint --fix       # Auto-fix lint issues
+npm run lint             # ESLint
+npm run typecheck        # TypeScript
+npm run lint -- --fix    # Auto-fix lint issues
 ```
 
 ## Post-Execution Checklist
@@ -317,9 +357,9 @@ pnpm lint --fix       # Auto-fix lint issues
 Before declaring execution complete:
 
 - [ ] All work items marked complete
-- [ ] All tests passing (`pnpm test`)
-- [ ] No lint errors (`pnpm lint`)
-- [ ] No type errors (`pnpm typecheck`)
+- [ ] All tests passing (`npm run test`)
+- [ ] No lint errors (`npm run lint`)
+- [ ] No type errors (`npm run typecheck`)
 - [ ] Manual testing performed
 - [ ] Documentation updated (if applicable)
 - [ ] Action plan updated with completion status

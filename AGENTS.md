@@ -120,17 +120,20 @@ When adding or modifying code in this repository:
 If tests are added to this repository:
 
 ```bash
+# Detect package manager: check for pnpm-lock.yaml, yarn.lock, or package-lock.json
+# Use the appropriate command: pnpm, yarn, npm, or bun
+
 # Run all tests
-pnpm test
+npm run test          # or: pnpm test, yarn test, bun test
 
 # Run with coverage
-pnpm test:coverage
+npm run test:coverage
 
 # Type checking
-pnpm typecheck
+npm run typecheck
 
 # Linting
-pnpm lint
+npm run lint
 ```
 
 ## Verification Checklist
@@ -161,15 +164,18 @@ Commands that require user input will hang or cause unexpected behavior:
 
 ```bash
 # ❌ FORBIDDEN - Interactive commands
-pnpm init                    # Asks questions
 npm init                     # Asks questions
+pnpm init                    # Asks questions
 yarn init                    # Asks questions
+bun init                     # May ask questions
 git clean -i                 # Interactive mode
 rm -i                        # Interactive mode
 
 # ✅ REQUIRED - Non-interactive alternatives
-pnpm init -y                 # Auto-accept defaults
 npm init -y                  # Auto-accept defaults
+pnpm init -y                 # Auto-accept defaults
+yarn init -y                 # Auto-accept defaults
+bun init -y                  # Auto-accept defaults
 ```
 
 ### 2. NEVER Delete the `.nexus/` Directory
@@ -200,9 +206,10 @@ This is a **template repository**. The directory will ALWAYS have template files
 
 ```bash
 # ❌ WILL FAIL - Require empty directories
+npm create vite@latest .              # Fails: directory not empty
 pnpm create vite .                    # Fails: directory not empty
 npx create-react-app .                # Fails: directory not empty
-pnpm create next-app .                # Fails: directory not empty
+npx create-next-app .                 # Fails: directory not empty
 
 # ❌ DO NOT "fix" by cleaning the directory
 rm -rf *                              # FORBIDDEN
@@ -210,11 +217,13 @@ git clean -fd                         # FORBIDDEN
 
 # ✅ CORRECT - Scaffold to temp dir, then merge carefully
 mkdir _temp_scaffold && cd _temp_scaffold
-pnpm create vite . --template vanilla-ts -y
+npm create vite@latest . -- --template vanilla-ts  # or use pnpm/yarn/bun
 cd .. && cp -rn _temp_scaffold/* . && rm -rf _temp_scaffold
 
-# ✅ PREFERRED - Manual setup
-pnpm init -y && pnpm add -D vite typescript
+# ✅ PREFERRED - Manual setup (use your package manager)
+npm init -y && npm install -D vite typescript
+# pnpm init -y && pnpm add -D vite typescript
+# yarn init -y && yarn add -D vite typescript
 # Then create files manually
 ```
 

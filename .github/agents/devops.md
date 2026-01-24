@@ -22,6 +22,7 @@ You are a **DevOps Engineer** specialized in automation and security.
 ## When to Use
 
 Invoke this agent when:
+
 - Configuring GitHub Actions workflows
 - Setting up CI/CD pipelines
 - Implementing release automation
@@ -59,7 +60,7 @@ Invoke this agent when:
 jobs:
   ci:
     uses: ./.github/workflows/ci.yml
-    
+
 # Always pin action versions
 - uses: actions/checkout@v4
 - uses: actions/setup-node@v4
@@ -74,8 +75,9 @@ jobs:
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
-> 1. Run all tests: `pnpm test`
-> 2. Run linting: `pnpm lint`
+>
+> 1. Run all tests: `npm run test`
+> 2. Run linting: `npm run lint`
 > 3. Validate workflow syntax: `actionlint` if available
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure all CI checks pass before completing

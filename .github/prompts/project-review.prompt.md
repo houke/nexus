@@ -41,8 +41,10 @@ These rules are ABSOLUTE and must NEVER be violated:
 
 ```bash
 # ❌ NEVER DO THIS
-pnpm init                    # Interactive - asks questions
 npm init                     # Interactive - asks questions
+pnpm init                    # Interactive - asks questions
+yarn init                    # Interactive - asks questions
+bun init                     # May ask questions
 git clean -i                 # Interactive clean
 ```
 
@@ -77,7 +79,7 @@ For each agent persona defined in the .github/agents directory, you will:
 
 - Apply code changes directly using edit tools
 - Follow TDD: write/update tests for fixes
-- Run verification after fixes: `pnpm test && pnpm lint && pnpm typecheck`
+- Run verification after fixes: `npm run test && npm run lint && npm run typecheck`
 
 4. **Document both findings AND fixes** in their report section.
 5. **ALWAYS** write the final review to `.nexus/review/` directory.
@@ -101,7 +103,7 @@ When delegating to each agent, include these instructions:
 - Document your fix (what you changed, why)
 - Verify the fix works
 
-3. Run verification: `pnpm test && pnpm lint && pnpm typecheck`
+3. Run verification: `npm run test && npm run lint && npm run typecheck`
 4. Report: findings + fixes applied
 
 **Do NOT**: Create a list of "recommendations" without fixing them.
@@ -115,9 +117,10 @@ flag it for another agent but still propose the fix.
 After ALL agents complete their review-and-fix passes:
 
 ```bash
-pnpm test        # All tests pass
-pnpm lint        # No lint errors
-pnpm typecheck   # No type errors
+# Use your package manager (npm, pnpm, yarn, or bun)
+npm run test        # All tests pass
+npm run lint        # No lint errors
+npm run typecheck   # No type errors
 ```
 
 If any fail, coordinate fixes before finalizing the report.

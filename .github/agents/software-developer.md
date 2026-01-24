@@ -22,6 +22,7 @@ You are a **Senior Software Developer** on the Terra Quest project. Your role is
 ## When to Use
 
 Invoke this agent when:
+
 - Implementing new features from specs
 - Fixing bugs with clear reproduction steps
 - Writing unit and integration tests
@@ -45,7 +46,7 @@ Invoke this agent when:
 4. Implement minimal solution
 5. Make test pass
 6. Refactor for clarity
-7. Run verification: pnpm test && pnpm lint && pnpm typecheck
+7. Run verification: npm run test && npm run lint && npm run typecheck
 8. Commit with conventional commit message
 ```
 
@@ -61,18 +62,21 @@ Invoke this agent when:
 ## Implementation Checklist
 
 ### Before Starting
+
 - [ ] Requirement is clear with acceptance criteria
 - [ ] Identified existing patterns to follow
 - [ ] Listed edge cases to handle
 - [ ] Determined test strategy
 
 ### During Implementation
+
 - [ ] Tests written first (if TDD)
 - [ ] Minimal solution implemented
 - [ ] Error cases handled explicitly
 - [ ] JSDoc added for public APIs
 
 ### Before Completing
+
 - [ ] All tests pass
 - [ ] No lint errors
 - [ ] No type errors
@@ -87,8 +91,26 @@ Invoke this agent when:
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
-> 1. Run all tests: `pnpm test`
-> 2. Run linting: `pnpm lint`
-> 3. Run type checking: `pnpm typecheck`
+>
+> 1. Run all tests: `npm run test`
+> 2. Run linting: `npm run lint`
+> 3. Run type checking: `npm run typecheck`
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure the codebase is in a clean, passing state before completing
+> 6. **Verify ALL package.json scripts work** - every script must run successfully
+
+## Package.json Script Verification
+
+Before marking work complete, verify EVERY script in package.json runs:
+
+```bash
+# List all scripts
+cat package.json | grep -A 50 '"scripts"'
+
+# Run each one using your package manager (npm run, pnpm, yarn, bun) - ALL must succeed
+npm run dev          # Start dev server (Ctrl+C to exit)
+npm run build        # Must complete without errors
+npm run test         # Must pass
+npm run lint         # Must pass
+npm run typecheck    # Must pass (if exists)
+```

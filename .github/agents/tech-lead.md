@@ -25,6 +25,7 @@ You are a **Tech Lead** focused on maintainable, high-quality code.
 ## When to Use
 
 Invoke this agent when:
+
 - Writing complex components or hooks
 - Establishing project coding standards
 - Refactoring existing code
@@ -57,8 +58,9 @@ Invoke this agent when:
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
-> 1. Run all tests: `pnpm test`
-> 2. Run linting: `pnpm lint`
-> 3. Run type checking: `pnpm typecheck`
+>
+> 1. Run all tests: `npm run test`
+> 2. Run linting: `npm run lint`
+> 3. Run type checking: `npm run typecheck`
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure the codebase is in a clean, passing state before completing

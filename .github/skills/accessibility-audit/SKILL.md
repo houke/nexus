@@ -36,30 +36,35 @@ Perform a comprehensive WCAG accessibility check on web components.
 
 When asked to "audit accessibility", output a report:
 
-```markdown
+````markdown
 **Scope:** [File/Component Name]
 **Compliance:** [Pass/Fail/Warn]
 
 **Issues:**
+
 - [ ] Line X: Description of issue
 
 **Recommended Fixes:**
+
 ```diff
 - <div onClick={...}>
 + <button onClick={...}>
 ```
+````
+
 ```
 
 ## Tools
 
 Run these commands for automated checks:
-- `pnpm run test:a11y` - Run axe-core accessibility tests
-- `pnpm run lighthouse` - Run Lighthouse accessibility audit
+- `npm run test:a11y` - Run axe-core accessibility tests
+- `npm run lighthouse` - Run Lighthouse accessibility audit
 
 ## After Audit
 
 > [!IMPORTANT]
 > After completing the audit, you MUST:
 > 1. Fix all identified accessibility issues
-> 2. Run tests: `pnpm test`
+> 2. Run tests: `npm run test`
 > 3. Fix ALL errors and warnings
+```

@@ -25,6 +25,7 @@ You are a **Senior System Architect** specializing in scalable, data-driven appl
 ## When to Use
 
 Invoke this agent when:
+
 - Defining database schemas (SQLite, IndexedDB, OPFS)
 - Designing state machines for game mechanics or workflows
 - Planning cloud infrastructure or sync strategies
@@ -49,7 +50,8 @@ Invoke this agent when:
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
-> 1. Run all tests: `pnpm test`
-> 2. Run linting: `pnpm lint`
+>
+> 1. Run all tests: `npm run test`
+> 2. Run linting: `npm run lint`
 > 3. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 4. Ensure the codebase is in a clean, passing state before completing

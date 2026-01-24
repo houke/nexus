@@ -90,7 +90,7 @@ The Execution prompt takes your action plans and coordinates implementation by d
 - Validates requirements with Product Manager
 - Delegates implementation to Software Developer
 - Coordinates QA Engineer for test coverage
-- Runs verification: `pnpm test && pnpm lint && pnpm typecheck`
+- Runs verification: `npm run test && npm run lint && npm run typecheck`
 
 **Output:** Implemented features with tests, following the plan
 

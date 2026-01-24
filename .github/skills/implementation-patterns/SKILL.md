@@ -45,9 +45,9 @@ This skill provides patterns for writing production-quality TypeScript/React cod
 
 ### Before Completing
 
-- [ ] All tests pass (`pnpm test`)
-- [ ] No lint errors (`pnpm lint`)
-- [ ] No type errors (`pnpm typecheck`)
+- [ ] All tests pass (`npm run test`)
+- [ ] No lint errors (`npm run lint`)
+- [ ] No type errors (`npm run typecheck`)
 - [ ] Code reviewed for clarity
 
 ## Debugging Strategy
@@ -213,13 +213,13 @@ export const ExampleCard: FC<ExampleCardProps> = ({
 
 ```bash
 # Run before every commit
-pnpm test        # Unit and integration tests
-pnpm lint        # ESLint checks
-pnpm typecheck   # TypeScript compiler
+npm run test        # Unit and integration tests
+npm run lint        # ESLint checks
+npm run typecheck   # TypeScript compiler
 
 # Run periodically
-pnpm test:e2e    # End-to-end tests
-pnpm audit       # Security vulnerabilities
+npm run test:e2e    # End-to-end tests
+npm audit           # Security vulnerabilities
 ```
 
 ## After Implementation
@@ -227,8 +227,8 @@ pnpm audit       # Security vulnerabilities
 > [!IMPORTANT]
 > After implementing any feature, you MUST:
 >
-> 1. Run all tests: `pnpm test`
-> 2. Run linting: `pnpm lint`
-> 3. Run type checking: `pnpm typecheck`
+> 1. Run all tests: `npm run test`
+> 2. Run linting: `npm run lint`
+> 3. Run type checking: `npm run typecheck`
 > 4. Fix ALL errors and warnings
 > 5. Verify the feature works manually

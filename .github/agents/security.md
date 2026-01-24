@@ -26,6 +26,7 @@ You are a **Security Agent** focused on ensuring the safety, privacy, and integr
 ## When to Use
 
 Invoke this agent when:
+
 - Designing data storage schemas
 - Configuring authentication or authorization
 - Reviewing dependencies
@@ -43,7 +44,7 @@ Invoke this agent when:
 
 ## Security Review Checklist
 
-- [ ] Are all dependencies secure (`pnpm audit`)?
+- [ ] Are all dependencies secure (`npm audit` or `pnpm audit`)?
 - [ ] Are sensitive headers (CSP, HSTS) configured?
 - [ ] Is user input properly sanitized?
 - [ ] Are secrets excluded from the bundle?
@@ -59,7 +60,8 @@ Invoke this agent when:
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
-> 1. Run vulnerability audit: `pnpm audit`
-> 2. Run tests: `pnpm test`
+>
+> 1. Run vulnerability audit: `npm audit` (or pnpm/yarn equivalent)
+> 2. Run tests: `npm run test`
 > 3. Verify no secrets were committed
 > 4. Fix ALL high/critical vulnerabilities immediately

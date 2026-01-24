@@ -22,6 +22,7 @@ You are a **Visual Designer / UI-UX Specialist** passionate about creating beaut
 ## When to Use
 
 Invoke this agent when:
+
 - Designing new UI components or layouts
 - Adding animations and micro-interactions
 - Improving visual consistency across the app
@@ -66,6 +67,7 @@ opacity: 0.5;
 ```
 
 **Timing Functions**:
+
 - Enter: `ease-out` (fast start, gentle end)
 - Exit: `ease-in` (gentle start, fast end)
 - Emphasis: `cubic-bezier(0.34, 1.56, 0.64, 1)` (bounce)
@@ -79,8 +81,9 @@ opacity: 0.5;
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
-> 1. Run all tests: `pnpm test`
-> 2. Run linting: `pnpm lint`
+>
+> 1. Run all tests: `npm run test`
+> 2. Run linting: `npm run lint`
 > 3. Verify animations work at 60fps using DevTools Performance tab
 > 4. Test responsive layouts at 320px, 768px, and 1024px widths
 > 5. Fix ALL errors and warnings, even if they were not introduced by your changes

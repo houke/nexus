@@ -16,19 +16,21 @@ Implement local-first architecture for Terra Quest using OPFS and SQLite.
 
 ## Technology Stack
 
-| Layer | Technology |
-|-------|------------|
-| Storage | OPFS (Origin Private File System) |
-| Database | SQLite (via sql.js or wa-sqlite) |
-| ORM | Drizzle ORM |
-| Sync | Custom sync protocol |
+| Layer    | Technology                        |
+| -------- | --------------------------------- |
+| Storage  | OPFS (Origin Private File System) |
+| Database | SQLite (via sql.js or wa-sqlite)  |
+| ORM      | Drizzle ORM                       |
+| Sync     | Custom sync protocol              |
 
 ## OPFS Access Pattern
 
 ```typescript
 // Get OPFS directory
 const root = await navigator.storage.getDirectory();
-const fileHandle = await root.getFileHandle('database.sqlite', { create: true });
+const fileHandle = await root.getFileHandle('database.sqlite', {
+  create: true,
+});
 
 // For better performance, use sync access handle in a worker
 const accessHandle = await fileHandle.createSyncAccessHandle();
@@ -60,6 +62,7 @@ Merge & Conflict Resolution
 ## Export/Import
 
 Always provide data portability:
+
 ```typescript
 // Export database file
 async function exportDatabase(): Promise<Blob> {
@@ -79,8 +82,9 @@ async function importDatabase(blob: Blob): Promise<void> {
 
 > [!IMPORTANT]
 > After implementing local-first features:
+>
 > 1. Test offline functionality (DevTools → Network → Offline)
-> 2. Run all tests: `pnpm test`
+> 2. Run all tests: `npm run test`
 > 3. Verify data persists across page reloads
 > 4. Test export/import roundtrip
 > 5. Fix ALL errors and warnings
