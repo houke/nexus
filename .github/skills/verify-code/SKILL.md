@@ -5,7 +5,7 @@ description: Verify code quality, type safety, memory leaks, and coding standard
 
 # Code Verification Skill
 
-Verify code quality against Terra Quest coding standards.
+Verify code quality against project coding standards.
 
 ## Verification Criteria
 

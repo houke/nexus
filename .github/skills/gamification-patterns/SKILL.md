@@ -5,7 +5,7 @@ description: Implement gamification mechanics including achievements, streaks, X
 
 # Gamification Patterns Skill
 
-Implement engaging gamification mechanics for Terra Quest.
+Implement engaging gamification mechanics for the application.
 
 ## Core Mechanics
 

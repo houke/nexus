@@ -5,7 +5,7 @@ description: specific instructions for performing security audits on the codebas
 
 # Security Audit Skill
 
-Verify application security against Terra Quest security standards and OWASP best practices.
+Verify application security against project security standards and OWASP best practices.
 
 ## Verification Criteria
 

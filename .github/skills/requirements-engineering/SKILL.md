@@ -89,13 +89,13 @@ And [additional outcome]
 **Functional**: What the feature does
 
 ```markdown
-- [ ] Given user has 99 hexes revealed, when they reveal a new hex, then the "100 Hexes" achievement unlocks
+- [ ] Given user has completed 9 tasks, when they complete the 10th task, then the "Task Master" achievement unlocks
 ```
 
 **Performance**: How fast/efficient
 
 ```markdown
-- [ ] Given 10,000 hexes in database, when user opens map, then render completes in under 500ms
+- [ ] Given 10,000 items in database, when user opens the list view, then render completes in under 500ms
 ```
 
 **Accessibility**: Inclusive design
@@ -107,7 +107,7 @@ And [additional outcome]
 **Error Handling**: Failure modes
 
 ```markdown
-- [ ] Given Overpass API times out, when user tries to fetch POIs, then cached POIs display with "Last updated" timestamp
+- [ ] Given API request times out, when user tries to fetch data, then cached data displays with "Last updated" timestamp
 ```
 
 ## PRD Template

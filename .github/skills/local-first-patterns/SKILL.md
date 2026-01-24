@@ -5,7 +5,7 @@ description: Implement local-first architecture patterns with OPFS, SQLite, and 
 
 # Local-First Patterns Skill
 
-Implement local-first architecture for Terra Quest using OPFS and SQLite.
+Implement local-first architecture using OPFS and SQLite.
 
 ## Core Principles
 

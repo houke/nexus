@@ -26,7 +26,7 @@ Compare "Everything we have" vs "Everything we need". Use any of the agents defi
 
 Analyze the following key documents to understand the plan and current state:
 
-- The `plan/` directory containing all phase plans (e.g. `plan/01-foundation/foundation-plan.md`, etc.)
+- The `.nexus/plan/` directory containing all phase plans (e.g. `.nexus/plan/0001-foundation-plan.md`, etc.)
 - Active agent definitions in `.github/agents/`
 
 Structure the response as:
@@ -39,7 +39,7 @@ Structure the response as:
 
 ### What We Need
 
-- missing features (check `plan/` files)
+- missing features (check `.nexus/plan/` files)
 - planned but not started items
 - gaps in resources or agents
 

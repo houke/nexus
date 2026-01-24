@@ -5,7 +5,7 @@ description: User journey mapping, wireframe conventions, interaction patterns f
 
 # User Flow Design Skill
 
-This skill provides patterns for designing intuitive user experiences in Terra Quest.
+This skill provides patterns for designing intuitive user experiences.
 
 ## User Flow Notation
 

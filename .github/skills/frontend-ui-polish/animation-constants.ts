@@ -1,5 +1,5 @@
 /**
- * Standard animation timings and easing functions for Terra Quest components.
+ * Standard animation timings and easing functions for application components.
  * Aligning with "The Juice" philosophy.
  */
 
@@ -13,13 +13,13 @@ export const ANIMATION_TIMING = {
 export const ANIMATION_EASING = {
   // Entrance: starts fast, ends slow
   ENTRANCE: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
-  
+
   // Exit: starts slow, ends fast
   EXIT: 'cubic-bezier(0.4, 0, 1, 1)',
-  
+
   // Emphasis: bouncy
   BOUNCE: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-  
+
   // Standard: balanced
   STANDARD: 'cubic-bezier(0.4, 0, 0.2, 1)',
 } as const;

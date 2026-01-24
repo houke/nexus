@@ -5,7 +5,7 @@ description: Expertise in UI/UX excellence, custom animations, transitions, and 
 
 # Frontend UI Polish Skill
 
-Apply high-end visual aesthetics and smooth interactions to the Terra Quest interface.
+Apply high-end visual aesthetics and smooth interactions to the application interface.
 
 ## Core Pillars
 
@@ -36,6 +36,7 @@ Apply high-end visual aesthetics and smooth interactions to the Terra Quest inte
 > Use standard timings and easings from [animation-constants.ts](./animation-constants.ts).
 
 Always prefer CSS variables defined in the central theme:
+
 ```css
 /* Examples */
 color: var(--color-primary);
@@ -59,6 +60,7 @@ const handleClick = () => {
 
 > [!IMPORTANT]
 > After styling or adding animations:
+>
 > 1. Verify 60fps performance in DevTools.
 > 2. Test responsiveness across mobile, tablet, and desktop.
 > 3. Ensure contrast ratios meet WCAG AA.

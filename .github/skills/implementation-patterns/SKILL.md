@@ -1,11 +1,11 @@
 ---
 name: implementation-patterns
-description: TDD workflows, coding standards, debugging strategies, and production code patterns for Terra Quest development.
+description: TDD workflows, coding standards, debugging strategies, and production code patterns for development.
 ---
 
 # Implementation Patterns Skill
 
-This skill provides patterns for writing production-quality TypeScript/React code in Terra Quest.
+This skill provides patterns for writing production-quality TypeScript/React code.
 
 ## TDD Workflow
 

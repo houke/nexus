@@ -5,7 +5,7 @@ description: Generate robust test suites using Vitest, React Testing Library, an
 
 # Test Generation Skill
 
-Generate comprehensive test suites for the Terra Quest application.
+Generate comprehensive test suites for the application.
 
 ## Philosophy
 
