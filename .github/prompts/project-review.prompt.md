@@ -31,6 +31,42 @@ You will coordinate a comprehensive code review by leveraging multiple specializ
 
 Each agent reviews the codebase through their lens of expertise, identifies issues, and **immediately fixes them**. The final report documents what was found AND what was fixed.
 
+## ⛔ CRITICAL SAFETY RULES
+
+These rules are ABSOLUTE and must NEVER be violated:
+
+### 1. NEVER Run Interactive Commands
+
+**FORBIDDEN** - Commands that require user input or run in interactive mode:
+
+```bash
+# ❌ NEVER DO THIS
+pnpm init                    # Interactive - asks questions
+npm init                     # Interactive - asks questions
+git clean -i                 # Interactive clean
+```
+
+Always use non-interactive alternatives (`-y`, `--yes` flags) or skip and document for manual execution.
+
+### 2. NEVER Delete or Clean the `.nexus/` Directory
+
+The `.github`, `.nexus/` and `.vscode` directories contains critical project artifacts. **NEVER**:
+
+```bash
+# ❌ ABSOLUTELY FORBIDDEN
+rm -rf .nexus
+git clean -fd                # Can delete .nexus if untracked!
+git reset --hard             # Can lose .nexus changes
+```
+
+### 3. Handle "Dirty" Directories Safely
+
+If the working directory has uncommitted changes:
+
+- **DO NOT** auto-clean or reset
+- Use `git stash` to preserve changes if needed
+- **When in doubt, STOP and ask the user**
+
 ## Process
 
 For each agent persona defined in the .github/agents directory, you will:

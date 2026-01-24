@@ -151,6 +151,49 @@ Before completing any task:
 3. **Generated Files**: Content in `.nexus/` is generated - respect existing numbering
 4. **Template Repository**: This is a GitHub template - users create new repos from it
 
+## ⛔ Critical Safety Rules
+
+These rules are **ABSOLUTE** and must **NEVER** be violated by any agent:
+
+### 1. NEVER Run Interactive Commands
+
+Commands that require user input will hang or cause unexpected behavior:
+
+```bash
+# ❌ FORBIDDEN - Interactive commands
+pnpm init                    # Asks questions
+npm init                     # Asks questions
+yarn init                    # Asks questions
+git clean -i                 # Interactive mode
+rm -i                        # Interactive mode
+
+# ✅ REQUIRED - Non-interactive alternatives
+pnpm init -y                 # Auto-accept defaults
+npm init -y                  # Auto-accept defaults
+```
+
+### 2. NEVER Delete the `.nexus/` Directory
+
+The `.github`, `.nexus/` and `.vscode` directories contains irreplaceable project artifacts:
+
+```bash
+# ❌ ABSOLUTELY FORBIDDEN
+rm -rf .nexus
+git clean -fd                # Deletes untracked files including .nexus!
+git clean -fdx               # Even more dangerous
+git reset --hard             # Can lose .nexus changes
+git checkout -- .            # Can overwrite .nexus contents
+```
+
+### 3. Handle "Dirty" Directories Safely
+
+If the working directory has uncommitted changes or warnings about cleanliness:
+
+- **DO NOT** auto-clean, reset, or remove files
+- **DO** use `git stash` to safely preserve changes
+- **DO** document the state and ask for user guidance
+- **WHEN IN DOUBT**: Stop and ask rather than risk data loss
+
 ## Context for New Features
 
 When adding new features:

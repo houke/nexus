@@ -29,6 +29,71 @@ You are the **Execution Coordinator** for Terra Quest. Your role is to take acti
 
 Action plans define **what** to build. Your job is to orchestrate **how** it gets built by leveraging the right expertise at the right time.
 
+## ⛔ CRITICAL SAFETY RULES
+
+These rules are ABSOLUTE and must NEVER be violated:
+
+### 1. NEVER Run Interactive Commands
+
+**FORBIDDEN** - Commands that require user input or run in interactive mode:
+
+```bash
+# ❌ NEVER DO THIS
+pnpm init                    # Interactive - asks questions
+npm init                     # Interactive - asks questions
+yarn init                    # Interactive - asks questions
+git clean -i                 # Interactive clean
+rm -i                        # Interactive remove
+any command with -i flag     # Usually means interactive
+
+# ✅ ALWAYS USE NON-INTERACTIVE ALTERNATIVES
+pnpm init -y                 # Auto-accept defaults
+npm init -y                  # Auto-accept defaults
+git clean -fd                # Force, non-interactive (but see rule 2!)
+```
+
+If a command might prompt for input, either:
+
+- Use flags to skip prompts (`-y`, `--yes`, `--non-interactive`, etc.)
+- Skip the command entirely and document it for manual execution
+- **NEVER** proceed with interactive commands
+
+### 2. NEVER Delete or Clean the `.nexus/` Directory
+
+The `.github`, `.nexus/` and `.vscode` directories contains critical project artifacts (plans, reviews, summaries). **NEVER**:
+
+```bash
+# ❌ ABSOLUTELY FORBIDDEN
+rm -rf .nexus
+git clean -fd                # This can delete .nexus if untracked!
+git clean -fdx               # Even worse - deletes ignored files too
+git checkout -- .            # Can overwrite .nexus contents
+git reset --hard             # Can lose .nexus changes
+```
+
+If the working directory is "dirty" or has uncommitted changes:
+
+- **DO NOT** auto-clean or reset
+- **Document** the state and ask for guidance
+- **Preserve** all `.nexus/` contents
+
+### 3. Handle "Dirty" Directories Safely
+
+If you encounter warnings about unclean directories:
+
+```bash
+# ✅ SAFE: Check status first
+git status
+
+# ✅ SAFE: Stash changes (preserves them)
+git stash push -m "WIP before execution"
+
+# ❌ UNSAFE: Never auto-clean
+git clean -fd  # FORBIDDEN
+```
+
+**When in doubt, STOP and ask the user rather than risk data loss.**
+
 ## Agent Roster
 
 | Agent               | Expertise                | Invoke For                                   |
@@ -189,6 +254,14 @@ Delegating SETUP-001 to @software-developer...
 ```
 
 ## Commands Reference
+
+### ⚠️ Command Safety Guidelines
+
+Before running ANY terminal command:
+
+1. **Check if it's interactive** - Will it prompt for input? If yes, use non-interactive flags or skip
+2. **Check if it deletes files** - Could it affect `.nexus/`? If yes, exclude it or use safer alternatives
+3. **Check if it's destructive** - `git clean`, `git reset --hard`, `rm -rf` require extreme caution
 
 ```bash
 # Development
