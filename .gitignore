@@ -1,0 +1,112 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+*.env
+
+# IDE and editor
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Package manager locks (keep one, ignore others if not used)
+# Uncomment if using npm only:
+# yarn.lock
+# pnpm-lock.yaml
+
+# Uncomment if using yarn only:
+# package-lock.json
+# pnpm-lock.yaml
+
+# Uncomment if using pnpm only:
+# package-lock.json
+# yarn.lock
+
+# Secrets and credentials
+*.pem
+*.key
+*.crt
+.secrets/
+
+# Local development
+.local/
+*.local
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Playwright
+playwright-report/
+playwright/.cache/
+test-results/
+
+# Storybook
+storybook-static/
+
+# TypeScript
+*.tsbuildinfo
+
+# Turbo
+.turbo/
+
+# Vercel
+.vercel/
+
+# Local Netlify folder
+.netlify/

@@ -1,0 +1,53 @@
+{
+  "servers": {
+    // 📚 Documentation lookup for libraries and frameworks
+    "io.github.upstash/context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@upstash/context7-mcp@1.0.31"],
+      "env": {
+        "CONTEXT7_API_KEY": "${input:CONTEXT7_API_KEY}"
+      }
+    },
+
+    // 🧠 Persistent memory for long conversations and project context
+    "memory": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    },
+
+    // 📁 Enhanced filesystem operations for batch file handling
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/houkebv/Apps/terra-quest"
+      ]
+    },
+
+    // 🎭 Playwright E2E test automation and browser debugging
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"]
+    },
+
+    // 🔍 Sequential thinking for complex problem decomposition
+    "sequential-thinking": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    }
+  },
+  "inputs": [
+    {
+      "id": "CONTEXT7_API_KEY",
+      "type": "promptString",
+      "description": "API key for Context7 documentation lookup",
+      "password": true
+    }
+  ]
+}
