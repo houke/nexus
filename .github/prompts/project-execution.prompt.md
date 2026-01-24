@@ -94,6 +94,38 @@ git clean -fd  # FORBIDDEN
 
 **When in doubt, STOP and ask the user rather than risk data loss.**
 
+### 4. Project Scaffolding in Template Directories
+
+This is a **template repository**. The working directory will ALWAYS contain template files (`.github/`, `.nexus/`, `AGENTS.md`, etc.). Scaffold commands that require empty directories will FAIL - this is expected.
+
+```bash
+# ❌ WILL FAIL - These require empty directories
+pnpm create vite .                    # Fails: directory not empty
+npx create-react-app .                # Fails: directory not empty
+pnpm create next-app .                # Fails: directory not empty
+
+# ❌ DO NOT try to "fix" by cleaning
+rm -rf *                              # FORBIDDEN - deletes template
+git clean -fd                         # FORBIDDEN - deletes template
+
+# ✅ CORRECT APPROACH - Scaffold to temp dir, then merge
+mkdir _temp_scaffold
+cd _temp_scaffold
+pnpm create vite . --template vanilla-ts -y
+cd ..
+# Copy files carefully, preserving template files
+cp -n _temp_scaffold/* .              # -n = no clobber
+cp -rn _temp_scaffold/src .           # Copy src if it doesn't exist
+rm -rf _temp_scaffold
+
+# ✅ ALTERNATIVE - Manual setup (preferred)
+pnpm init -y                          # Initialize package.json
+pnpm add -D vite typescript           # Add dependencies manually
+# Create src/, tsconfig.json, vite.config.ts manually
+```
+
+**Key Principle**: Template files are SACRED. Work around them, never remove them.
+
 ## Agent Roster
 
 | Agent               | Expertise                | Invoke For                                   |

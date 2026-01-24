@@ -194,6 +194,32 @@ If the working directory has uncommitted changes or warnings about cleanliness:
 - **DO** document the state and ask for user guidance
 - **WHEN IN DOUBT**: Stop and ask rather than risk data loss
 
+### 4. Project Scaffolding in Template Directories
+
+This is a **template repository**. The directory will ALWAYS have template files (`.github/`, `.nexus/`, `AGENTS.md`, etc.). Scaffold commands that require empty directories will FAIL - this is EXPECTED.
+
+```bash
+# ❌ WILL FAIL - Require empty directories
+pnpm create vite .                    # Fails: directory not empty
+npx create-react-app .                # Fails: directory not empty
+pnpm create next-app .                # Fails: directory not empty
+
+# ❌ DO NOT "fix" by cleaning the directory
+rm -rf *                              # FORBIDDEN
+git clean -fd                         # FORBIDDEN
+
+# ✅ CORRECT - Scaffold to temp dir, then merge carefully
+mkdir _temp_scaffold && cd _temp_scaffold
+pnpm create vite . --template vanilla-ts -y
+cd .. && cp -rn _temp_scaffold/* . && rm -rf _temp_scaffold
+
+# ✅ PREFERRED - Manual setup
+pnpm init -y && pnpm add -D vite typescript
+# Then create files manually
+```
+
+**Template files are SACRED. Work around them, never remove them.**
+
 ## Context for New Features
 
 When adding new features:
