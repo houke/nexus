@@ -11,10 +11,13 @@ Nexus is a template repository that provides a multi-agent orchestration system 
 ```
 .github/
 ├── agents/       # Agent persona definitions (chatagent format)
+├── copilot-instructions.md  # Custom instructions for GitHub Copilot
 ├── prompts/      # Workflow prompts for planning, execution, review, summary
 └── skills/       # Specialized skill instructions (SKILL.md files)
 
 .nexus/           # Generated outputs directory
+├── docs/         # TOC files tracking all documents per feature
+├── memory/       # Agent memory files for persistent preferences
 ├── plan/         # Action plans from planning sessions
 ├── execution/    # Execution tracking
 ├── review/       # Code review reports
@@ -50,23 +53,142 @@ When working on this codebase, respect the separation of concerns defined by eac
 - Orchestrates all agents to create comprehensive action plans
 - Plans are saved to `.nexus/plan/NNNN-<slug>.md`
 - Plans should NOT execute code, only document decisions
+- **Status**: `draft` (created during planning)
 
 ### Execution (`project-execution.prompt.md`)
 
 - Takes plans and coordinates implementation
 - Delegates to appropriate agents based on task type
 - Runs verification after changes
+- Creates execution logs in `.nexus/execution/NNNN-<slug>.md`
+- **Creates TOC file** in `.nexus/docs/<feature>.toc.md` to track all related documents
+- **Status transition**: `draft` → `in-progress`
 
 ### Review (`project-review.prompt.md`)
 
 - Comprehensive code review and **automatic fix** phase using all agent perspectives
 - Agents are instructed to fix issues they find within their expertise
 - Reviews and fix reports saved to `.nexus/review/NNNN-<slug>.md`
+- **Updates TOC file** with review document link
+- **Status transition**: `in-progress` → `complete`
+
+### Sync (`project-sync.prompt.md`)
+
+- **Purpose**: Reconcile documentation with actual work done
+- **Use when**: Work happens outside formal workflows (direct agent chats)
+- Updates plan status, execution logs, and generates missing reviews
+- **Creates/updates TOC files** for any features with missing document tracking
+- Detects drift between plans and reality
+- **Critical for**: Keeping `.nexus/` documentation in sync
 
 ### Summary (`project-summary.prompt.md`)
 
 - Project status snapshot comparing "have" vs "need"
 - Summaries saved to `.nexus/summary/NNNN-<slug>.md`
+- **Updates TOC files** with summary document links
+
+## Document Tracking (TOC System)
+
+All documents related to a feature are tracked in a master TOC (Table of Contents) file.
+
+### When TOC Files Are Created
+
+- Created automatically when execution begins on a plan
+- Can be created retroactively by the sync workflow
+
+### TOC File Naming
+
+Files are named descriptively based on the feature:
+
+```
+.nexus/docs/snake-game.toc.md       # Building a snake game
+.nexus/docs/user-auth.toc.md        # Authentication feature
+.nexus/docs/pinterest-clone.toc.md  # Pinterest clone app
+```
+
+### TOC Update Triggers
+
+| Workflow | Action |
+|----------|--------|
+| Execution | Creates TOC, adds plan + execution links |
+| Review | Adds review document link |
+| Summary | Adds summary document link |
+| Sync | Creates missing TOC, updates all links |
+
+## Workflow Best Practices
+
+### Ideal Flow (Fully Tracked)
+
+```
+1. Planning → creates plan (status: draft)
+2. Execution → implements plan (status: in-progress)
+3. Review → audits & fixes (status: complete)
+```
+
+### Reality (When Bypassing Workflows)
+
+When you talk directly to agents (e.g., "@software-developer fix this bug"):
+
+1. ⚠️ **Problem**: Plan status doesn't update, execution not logged
+2. ✅ **Solution**: Run sync workflow periodically
+3. 🔄 **Sync detects**: Changes in git history, updates documentation
+
+### Preventing Drift
+
+To keep plans synchronized with reality:
+
+- **Preferred**: Always use execution workflow for implementation
+- **Acceptable**: Direct agent work + manual sync afterward
+- **Avoid**: Long periods of untracked work without syncing
+
+### When to Run Sync
+
+Run `project-sync` prompt when:
+
+- ✅ You've done work by chatting directly with agents
+- ✅ Plan status seems out of date
+- ✅ Execution log is missing or stale
+- ✅ Review report doesn't exist but work is done
+- ✅ Before starting a formal review (to catch up)
+
+## Agent Memory System
+
+Each agent has a persistent memory file in `.nexus/memory/` that stores user preferences and learned patterns.
+
+### Memory Files
+
+```
+.nexus/memory/
+├── architect.memory.md
+├── devops.memory.md
+├── gamer.memory.md
+├── product-manager.memory.md
+├── qa-engineer.memory.md
+├── security.memory.md
+├── software-developer.memory.md
+├── tech-lead.memory.md
+├── ux-designer.memory.md
+└── visual-designer.memory.md
+```
+
+### How Memory Works
+
+**Reading**: Agents should check their memory file before starting work to apply stored preferences.
+
+**Writing**: When users say things like "please remember...", "always...", or "never...", the addressed agent updates their memory file.
+
+Example: `@software-developer please remember to work mobile-first` adds an entry to `software-developer.memory.md`.
+
+### Memory Entry Format
+
+```markdown
+### [Descriptive Title]
+- **Preference**: [What to remember]
+- **Reason**: [Why, if provided]
+- **Added**: [YYYY-MM-DD]
+```
+
+See `.github/copilot-instructions.md` for full memory system documentation.
 
 ## Skills System
 

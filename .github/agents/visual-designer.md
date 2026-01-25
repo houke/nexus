@@ -23,9 +23,11 @@ Challenge yourself to avoid the predictable. Every project deserves a unique vis
 ### Typography: Avoid the Overused
 
 **AVOID** these overused fonts (unless specifically requested):
+
 - Inter, Source Sans Pro, Open Sans, Roboto, Lato, Montserrat, Poppins, Nunito
 
 **EXPLORE** distinctive alternatives:
+
 - **Sans-serif**: Satoshi, General Sans, Switzer, Cabinet Grotesk, Clash Display, Geist, Plus Jakarta Sans, DM Sans, Outfit, Space Grotesk, Manrope, Sora, Urbanist
 - **Serif**: Fraunces, Gambetta, Zodiak, Erode, Sentient, Lora, Libre Baskerville, Cormorant
 - **Display**: Bebas Neue, Archivo Black, Unbounded, Righteous, Orbitron (for specific contexts)
@@ -36,12 +38,14 @@ Challenge yourself to avoid the predictable. Every project deserves a unique vis
 ### Layouts: Break the Mold
 
 **AVOID** generic patterns:
+
 - Standard card grids with rounded corners
 - Hero → Features → CTA → Footer layouts
 - Same-size symmetrical everything
 - Default Bootstrap/Tailwind component looks
 
 **EXPLORE** creative approaches:
+
 - Asymmetric layouts with intentional tension
 - Bento grid variations with mixed sizes
 - Overlapping elements and negative space
@@ -54,7 +58,8 @@ Challenge yourself to avoid the predictable. Every project deserves a unique vis
 
 **AVOID**: Safe corporate blues, generic gradients, grayscale-with-one-accent-color
 
-**EXPLORE**: 
+**EXPLORE**:
+
 - Unexpected color combinations
 - Duotones and triadic schemes
 - High-contrast, high-saturation palettes (when appropriate)

@@ -1,12 +1,30 @@
 ---
-title: "[Plan Title]"
-date: "[YYYY-MM-DD]"
-type: "new-project | new-feature | refactor | bug-fix"
-agents: ["@product-manager", "@architect", "@tech-lead", "@software-developer", "@ux-designer", "@visual-designer", "@qa-engineer", "@security", "@devops", "@gamer"]
-status: "draft | approved | in-progress | complete"
+title: '[Plan Title]'
+date: '[YYYY-MM-DD]'
+type: 'new-project | new-feature | refactor | bug-fix'
+agents:
+  [
+    '@product-manager',
+    '@architect',
+    '@tech-lead',
+    '@software-developer',
+    '@ux-designer',
+    '@visual-designer',
+    '@qa-engineer',
+    '@security',
+    '@devops',
+    '@gamer',
+  ]
+status: 'draft' # draft → in-progress (execution) → complete (review)
 ---
 
 # [Plan Title]
+
+> **⚠️ Status Tracking**: This plan's status should be updated by workflows:
+>
+> - `draft` → `in-progress`: When execution workflow starts
+> - `in-progress` → `complete`: When review workflow finishes
+> - If work happens outside formal workflows, run `project-sync` prompt to reconcile
 
 ## 1. Executive Summary
 
@@ -26,10 +44,10 @@ _(Owners: @product-manager, @tech-lead)_
 
 ### Scope
 
-| In Scope                    | Out of Scope               |
-| --------------------------- | -------------------------- |
-| [Feature/capability]        | [Explicitly excluded item] |
-| [Feature/capability]        | [Explicitly excluded item] |
+| In Scope             | Out of Scope               |
+| -------------------- | -------------------------- |
+| [Feature/capability] | [Explicitly excluded item] |
+| [Feature/capability] | [Explicitly excluded item] |
 
 ---
 
@@ -52,9 +70,9 @@ So that [benefit/value].
 
 ### User Personas Affected
 
-| Persona          | Impact       | Notes                   |
-| ---------------- | ------------ | ----------------------- |
-| [Persona name]   | High/Med/Low | [How this affects them] |
+| Persona        | Impact       | Notes                   |
+| -------------- | ------------ | ----------------------- |
+| [Persona name] | High/Med/Low | [How this affects them] |
 
 ### Priority & Timeline
 
@@ -73,9 +91,9 @@ _(Owner: @architect)_
 [High-level architecture description - how components interact]
 
 \`\`\`
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│  Component  │────▶│  Component  │────▶│  Component  │
-└─────────────┘     └─────────────┘     └─────────────┘
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│ Component │────▶│ Component │────▶│ Component │
+└─────────────┘ └─────────────┘ └─────────────┘
 \`\`\`
 
 ### Core Components
@@ -89,16 +107,16 @@ _(Owner: @architect)_
 \`\`\`sql
 -- New tables or schema changes
 CREATE TABLE example (
-  id INTEGER PRIMARY KEY,
-  ...
+id INTEGER PRIMARY KEY,
+...
 );
 \`\`\`
 
 \`\`\`typescript
 // TypeScript interfaces
 interface Example {
-  id: string;
-  // ...
+id: string;
+// ...
 }
 \`\`\`
 
@@ -125,11 +143,11 @@ _(Owner: @tech-lead)_
 \`\`\`
 src/
 ├── features/
-│   └── [feature-name]/
-│       ├── components/
-│       ├── hooks/
-│       ├── services/
-│       └── types.ts
+│ └── [feature-name]/
+│ ├── components/
+│ ├── hooks/
+│ ├── services/
+│ └── types.ts
 \`\`\`
 
 ### Key Interfaces & Types
@@ -161,16 +179,16 @@ _(Owner: @ux-designer)_
 
 \`\`\`
 [Start] → [Step 1] → [Decision Point] → [Step 2] → [End]
-                          ↓
-                    [Alternative Path]
+↓
+[Alternative Path]
 \`\`\`
 
 ### Wireframes
 
 [Description or link to wireframes]
 
-| Screen/State  | Description         | Notes          |
-| ------------- | ------------------- | -------------- |
+| Screen/State  | Description           | Notes          |
+| ------------- | --------------------- | -------------- |
 | [Screen name] | [What user sees/does] | [Interactions] |
 
 ### Interaction Patterns
@@ -205,9 +223,9 @@ _(Owner: @visual-designer)_
 
 ### Color Palette
 
-| Token Name | Value      | Usage        |
-| ---------- | ---------- | ------------ |
-| [--color-x]| [#hex/hsl] | [Where used] |
+| Token Name  | Value      | Usage        |
+| ----------- | ---------- | ------------ |
+| [--color-x] | [#hex/hsl] | [Where used] |
 
 ### Animation & Motion
 
@@ -255,9 +273,9 @@ _(Owner: @security)_
 
 ### Threat Model
 
-| Threat          | Risk Level   | Mitigation       |
-| --------------- | ------------ | ---------------- |
-| [Threat type]   | High/Med/Low | [How we prevent] |
+| Threat        | Risk Level   | Mitigation       |
+| ------------- | ------------ | ---------------- |
+| [Threat type] | High/Med/Low | [How we prevent] |
 
 ### Data Security
 
@@ -304,7 +322,7 @@ _(Owner: @qa-engineer)_
 
 ### Test Types Required
 
-- [ ] Unit tests (coverage target: ___%)
+- [ ] Unit tests (coverage target: \_\_\_%)
 - [ ] Integration tests
 - [ ] E2E tests (Playwright)
 - [ ] Accessibility tests (axe-core)
@@ -395,9 +413,24 @@ _(Track decisions needed before/during implementation)_
 
 _(Define project-specific terms)_
 
-| Term   | Definition        |
-| ------ | ----------------- |
-| [Term] | [What it means]   |
+| Term   | Definition      |
+| ------ | --------------- |
+| [Term] | [What it means] |
+
+---
+
+## 📌 Status Tracking Notes
+
+**Plan Lifecycle:**
+
+- `draft` → Created by planning workflow
+- `in-progress` → Updated by execution workflow when work starts
+- `complete` → Updated by review workflow when done
+
+**If work happens outside formal workflows** (e.g., direct agent chats):
+
+1. Run the `project-sync` prompt to reconcile this plan
+2. See [keeping-plans-in-sync.md](../docs/keeping-plans-in-sync.md) for details
 
 ---
 

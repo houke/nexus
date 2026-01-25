@@ -2,7 +2,7 @@
 
 **Transform VS Code into an Autonomous Command Center**
 
-Nexus unites specialized AI agents—from strategic Architects to rigorous Security Agents—to orchestrate your entire software lifecycle. Transform your IDE into a collaborative ecosystem where your digital squad plans, builds, and secures code in real-time.
+Nexus unites specialized AI agents, from strategic Architects to rigorous Security Agents, to orchestrate your entire software lifecycle. Transform your IDE into a collaborative ecosystem where your digital squad plans, builds, and secures code in real-time.
 
 ---
 
@@ -44,7 +44,7 @@ Nexus is a **template repository** designed to supercharge any new project with 
 
 ## 🔄 The Nexus Workflow
 
-Nexus provides four core prompts that guide you through the entire software development lifecycle:
+Nexus provides five core prompts that guide you through the entire software development lifecycle:
 
 ### 1️⃣ Planning Phase → `project-planning.prompt.md`
 
@@ -121,7 +121,40 @@ The Review prompt runs a comprehensive code review using ALL agent personas. Thi
 
 ---
 
-### 4️⃣ Summary Phase → `project-summary.prompt.md`
+### 4️⃣ Sync Phase → `project-sync.prompt.md`
+
+**When to use:** When work happens outside formal workflows
+
+The Sync prompt reconciles documentation with reality when you've been chatting directly with agents (e.g., "@software-developer fix this bug") instead of using the execution workflow.
+
+**How to use:**
+
+1. Open the Command Palette
+2. Select "Chat: Run Prompt..."
+3. Choose `project-sync`
+
+**What happens:**
+
+- Analyzes git history to detect actual changes
+- Compares changes against plan action items
+- Updates plan status (draft → in-progress → complete)
+- Creates or updates execution logs retroactively
+- Generates review reports if work is complete
+- Provides status summary and next steps
+
+**Output:** Updated plan status, execution logs, and review reports in `.nexus/`
+
+> ⚠️ **Important:** Sync is your safety net when you bypass the formal workflow. It prevents documentation drift by keeping plans synchronized with what you've actually built.
+
+**When to run sync:**
+- ✅ After chatting directly with agents
+- ✅ When plan status seems out of date
+- ✅ Before running a formal review
+- ✅ When execution logs are missing or stale
+
+---
+
+### 5️⃣ Summary Phase → `project-summary.prompt.md`
 
 **When to use:** Periodically, to assess project status
 
@@ -160,6 +193,7 @@ The Summary prompt provides a snapshot of your project's current state by compar
 │   │   ├── project-planning.prompt.md
 │   │   ├── project-execution.prompt.md
 │   │   ├── project-review.prompt.md
+│   │   ├── project-sync.prompt.md
 │   │   └── project-summary.prompt.md
 │   └── skills/           # Specialized skill instructions
 ├── .nexus/               # Generated outputs
@@ -215,6 +249,12 @@ Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json
 5. Run "project-execution" prompt to start building
 6. Run "project-review" prompt before committing
 7. Run "project-summary" to track progress
+
+# Alternative: Quick iteration workflow
+1. Run "project-planning" for initial plan
+2. Chat directly with agents: "@software-developer implement auth"
+3. Run "project-sync" to update documentation
+4. Run "project-review" for final audit
 ```
 
 ---
@@ -222,6 +262,7 @@ Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json
 ## 📚 Additional Resources
 
 - [AGENTS.md](./AGENTS.md) - Instructions for AI coding agents
+- [Keeping Plans in Sync](./.nexus/docs/keeping-plans-in-sync.md) - Guide to preventing documentation drift
 - [GitHub Copilot Docs](https://docs.github.com/en/copilot)
 - [MCP Protocol](https://modelcontextprotocol.io)
 

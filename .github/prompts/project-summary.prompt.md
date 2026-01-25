@@ -29,7 +29,27 @@ Analyze the following key documents to understand the plan and current state:
 - The `.nexus/plan/` directory containing all phase plans (e.g. `.nexus/plan/0001-foundation-plan.md`, etc.)
 - Active agent definitions in `.github/agents/`
 
+## Plan Status Tracking
+
+**REQUIRED**: Read all plan files in `.nexus/plan/` and extract their status from frontmatter:
+
+- `status: "draft"` - Not yet started (needs execution)
+- `status: "in-progress"` - Currently being implemented
+- `status: "complete"` - Reviewed and finished
+
+**Show a table** of all plans with their current status. Highlight any `draft` or `in-progress` plans as requiring attention.
+
+> **Note**: Plans are marked `complete` by the review prompt after successful code review. Uncompleted plans indicate unreviewed work.
+
 Structure the response as:
+
+### Plan Status Overview
+
+| Plan          | Type        | Status      | Notes           |
+| ------------- | ----------- | ----------- | --------------- |
+| 0001-feature  | new-feature | complete    | ✅ Reviewed     |
+| 0002-refactor | refactor    | in-progress | 🔄 Needs review |
+| 0003-new-ui   | new-feature | draft       | ⏸️ Not started  |
 
 ### What We Have
 
@@ -46,8 +66,33 @@ Structure the response as:
 ### Next Steps
 
 - Recommended immediate actions
+- **Uncompleted plans**: [List plans needing execution or review]
 
 **ALWAYS** write the final summary to `.nexus/summary/` directory.
+
+## TOC Document Update
+
+**REQUIRED**: After creating the summary report:
+
+1. **Find the TOC file** for any related feature in `.nexus/docs/<feature>.toc.md`
+2. **Add the summary document** to the "Summary Documents" section
+3. **Update the Timeline** table with the summary entry
+
+Example update to TOC:
+
+```markdown
+## Summary Documents
+
+- [Summary: NNNN-status-snapshot](../summary/NNNN-status-snapshot.md) - Created YYYY-MM-DD
+```
+
+And add to Timeline:
+
+```markdown
+| YYYY-MM-DD | Summary   | summary/NNNN-status.md      | @coordinator |
+```
+
+If the summary covers multiple features, update ALL related TOC files.
 
 ## Output Documentation Protocol
 

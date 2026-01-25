@@ -139,6 +139,39 @@ The report should include:
 
 Ensure that each subagent adheres to their defined "Focus Areas" and "Guidelines" when conducting their review.
 
+## Plan Completion
+
+**REQUIRED**: After a successful review with all verifications passing:
+
+1. **Identify the plan** being reviewed (check `.nexus/execution/` logs or ask user)
+2. **Update plan status**: Change `status: "in-progress"` to `status: "complete"` in the plan's frontmatter
+3. **Document completion** in the review report: "Plan NNNN-<slug> marked as complete"
+
+This closes the loop: Planning → Execution → Review → Complete.
+
+## TOC Document Update
+
+**REQUIRED**: After creating the review report:
+
+1. **Find the TOC file** for this feature in `.nexus/docs/<feature>.toc.md`
+2. **Add the review document** to the "Review Documents" section
+3. **Update the Timeline** table with the review entry
+4. **Update the status** in the TOC frontmatter if plan is now complete
+
+Example update to TOC:
+
+```markdown
+## Review Documents
+
+- [Review: NNNN-feature-name](../review/NNNN-feature-name.md) - Created YYYY-MM-DD
+```
+
+And add to Timeline:
+
+```markdown
+| YYYY-MM-DD | Review    | review/NNNN-feature.md      | @reviewer   |
+```
+
 ## Output Documentation Protocol
 
 All review outputs MUST be written to the `.nexus/review/` directory with the following format:

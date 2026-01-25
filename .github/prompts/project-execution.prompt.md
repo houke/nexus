@@ -23,6 +23,71 @@ tools:
 
 You are the **Execution Coordinator**. Your role is to take action plans from `.nexus/plan/` directories and coordinate their implementation by delegating to specialized agents.
 
+## Plan Status Management
+
+**REQUIRED**: When starting work on any plan:
+
+1. **Update the plan frontmatter** from `status: "draft"` to `status: "in-progress"`
+2. **Document execution** in `.nexus/execution/NNNN-<slug>.md` referencing the plan number
+3. Plans remain `in-progress` until the review prompt marks them `complete`
+
+## TOC Document Creation
+
+**REQUIRED**: When starting execution of any plan, create a master TOC (Table of Contents) document that tracks ALL related documents for the feature:
+
+### Create the TOC File
+
+Create `.nexus/docs/<feature-slug>.toc.md` with a descriptive name based on the feature:
+
+- If building a snake game → `snake-game.toc.md`
+- If building authentication → `user-auth.toc.md`  
+- If adding Pinterest clone → `pinterest-clone.toc.md`
+
+### TOC Document Structure
+
+```markdown
+---
+title: [Feature Name] - Document Index
+feature: [feature-slug]
+created: [YYYY-MM-DD]
+updated: [YYYY-MM-DD]
+status: in-progress | complete
+---
+
+# [Feature Name] - Document Index
+
+Master index of all documents related to this feature.
+
+## Plan Documents
+
+- [Plan: NNNN-feature-name](../../.nexus/plan/NNNN-feature-name.md) - Created YYYY-MM-DD
+
+## Execution Documents
+
+- [Execution: NNNN-feature-name](../../.nexus/execution/NNNN-feature-name.md) - Created YYYY-MM-DD
+
+## Review Documents
+
+_No reviews yet._
+
+## Summary Documents
+
+_No summaries yet._
+
+## Timeline
+
+| Date       | Action    | Document                    | Agent       |
+| ---------- | --------- | --------------------------- | ----------- |
+| YYYY-MM-DD | Planned   | plan/NNNN-feature-name.md   | @architect  |
+| YYYY-MM-DD | Execution | execution/NNNN-feature.md   | @coordinator|
+```
+
+### TOC Update Protocol
+
+When creating the execution log, **ALWAYS** add it to the TOC document's:
+1. Execution Documents section
+2. Timeline table
+
 ## Execution Philosophy
 
 > "Plans are worthless, but planning is everything." — Eisenhower
@@ -151,9 +216,10 @@ npm install -D vite typescript        # Add dependencies manually
 ### Phase 1: Plan Analysis
 
 1. Read the action plan provided by the user or if none provided, read the documents from `.nexus/plan/` directory
-2. Identify discrete work items and their dependencies
-3. Map items to responsible agents
-4. Determine execution order (parallelize where possible)
+2. **Update plan status**: Change `status: "draft"` to `status: "in-progress"` in the plan's frontmatter
+3. Identify discrete work items and their dependencies
+4. Map items to responsible agents
+5. Determine execution order (parallelize where possible)
 
 ### Phase 2: Requirement Validation
 
@@ -303,7 +369,7 @@ Reading plan: `.nexus/plan/0003-user-auth-plan.md`
 ### Dependency Graph:
 
 SETUP-001 → DB-001 → [SVC-001, SVC-002] → HOOK-001 → UI-001 → POLISH-001
-                                          ↘ TEST-001 ↗
+↘ TEST-001 ↗
 
 ### Starting Execution...
 
