@@ -169,14 +169,85 @@ Example update to TOC:
 And add to Timeline:
 
 ```markdown
-| YYYY-MM-DD | Review    | review/NNNN-feature.md      | @reviewer   |
+| YYYY-MM-DD | Review | review/NNNN-feature.md | @reviewer |
 ```
 
 ## Output Documentation Protocol
 
 All review outputs MUST be written to the `.nexus/review/` directory with the following format:
 
-### Filename Convention
+### Review Document Update Policy
+
+**IMPORTANT**: Before creating a new review document, check for existing reviews:
+
+1. **List existing reviews**: `ls .nexus/review/`
+2. **Check for matching feature/scope**: If a review for the same feature exists, UPDATE it
+3. **Determine action**:
+   - **Existing review found** → Update the existing document, increment `review-iteration`
+   - **No matching review** → Create new document with next sequential number
+
+### Update vs Create Decision
+
+```markdown
+# Check: Does a review already exist for this feature?
+
+# Example: Reviewing "user-auth" feature
+
+# 1. List existing reviews
+
+ls .nexus/review/
+
+# Output: 0001-user-auth-review.md, 0002-other-feature.md
+
+# 2. Match found? → UPDATE 0001-user-auth-review.md
+
+# No match? → CREATE 0003-<new-feature>-review.md
+```
+
+### Updating Existing Reviews
+
+When updating an existing review document:
+
+1. **Preserve history**: Add a new "Review Iteration" section, don't delete previous
+2. **Update frontmatter**: Increment `review-iteration`, update `date`
+3. **Add iteration header**: `## Review Iteration N - YYYY-MM-DD`
+4. **Document deltas**: Focus on new findings vs previous iteration
+5. **Update metrics**: Show before/after comparison across iterations
+
+Example update structure:
+
+```markdown
+---
+title: User Auth Review
+date: [UPDATED DATE]
+review-iteration: 2
+last-iteration-date: [PREVIOUS DATE]
+agents: [@agent1, @agent2, ...]
+---
+
+## Review Iteration 2 - 2024-01-25
+
+### Changes Since Last Review
+
+- [What changed in codebase]
+- [What was fixed from previous review]
+
+### New Issues Found
+
+[Only NEW issues not in previous iteration]
+
+### Remaining Issues (from Iteration 1)
+
+[Issues that weren't fixed]
+
+---
+
+## Review Iteration 1 - 2024-01-20 (Previous)
+
+[Original review content preserved below]
+```
+
+### Filename Convention (New Reviews Only)
 
 ```
 .nexus/review/NNNN-<descriptive-slug>.md
