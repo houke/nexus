@@ -11,7 +11,7 @@ updated: 'YYYY-MM-DD'
 
 **Plan Reference**: [.nexus/plan/0000-plan-slug.md](.nexus/plan/0000-plan-slug.md)
 
-> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `project-sync` to update retroactively. See [keeping-plans-in-sync.md](../docs/keeping-plans-in-sync.md)
+> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `project-sync` to update retroactively. See [workflow-guide.md](../docs/workflow-guide.md)
 
 ---
 

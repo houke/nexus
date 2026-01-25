@@ -430,7 +430,7 @@ _(Define project-specific terms)_
 **If work happens outside formal workflows** (e.g., direct agent chats):
 
 1. Run the `project-sync` prompt to reconcile this plan
-2. See [keeping-plans-in-sync.md](../docs/keeping-plans-in-sync.md) for details
+2. See [workflow-guide.md](../docs/workflow-guide.md) for details
 
 ---
 

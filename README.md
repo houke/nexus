@@ -189,6 +189,7 @@ The Summary prompt provides a snapshot of your project's current state by compar
 │   │   ├── software-developer.md
 │   │   ├── security.md
 │   │   └── ...
+│   ├── copilot-instructions.md  # Custom instructions for Copilot
 │   ├── prompts/          # Core workflow prompts
 │   │   ├── project-planning.prompt.md
 │   │   ├── project-execution.prompt.md
@@ -197,6 +198,8 @@ The Summary prompt provides a snapshot of your project's current state by compar
 │   │   └── project-summary.prompt.md
 │   └── skills/           # Specialized skill instructions
 ├── .nexus/               # Generated outputs
+│   ├── docs/             # TOC files tracking documents per feature
+│   ├── memory/           # Agent memory files (persistent preferences)
 │   ├── plan/             # Action plans
 │   ├── execution/        # Execution logs
 │   ├── review/           # Code reviews
@@ -262,9 +265,93 @@ Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json
 ## 📚 Additional Resources
 
 - [AGENTS.md](./AGENTS.md) - Instructions for AI coding agents
-- [Keeping Plans in Sync](./.nexus/docs/keeping-plans-in-sync.md) - Guide to preventing documentation drift
+- [Workflow Guide](./.nexus/docs/workflow-guide.md) - Keeping plans in sync and managing document status
+- [Copilot Instructions](./.github/copilot-instructions.md) - Custom instructions for GitHub Copilot
 - [GitHub Copilot Docs](https://docs.github.com/en/copilot)
 - [MCP Protocol](https://modelcontextprotocol.io)
+
+---
+
+## 🗂️ Document Tracking (TOC System)
+
+Nexus automatically tracks all documents related to each feature using a Table of Contents (TOC) system.
+
+### How It Works
+
+When you execute a plan, a TOC file is created in `.nexus/docs/` that links to:
+- The original plan document
+- Execution logs
+- Review reports
+- Status summaries
+
+### File Naming
+
+TOC files are named after the feature they track:
+
+```
+.nexus/docs/snake-game.toc.md       # Building a snake game
+.nexus/docs/user-auth.toc.md        # Authentication feature
+.nexus/docs/pinterest-clone.toc.md  # Pinterest clone app
+```
+
+### Benefits
+
+- **Single source of truth** for all feature documentation
+- **Easy navigation** between related documents
+- **Timeline tracking** of project progress
+- **No orphaned documents** - everything is linked
+
+---
+
+## 🧠 Agent Memory System
+
+Each agent has a persistent memory file that stores user preferences and learned patterns.
+
+### Memory Files
+
+```
+.nexus/memory/
+├── architect.memory.md
+├── devops.memory.md
+├── gamer.memory.md
+├── product-manager.memory.md
+├── qa-engineer.memory.md
+├── security.memory.md
+├── software-developer.memory.md
+├── tech-lead.memory.md
+├── ux-designer.memory.md
+└── visual-designer.memory.md
+```
+
+### Teaching Agents
+
+Tell any agent to remember your preferences:
+
+```
+@software-developer please remember to work mobile-first
+@visual-designer please remember to use #4F46E5 as the brand color
+@architect please remember we're targeting SQLite for local storage
+```
+
+### Trigger Phrases
+
+Agents will update their memory when you say:
+- "remember to..."
+- "always..."
+- "never..."
+- "from now on..."
+- "going forward..."
+
+### Memory Entry Format
+
+Preferences are stored with context:
+
+```markdown
+### Mobile-First Development
+- **Preference**: Always implement mobile-first
+- **Reason**: User prefers responsive design from smallest screens
+- **Added**: 2026-01-25
+```
 
 ---
 
