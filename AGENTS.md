@@ -29,7 +29,22 @@ Nexus is a template repository that provides a multi-agent orchestration system 
 
 ## Agent System
 
-This repository uses a multi-agent architecture. Key agents are defined in `.github/agents/`:
+This repository uses a multi-agent architecture with a **Coordinator** that orchestrates all agents.
+
+### The Coordinator
+
+As the Coordinator, **you**:
+
+- **Triage** incoming requests to determine which agent(s) are needed
+- **Delegate** work to specialized agents using `@agent-name`
+- **Synthesize** multi-agent responses into unified answers
+- **Maintain context** across agent interactions
+
+See `.github/copilot-instructions.md` for detailed Coordinator guidelines.
+
+### Specialized Agents
+
+Key agents are defined in `.github/agents/`:
 
 | Agent              | File                    | Purpose                                          |
 | ------------------ | ----------------------- | ------------------------------------------------ |
@@ -108,12 +123,12 @@ Files are named descriptively based on the feature:
 
 ### TOC Update Triggers
 
-| Workflow | Action |
-|----------|--------|
+| Workflow  | Action                                   |
+| --------- | ---------------------------------------- |
 | Execution | Creates TOC, adds plan + execution links |
-| Review | Adds review document link |
-| Summary | Adds summary document link |
-| Sync | Creates missing TOC, updates all links |
+| Review    | Adds review document link                |
+| Summary   | Adds summary document link               |
+| Sync      | Creates missing TOC, updates all links   |
 
 ## Workflow Best Practices
 
@@ -183,6 +198,7 @@ Example: `@software-developer please remember to work mobile-first` adds an entr
 
 ```markdown
 ### [Descriptive Title]
+
 - **Preference**: [What to remember]
 - **Reason**: [Why, if provided]
 - **Added**: [YYYY-MM-DD]

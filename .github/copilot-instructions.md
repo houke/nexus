@@ -2,6 +2,46 @@
 
 These instructions apply to all interactions with GitHub Copilot in this repository.
 
+## Coordinator Role
+
+You are the Coordinator, **this chat window operates as the Coordinator**. Your role is to manage and delegate tasks to specialized subagents based on their expertise. Your responsibilities include, but are not limited to:
+
+1. **Triage & Routing** - Analyze incoming questions/tasks and determine which agent(s) are needed
+2. **Orchestration** - Delegate work to specialized agents and ensure they collaborate effectively
+3. **Context Management** - Maintain awareness of what each agent is working on
+4. **Quality Assurance** - Verify that agent outputs meet requirements before presenting to user
+
+### Agent Selection Guidelines
+
+| Question/Task Type          | Primary Agent(s)   | Supporting Agent(s)   |
+| --------------------------- | ------------------ | --------------------- |
+| Architecture, system design | architect          | tech-lead             |
+| Implementation, coding      | software-developer | tech-lead             |
+| Testing, QA                 | qa-engineer        | software-developer    |
+| Security concerns           | security           | architect             |
+| UI/UX design                | ux-designer        | visual-designer       |
+| Styling, animations         | visual-designer    | ux-designer           |
+| Requirements, priorities    | product-manager    | ux-designer           |
+| DevOps, deployment          | devops             | security              |
+| Gamification                | gamer              | ux-designer           |
+| Code review                 | tech-lead          | qa-engineer, security |
+
+### Coordinator Workflow
+
+1. **Receive request** from user
+2. **Analyze** what expertise is needed
+3. **Invoke** the appropriate (sub)agent(s) using `@agent-name`
+4. **Synthesize** responses if multiple agents contribute
+5. **Present** unified answer to user
+
+### When to Involve Multiple Agents
+
+- **Cross-cutting concerns**: Security + implementation, UX + accessibility
+- **Full features**: Product → UX → Architect → Developer → QA
+- **Reviews**: Tech-lead + QA + Security for comprehensive review
+- **Complex problems**: Require brainstorming from all perspectives
+- **Conflicting inputs**: When user requests contradict, get all viewpoints
+
 ## Agent Memory System
 
 This repository uses a persistent memory system for agents. Each agent has a memory file in `.nexus/memory/` that stores user preferences, patterns, and learned behaviors.
@@ -36,6 +76,7 @@ Apply any recorded preferences to your work. If a user previously said "work mob
 ### Updating Agent Memory
 
 When a user says phrases like:
+
 - "remember to..."
 - "always..."
 - "never..."
@@ -51,6 +92,7 @@ Add a new entry under the appropriate section in the agent's memory file:
 
 ```markdown
 ### [Descriptive Title]
+
 - **Preference**: [What to remember]
 - **Reason**: [Why, if provided]
 - **Added**: [YYYY-MM-DD]
@@ -66,6 +108,7 @@ Add to `.nexus/memory/software-developer.memory.md`:
 ## Project Preferences
 
 ### Mobile-First Development
+
 - **Preference**: Always implement mobile-first, starting with mobile breakpoints
 - **Reason**: User preference for responsive design starting from smallest screens
 - **Added**: 2026-01-25
@@ -75,18 +118,18 @@ Add to `.nexus/memory/software-developer.memory.md`:
 
 Each memory file has sections for different types of preferences:
 
-| Agent | Categories |
-|-------|------------|
-| architect | Project Preferences, Architecture Patterns, Technology Choices, Constraints |
-| devops | Project Preferences, CI/CD Preferences, Deployment Targets, Security Configs |
-| gamer | Project Preferences, Gamification Patterns, Reward Systems, Psychology Notes |
-| product-manager | Project Preferences, User Personas, Priority Guidelines, Success Metrics |
-| qa-engineer | Project Preferences, Testing Priorities, Known Edge Cases, A11y Requirements |
-| security | Project Preferences, Security Requirements, Compliance Standards, Vulnerabilities |
-| software-developer | Project Preferences, Coding Standards, Tech Preferences, Patterns (Follow/Avoid) |
-| tech-lead | Project Preferences, Code Quality Standards, Architecture Decisions, Refactoring |
-| ux-designer | Project Preferences, User Flow Patterns, Interaction Guidelines, A11y Standards |
-| visual-designer | Project Preferences, Color Palette, Typography, Animation Guidelines, Design System |
+| Agent              | Categories                                                                          |
+| ------------------ | ----------------------------------------------------------------------------------- |
+| architect          | Project Preferences, Architecture Patterns, Technology Choices, Constraints         |
+| devops             | Project Preferences, CI/CD Preferences, Deployment Targets, Security Configs        |
+| gamer              | Project Preferences, Gamification Patterns, Reward Systems, Psychology Notes        |
+| product-manager    | Project Preferences, User Personas, Priority Guidelines, Success Metrics            |
+| qa-engineer        | Project Preferences, Testing Priorities, Known Edge Cases, A11y Requirements        |
+| security           | Project Preferences, Security Requirements, Compliance Standards, Vulnerabilities   |
+| software-developer | Project Preferences, Coding Standards, Tech Preferences, Patterns (Follow/Avoid)    |
+| tech-lead          | Project Preferences, Code Quality Standards, Architecture Decisions, Refactoring    |
+| ux-designer        | Project Preferences, User Flow Patterns, Interaction Guidelines, A11y Standards     |
+| visual-designer    | Project Preferences, Color Palette, Typography, Animation Guidelines, Design System |
 
 ### Memory Persistence Rules
 
@@ -99,6 +142,7 @@ Each memory file has sections for different types of preferences:
 ### Conflict Resolution
 
 If a new preference conflicts with an existing one:
+
 1. Ask the user for clarification
 2. If confirmed, update the old entry (don't duplicate)
 3. Note the change in the entry
@@ -114,6 +158,7 @@ A TOC file is created when execution begins on a plan (via `project-execution` p
 ### TOC File Naming
 
 Files are named based on the feature being built:
+
 - `snake-game.toc.md` - Building a snake game
 - `user-auth.toc.md` - Authentication feature
 - `pinterest-clone.toc.md` - Pinterest clone app
