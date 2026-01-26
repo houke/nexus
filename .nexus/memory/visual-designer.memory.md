@@ -10,7 +10,7 @@ Persistent preferences and learned patterns for the **@visual-designer** agent.
 
 _No preferences recorded yet._
 
-<!-- 
+<!--
 Example entry:
 ### Brand Color
 - **Preference**: Primary brand color is #4F46E5

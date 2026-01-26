@@ -10,6 +10,13 @@
       }
     },
 
+    // 🔀 Git operations: diff, log, commit, branch management
+    "git": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-git", "--repository", "${workspaceFolder}"]
+    },
+
     // 🧠 Persistent memory for long conversations and project context
     "memory": {
       "type": "stdio",

@@ -1,24 +1,25 @@
 ---
-plan: '0000-plan-slug' # Reference to plan number
-status: 'in-progress' # in-progress | complete | blocked
+feature: '<feature-slug>'
+status: 'in-progress' # in-progress | blocked | complete
 started: 'YYYY-MM-DD'
 updated: 'YYYY-MM-DD'
 ---
 
-# Execution Log: [Plan Title]
+# Execution Log: [Feature Title]
 
-> **Purpose**: Track implementation progress and connect work to the original plan.
+> **Purpose**: Track implementation progress for this feature.
 
-**Plan Reference**: [.nexus/plan/0000-plan-slug.md](.nexus/plan/0000-plan-slug.md)
+**Plan Reference**: [plan.md](./plan.md)
 
-> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `project-sync` to update retroactively. See [workflow-guide.md](../docs/workflow-guide.md)
+> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `project-sync` to update retroactively.
 
 ---
 
 ## Overview
 
+**Feature**: [Feature name]  
 **Started**: YYYY-MM-DD  
-**Status**: in-progress | complete | blocked  
+**Status**: in-progress | blocked | complete  
 **Last Updated**: YYYY-MM-DD
 
 **Progress Summary**:

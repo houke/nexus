@@ -1,5 +1,6 @@
 ---
 title: '[Plan Title]'
+feature: '<feature-slug>'
 date: '[YYYY-MM-DD]'
 type: 'new-project | new-feature | refactor | bug-fix'
 agents:
@@ -15,7 +16,7 @@ agents:
     '@devops',
     '@gamer',
   ]
-status: 'draft' # draft → in-progress (execution) → complete (review)
+status: 'draft' # draft → in-progress (execution) → review → complete
 ---
 
 # [Plan Title]
@@ -23,7 +24,8 @@ status: 'draft' # draft → in-progress (execution) → complete (review)
 > **⚠️ Status Tracking**: This plan's status should be updated by workflows:
 >
 > - `draft` → `in-progress`: When execution workflow starts
-> - `in-progress` → `complete`: When review workflow finishes
+> - `in-progress` → `review`: When ready for code review
+> - `review` → `complete`: When review workflow finishes
 > - If work happens outside formal workflows, run `project-sync` prompt to reconcile
 
 ## 1. Executive Summary
@@ -57,11 +59,11 @@ _(Owner: @product-manager)_
 
 ### User Stories
 
-\`\`\`
+```
 As a [user type],
 I want to [action/capability],
 So that [benefit/value].
-\`\`\`
+```
 
 ### Acceptance Criteria
 
@@ -90,11 +92,11 @@ _(Owner: @architect)_
 
 [High-level architecture description - how components interact]
 
-\`\`\`
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│ Component │────▶│ Component │────▶│ Component │
-└─────────────┘ └─────────────┘ └─────────────┘
-\`\`\`
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│ Component   │────▶│ Component   │────▶│ Component   │
+└─────────────┘    └─────────────┘    └─────────────┘
+```
 
 ### Core Components
 
@@ -104,21 +106,21 @@ _(Owner: @architect)_
 
 ### Data Model
 
-\`\`\`sql
+```sql
 -- New tables or schema changes
 CREATE TABLE example (
-id INTEGER PRIMARY KEY,
-...
+  id INTEGER PRIMARY KEY,
+  ...
 );
-\`\`\`
+```
 
-\`\`\`typescript
+```typescript
 // TypeScript interfaces
 interface Example {
-id: string;
-// ...
+  id: string;
+  // ...
 }
-\`\`\`
+```
 
 ### External Dependencies
 
@@ -140,21 +142,21 @@ _(Owner: @tech-lead)_
 
 ### Code Structure
 
-\`\`\`
+```
 src/
 ├── features/
-│ └── [feature-name]/
-│ ├── components/
-│ ├── hooks/
-│ ├── services/
-│ └── types.ts
-\`\`\`
+│   └── [feature-name]/
+│       ├── components/
+│       ├── hooks/
+│       ├── services/
+│       └── types.ts
+```
 
 ### Key Interfaces & Types
 
-\`\`\`typescript
+```typescript
 // Core types for this feature
-\`\`\`
+```
 
 ### Algorithm / Logic Overview
 
@@ -177,11 +179,11 @@ _(Owner: @ux-designer)_
 
 ### User Flow
 
-\`\`\`
+```
 [Start] → [Step 1] → [Decision Point] → [Step 2] → [End]
-↓
-[Alternative Path]
-\`\`\`
+                            ↓
+                    [Alternative Path]
+```
 
 ### Wireframes
 
@@ -368,22 +370,22 @@ _(Owner: @devops)_
 
 _(Collaborative: All agents)_
 
-### Phase 1: Foundation
+### Setup
 
 - [ ] **SETUP-001**: [Task description] — @[owner]
 - [ ] **SETUP-002**: [Task description] — @[owner]
 
-### Phase 2: Core Implementation
+### Core Implementation
 
 - [ ] **IMPL-001**: [Task description] — @[owner]
 - [ ] **IMPL-002**: [Task description] — @[owner]
 
-### Phase 3: Polish & Testing
+### Polish & Testing
 
 - [ ] **POLISH-001**: [Task description] — @[owner]
 - [ ] **TEST-001**: [Task description] — @[owner]
 
-### Phase 4: Review & Deploy
+### Review & Deploy
 
 - [ ] **REVIEW-001**: Code review — @tech-lead
 - [ ] **DEPLOY-001**: Production deployment — @devops
@@ -419,18 +421,16 @@ _(Define project-specific terms)_
 
 ---
 
-## 📌 Status Tracking Notes
+## 📌 Document Location
 
-**Plan Lifecycle:**
+This document lives at: `.nexus/features/<feature-slug>/plan.md`
 
-- `draft` → Created by planning workflow
-- `in-progress` → Updated by execution workflow when work starts
-- `complete` → Updated by review workflow when done
+Related documents in this feature folder:
 
-**If work happens outside formal workflows** (e.g., direct agent chats):
-
-1. Run the `project-sync` prompt to reconcile this plan
-2. See [workflow-guide.md](../docs/workflow-guide.md) for details
+- `execution.md` - Implementation tracking
+- `review.md` - Code review results
+- `summary.md` - Status snapshots
+- `notes/` - Additional notes and research
 
 ---
 

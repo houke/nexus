@@ -1,6 +1,6 @@
 ---
 name: project-summary
-description: Get a summary of everything we have vs everything we need from all agent personas from .github/agents
+description: Get a summary of everything we have vs everything we need for features
 model: Claude Opus 4.5
 tools:
   [
@@ -12,7 +12,7 @@ tools:
     'web',
     'io.github.upstash/context7/*',
     'agent',
-    'gitkraken/*',
+    'git/*',
     'memory/*',
     'filesystem/*',
     'sequential-thinking/*',
@@ -21,107 +21,104 @@ tools:
   ]
 ---
 
+# Project Summary Orchestrator
+
 You are the **Summary Orchestrator**. Compare "Everything we have" vs "Everything we need". Use any of the agents defined in the .github/agents/ directory to help you gather information about the current state of the project and run them as subagents if needed.
 
-Analyze the following key documents to understand the plan and current state:
+## Data Sources
 
-- The `.nexus/plan/` directory containing all phase plans (e.g. `.nexus/plan/0001-foundation-plan.md`, etc.)
-- Active agent definitions in `.github/agents/`
+Analyze the following to understand current state:
 
-## Plan Status Tracking
+- **Feature folders**: `.nexus/features/*/` - All planned and implemented features
+- **Master TOC**: `.nexus/toc.md` - Feature status overview
+- **Agent definitions**: `.github/agents/` - Available expertise
 
-**REQUIRED**: Read all plan files in `.nexus/plan/` and extract their status from frontmatter:
+## Feature Status Tracking
+
+**REQUIRED**: Read all feature plans and extract their status from frontmatter:
 
 - `status: "draft"` - Not yet started (needs execution)
 - `status: "in-progress"` - Currently being implemented
+- `status: "review"` - Under code review
 - `status: "complete"` - Reviewed and finished
+- `status: "on-hold"` - Paused
+- `status: "archived"` - No longer relevant
 
-**Show a table** of all plans with their current status. Highlight any `draft` or `in-progress` plans as requiring attention.
+**Show a table** of all features with their current status. Highlight any `draft` or `in-progress` features as requiring attention.
 
-> **Note**: Plans are marked `complete` by the review prompt after successful code review. Uncompleted plans indicate unreviewed work.
+## Output Structure
 
-Structure the response as:
+### Feature Status Overview
 
-### Plan Status Overview
-
-| Plan          | Type        | Status      | Notes           |
-| ------------- | ----------- | ----------- | --------------- |
-| 0001-feature  | new-feature | complete    | ✅ Reviewed     |
-| 0002-refactor | refactor    | in-progress | 🔄 Needs review |
-| 0003-new-ui   | new-feature | draft       | ⏸️ Not started  |
+```markdown
+| Feature    | Status      | Progress | Last Updated | Notes               |
+| ---------- | ----------- | -------- | ------------ | ------------------- |
+| user-auth  | complete    | 100%     | 2026-01-25   | ✅ Reviewed         |
+| data-sync  | in-progress | 60%      | 2026-01-26   | 🔄 Needs completion |
+| snake-game | draft       | 0%       | 2026-01-20   | ⏸️ Not started      |
+```
 
 ### What We Have
 
-- implemented features
-- existing infrastructure
-- current agents
+- Implemented features
+- Existing infrastructure
+- Available agents and skills
 
 ### What We Need
 
-- missing features (check `.nexus/plan/` files)
-- planned but not started items
-- gaps in resources or agents
+- Missing features (check feature plans)
+- Planned but not started items
+- Gaps in resources or expertise
 
 ### Next Steps
 
 - Recommended immediate actions
-- **Uncompleted plans**: [List plans needing execution or review]
+- **Incomplete features**: [List features needing work]
 
-**ALWAYS** write the final summary to `.nexus/summary/` directory.
+## Feature-Based Output Protocol
 
-## TOC Document Update
+### Summary Document Location
 
-**REQUIRED**: After creating the summary report:
-
-1. **Find the TOC file** for any related feature in `.nexus/docs/<feature>.toc.md`
-2. **Add the summary document** to the "Summary Documents" section
-3. **Update the Timeline** table with the summary entry
-
-Example update to TOC:
-
-```markdown
-## Summary Documents
-
-- [Summary: NNNN-status-snapshot](../summary/NNNN-status-snapshot.md) - Created YYYY-MM-DD
-```
-
-And add to Timeline:
-
-```markdown
-| YYYY-MM-DD | Summary | summary/NNNN-status.md | @orchestrator |
-```
-
-If the summary covers multiple features, update ALL related TOC files.
-
-## Output Documentation Protocol
-
-All summary outputs MUST be written to the `.nexus/summary/` directory with the following format:
-
-### Filename Convention
+If creating a feature-specific summary, write to:
 
 ```
-.nexus/summary/NNNN-<descriptive-slug>.md
+.nexus/features/<feature-slug>/summary.md
 ```
 
-- `NNNN`: Zero-padded sequential number (0001, 0002, etc.)
-- `<descriptive-slug>`: Kebab-case summary of the snapshot
+If creating a project-wide summary, write to:
 
-Example: `.nexus/summary/0001-project-status-snapshot.md`
+```
+.nexus/features/_project-summary/summary.md
+```
 
-### Document Structure
+Use the template from `.nexus/templates/summary.template.md`.
+
+### Update Master TOC
+
+**REQUIRED**: After creating a summary:
+
+1. If feature-specific: Add `summary` to that feature's Files column
+2. Update Last Edited date
+3. Add any agents who contributed to the summary
+
+## Document Structure
 
 ```markdown
 ---
-title: [Summary Title]
+feature: <feature-slug> | _project-summary
 date: [YYYY-MM-DD]
 agents: [@agent1, @agent2, ...]
 ---
 
-# [Summary Title]
+# Summary: [Title]
 
 ## Executive Summary
 
-[2-3 paragraph high-level overview of current project state]
+[2-3 paragraph high-level overview of current state]
+
+## Feature Status
+
+[Table of all features and their status]
 
 ## What We Have
 
@@ -146,4 +143,36 @@ agents: [@agent1, @agent2, ...]
 ## Recommended Next Steps
 
 [Prioritized action items]
+```
+
+## Example Summary
+
+```markdown
+# Project Summary: 2026-01-26
+
+## Feature Status
+
+| Feature       | Status         | Progress | Blockers           |
+| ------------- | -------------- | -------- | ------------------ |
+| user-auth     | ✅ complete    | 100%     | None               |
+| data-sync     | 🔄 in-progress | 60%      | API design pending |
+| notifications | 📝 draft       | 0%       | Waiting for auth   |
+
+## What We Have
+
+- ✅ User authentication (login, register, sessions)
+- ✅ Basic UI components
+- ✅ Database schema
+
+## What We Need
+
+- ⏳ Data synchronization engine
+- ⏳ Push notifications
+- ⏳ Offline support
+
+## Next Steps
+
+1. Complete data-sync feature (60% → 100%)
+2. Begin notifications feature
+3. Schedule security review for auth
 ```

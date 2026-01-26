@@ -1,6 +1,6 @@
 ---
 name: project-review
-description: Run a code review using a all agent personas from .github/agents
+description: Run a code review using all agent personas from .github/agents
 model: Claude Opus 4.5
 tools:
   [
@@ -12,7 +12,7 @@ tools:
     'web',
     'io.github.upstash/context7/*',
     'agent',
-    'gitkraken/*',
+    'git/*',
     'memory/*',
     'filesystem/*',
     'sequential-thinking/*',
@@ -82,7 +82,7 @@ For each agent persona defined in the .github/agents directory, you will:
 - Run verification after fixes: `npm run test && npm run lint && npm run typecheck`
 
 4. **Document both findings AND fixes** in their report section.
-5. **ALWAYS** write the final review to `.nexus/review/` directory.
+5. **ALWAYS** write the final review to the feature folder.
 
 ## Agent Fix Instructions
 
@@ -139,70 +139,35 @@ The report should include:
 
 Ensure that each subagent adheres to their defined "Focus Areas" and "Guidelines" when conducting their review.
 
-## Plan Completion
+## Feature Completion
 
 **REQUIRED**: After a successful review with all verifications passing:
 
-1. **Identify the plan** being reviewed (check `.nexus/execution/` logs or ask user)
-2. **Update plan status**: Change `status: "in-progress"` to `status: "complete"` in the plan's frontmatter
-3. **Document completion** in the review report: "Plan NNNN-<slug> marked as complete"
+1. **Update plan status**: Change `status: "in-progress"` to `status: "complete"` in the plan's frontmatter
+2. **Document completion** in the review report: "Feature marked as complete"
+3. **Update toc.md** with final status and review document
 
 This closes the loop: Planning → Execution → Review → Complete.
 
-## TOC Document Update
+## Feature-Based Output Protocol
 
-**REQUIRED**: After creating the review report:
+### Review Document Location
 
-1. **Find the TOC file** for this feature in `.nexus/docs/<feature>.toc.md`
-2. **Add the review document** to the "Review Documents" section
-3. **Update the Timeline** table with the review entry
-4. **Update the status** in the TOC frontmatter if plan is now complete
+Write the review to:
 
-Example update to TOC:
-
-```markdown
-## Review Documents
-
-- [Review: NNNN-feature-name](../review/NNNN-feature-name.md) - Created YYYY-MM-DD
+```
+.nexus/features/<feature-slug>/review.md
 ```
 
-And add to Timeline:
-
-```markdown
-| YYYY-MM-DD | Review | review/NNNN-feature.md | @reviewer |
-```
-
-## Output Documentation Protocol
-
-All review outputs MUST be written to the `.nexus/review/` directory with the following format:
+Use the template from `.nexus/templates/review.template.md`.
 
 ### Review Document Update Policy
 
-**IMPORTANT**: Before creating a new review document, check for existing reviews:
+**IMPORTANT**: Before creating a new review, check for existing reviews:
 
-1. **List existing reviews**: `ls .nexus/review/`
-2. **Check for matching feature/scope**: If a review for the same feature exists, UPDATE it
-3. **Determine action**:
-   - **Existing review found** → Update the existing document, increment `review-iteration`
-   - **No matching review** → Create new document with next sequential number
-
-### Update vs Create Decision
-
-```markdown
-# Check: Does a review already exist for this feature?
-
-# Example: Reviewing "user-auth" feature
-
-# 1. List existing reviews
-
-ls .nexus/review/
-
-# Output: 0001-user-auth-review.md, 0002-other-feature.md
-
-# 2. Match found? → UPDATE 0001-user-auth-review.md
-
-# No match? → CREATE 0003-<new-feature>-review.md
-```
+1. **Check if review exists**: `ls .nexus/features/<slug>/`
+2. **If review.md exists** → Update it, increment `review-iteration`
+3. **If no review.md** → Create it
 
 ### Updating Existing Reviews
 
@@ -212,65 +177,34 @@ When updating an existing review document:
 2. **Update frontmatter**: Increment `review-iteration`, update `date`
 3. **Add iteration header**: `## Review Iteration N - YYYY-MM-DD`
 4. **Document deltas**: Focus on new findings vs previous iteration
-5. **Update metrics**: Show before/after comparison across iterations
 
-Example update structure:
+### Update Master TOC
+
+**REQUIRED**: Update `.nexus/toc.md`:
+
+1. Change status from `in-progress` to `complete`
+2. Add `review` to the Files column
+3. Update Last Edited date
+
+Example:
+
+```markdown
+| user-auth | complete | plan, execution, review | @architect, @software-developer, @qa-engineer | 2026-01-26 |
+```
+
+## Document Structure
 
 ```markdown
 ---
-title: User Auth Review
-date: [UPDATED DATE]
-review-iteration: 2
-last-iteration-date: [PREVIOUS DATE]
-agents: [@agent1, @agent2, ...]
----
-
-## Review Iteration 2 - 2024-01-25
-
-### Changes Since Last Review
-
-- [What changed in codebase]
-- [What was fixed from previous review]
-
-### New Issues Found
-
-[Only NEW issues not in previous iteration]
-
-### Remaining Issues (from Iteration 1)
-
-[Issues that weren't fixed]
-
----
-
-## Review Iteration 1 - 2024-01-20 (Previous)
-
-[Original review content preserved below]
-```
-
-### Filename Convention (New Reviews Only)
-
-```
-.nexus/review/NNNN-<descriptive-slug>.md
-```
-
-- `NNNN`: Zero-padded sequential number (0001, 0002, etc.)
-- `<descriptive-slug>`: Kebab-case summary of what was reviewed
-
-Example: `.nexus/review/0001-codebase-full-review.md`
-
-### Document Structure
-
-```markdown
----
-title: [Review & Fix Report Title]
+feature: <feature-slug>
 date: [YYYY-MM-DD]
+review-iteration: 1
 agents: [@agent1, @agent2, ...]
-scope: [files/features reviewed]
 issues-found: [total count]
 issues-fixed: [total count]
 ---
 
-# [Review & Fix Report Title]
+# Review Report: [Feature Title]
 
 ## Summary
 

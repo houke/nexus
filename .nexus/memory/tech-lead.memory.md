@@ -10,7 +10,7 @@ Persistent preferences and learned patterns for the **@tech-lead** agent.
 
 _No preferences recorded yet._
 
-<!-- 
+<!--
 Example entry:
 ### Composition Preference
 - **Preference**: Always prefer composition over inheritance

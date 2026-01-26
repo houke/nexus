@@ -10,7 +10,7 @@ Persistent preferences and learned patterns for the **@architect** agent.
 
 _No preferences recorded yet._
 
-<!-- 
+<!--
 Example entry:
 ### Database Choice
 - **Preference**: Always use SQLite with OPFS for local-first apps

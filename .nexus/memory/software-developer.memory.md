@@ -10,7 +10,7 @@ Persistent preferences and learned patterns for the **@software-developer** agen
 
 _No preferences recorded yet._
 
-<!-- 
+<!--
 Example entry:
 ### Mobile-First Development
 - **Preference**: Always implement mobile-first

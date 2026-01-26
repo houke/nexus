@@ -67,7 +67,7 @@ The Planning prompt orchestrates a comprehensive planning session by invoking AL
 - The QA Engineer plans test strategies
 - ...and more
 
-**Output:** A comprehensive plan saved to `.nexus/plan/NNNN-<feature>.md`
+**Output:** A comprehensive plan saved to `.nexus/features/<feature-slug>/plan.md` and tracked in `.nexus/toc.md`
 
 ---
 
@@ -82,10 +82,13 @@ The Execution prompt takes your action plans and coordinates implementation by d
 1. Open the Command Palette
 2. Select "Chat: Run Prompt..."
 3. Choose `project-execution`
-4. Reference the plan file you want to execute
+4. Reference the feature to execute (or let it detect from `.nexus/toc.md`)
 
 **What happens:**
 
+- Reads the plan from `.nexus/features/<slug>/plan.md`
+- Creates execution log at `.nexus/features/<slug>/execution.md`
+- Updates toc.md (status: draft → in-progress)
 - Analyzes the plan and identifies work items
 - Validates requirements with Product Manager
 - Delegates implementation to Software Developer
@@ -117,7 +120,7 @@ The Review prompt runs a comprehensive code review using ALL agent personas. Thi
 - Tech Lead reviews code quality and **resolves** lint/style issues
 - ...every agent contributes AND executes fixes
 
-**Output:** A detailed review and fix report saved to `.nexus/review/NNNN-<review>.md`
+**Output:** A detailed review and fix report saved to `.nexus/features/<feature-slug>/review.md`
 
 ---
 
@@ -137,16 +140,17 @@ The Sync prompt reconciles documentation with reality when you've been chatting 
 
 - Analyzes git history to detect actual changes
 - Compares changes against plan action items
-- Updates plan status (draft → in-progress → complete)
+- Updates feature status (draft → in-progress → complete)
 - Creates or updates execution logs retroactively
-- Generates review reports if work is complete
+- Updates `.nexus/toc.md` with current reality
 - Provides status summary and next steps
 
-**Output:** Updated plan status, execution logs, and review reports in `.nexus/`
+**Output:** Updated feature documents and toc.md in `.nexus/`
 
 > ⚠️ **Important:** Sync is your safety net when you bypass the formal workflow. It prevents documentation drift by keeping plans synchronized with what you've actually built.
 
 **When to run sync:**
+
 - ✅ After chatting directly with agents
 - ✅ When plan status seems out of date
 - ✅ Before running a formal review
@@ -168,12 +172,12 @@ The Summary prompt provides a snapshot of your project's current state by compar
 
 **What happens:**
 
-- Analyzes all plan files in `.nexus/plan/`
-- Reviews implemented features
+- Analyzes all features in `.nexus/features/` and `.nexus/toc.md`
+- Reviews implemented features and their status
 - Identifies gaps and missing items
 - Provides actionable next steps
 
-**Output:** A status report saved to `.nexus/summary/NNNN-<summary>.md`
+**Output:** A status report saved to `.nexus/features/<feature-slug>/summary.md`
 
 > 💡 **Pro tip:** Run the summary prompt every few days or at the start of each work session to stay aligned with project goals.
 
@@ -198,12 +202,16 @@ The Summary prompt provides a snapshot of your project's current state by compar
 │   │   └── project-summary.prompt.md
 │   └── skills/           # Specialized skill instructions
 ├── .nexus/               # Generated outputs
-│   ├── docs/             # TOC files tracking documents per feature
+│   ├── toc.md            # Master feature index (START HERE)
+│   ├── features/         # Feature folders (one per feature)
+│   │   └── <feature-slug>/
+│   │       ├── plan.md
+│   │       ├── execution.md
+│   │       ├── review.md
+│   │       └── notes/
+│   ├── templates/        # Document templates
 │   ├── memory/           # Agent memory files (persistent preferences)
-│   ├── plan/             # Action plans
-│   ├── execution/        # Execution logs
-│   ├── review/           # Code reviews
-│   └── summary/          # Status summaries
+│   └── docs/             # Guides and reference
 ├── .vscode/
 │   └── mcp.json          # MCP server configuration
 ├── AGENTS.md             # Agent instructions for AI coding tools
@@ -233,7 +241,7 @@ To set Claude Opus 4.5 as your default:
 Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json`):
 
 - `context7` - Up-to-date library documentation
-- `gitkraken` - Git operations and PR management
+- `git` - Git operations (diff, log, commit, branches)
 - `memory` - Knowledge graph for persistent context
 - `filesystem` - File operations
 - `sequential-thinking` - Complex problem decomposition
@@ -248,10 +256,11 @@ Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json
 2. Open in VS Code
 3. Run "project-planning" prompt:
    "I want to build a task management app with offline support"
-4. Review the generated plan in .nexus/plan/
-5. Run "project-execution" prompt to start building
-6. Run "project-review" prompt before committing
-7. Run "project-summary" to track progress
+4. Review the generated plan in .nexus/features/<feature>/plan.md
+5. Check .nexus/toc.md to see your feature tracked
+6. Run "project-execution" prompt to start building
+7. Run "project-review" prompt before committing
+8. Run "project-summary" to track progress
 
 # Alternative: Quick iteration workflow
 1. Run "project-planning" for initial plan
@@ -272,34 +281,44 @@ Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json
 
 ---
 
-## 🗂️ Document Tracking (TOC System)
+## 🗂️ Feature-Based Organization
 
-Nexus automatically tracks all documents related to each feature using a Table of Contents (TOC) system.
+Nexus organizes all work by **feature**, not by workflow phase. Each feature gets its own folder containing all related documents.
 
-### How It Works
-
-When you execute a plan, a TOC file is created in `.nexus/docs/` that links to:
-- The original plan document
-- Execution logs
-- Review reports
-- Status summaries
-
-### File Naming
-
-TOC files are named after the feature they track:
+### Feature Structure
 
 ```
-.nexus/docs/snake-game.toc.md       # Building a snake game
-.nexus/docs/user-auth.toc.md        # Authentication feature
-.nexus/docs/pinterest-clone.toc.md  # Pinterest clone app
+.nexus/features/<feature-slug>/
+├── plan.md        # What we're building and why
+├── execution.md   # Implementation tracking
+├── review.md      # Code review findings (updated per iteration)
+├── summary.md     # Status snapshots (optional)
+└── notes/         # Supporting materials
 ```
+
+### Master TOC
+
+The file `.nexus/toc.md` is the **single source of truth** for all features:
+
+| Feature    | Status      | Files                   | Agents           | Last Edited |
+| ---------- | ----------- | ----------------------- | ---------------- | ----------- |
+| user-auth  | complete    | plan, execution, review | @architect, @dev | 2026-01-26  |
+| snake-game | in-progress | plan, execution         | @dev, @qa        | 2026-01-25  |
+
+### Feature Status Values
+
+- `draft` - Plan created, work not started
+- `in-progress` - Currently being implemented
+- `review` - Under code review
+- `complete` - Reviewed and finished
+- `on-hold` / `archived` - Paused or no longer relevant
 
 ### Benefits
 
-- **Single source of truth** for all feature documentation
-- **Easy navigation** between related documents
-- **Timeline tracking** of project progress
-- **No orphaned documents** - everything is linked
+- **Everything in one place** - No hunting across phase directories
+- **Natural mental model** - Think "auth feature" not "execution phase"
+- **Parallel work** - Multiple features at different stages simultaneously
+- **Better traceability** - Clear lineage from plan to completion
 
 ---
 
@@ -336,6 +355,7 @@ Tell any agent to remember your preferences:
 ### Trigger Phrases
 
 Agents will update their memory when you say:
+
 - "remember to..."
 - "always..."
 - "never..."
@@ -348,6 +368,7 @@ Preferences are stored with context:
 
 ```markdown
 ### Mobile-First Development
+
 - **Preference**: Always implement mobile-first
 - **Reason**: User prefers responsive design from smallest screens
 - **Added**: 2026-01-25

@@ -147,30 +147,63 @@ If a new preference conflicts with an existing one:
 2. If confirmed, update the old entry (don't duplicate)
 3. Note the change in the entry
 
-## Document Tracking (TOC System)
+## Feature-Based Workflow
 
-This repository tracks all documents related to a feature using TOC (Table of Contents) files.
+This repository uses a **feature-based** organization system. All work is tracked by feature, not by workflow phase.
 
-### When TOC Files Are Created
+### Feature Structure
 
-A TOC file is created when execution begins on a plan (via `project-execution` prompt).
+Each feature has its own folder containing all related documents:
 
-### TOC File Naming
+```
+.nexus/features/<feature-slug>/
+├── plan.md        # What we're building and why
+├── execution.md   # Implementation tracking
+├── review.md      # Code review findings
+├── summary.md     # Status snapshots (optional)
+└── notes/         # Supporting materials
+```
 
-Files are named based on the feature being built:
+### Master TOC
 
-- `snake-game.toc.md` - Building a snake game
-- `user-auth.toc.md` - Authentication feature
-- `pinterest-clone.toc.md` - Pinterest clone app
+The file `.nexus/toc.md` is the **single source of truth** for all features:
 
-### TOC Updates
+| Feature | Status | Files | Agents | Last Edited |
+| ------- | ------ | ----- | ------ | ----------- |
+| user-auth | complete | plan, execution, review | @architect, @dev | 2026-01-26 |
 
-All workflow prompts (execution, review, summary) MUST update the relevant TOC file when creating documents.
+### Feature Status Values
+
+- `draft` - Plan created, work not started
+- `in-progress` - Currently being implemented
+- `review` - Implementation complete, under review
+- `complete` - Reviewed and finished
+- `on-hold` - Paused
+- `archived` - No longer relevant
+
+### When to Update toc.md
+
+**Always update toc.md** when:
+
+- Creating a new feature (add row)
+- Changing feature status
+- Adding new documents to a feature
+- Agents contribute to a feature
+
+### Workflow Prompts
+
+| Prompt | Creates | Updates |
+| ------ | ------- | ------- |
+| `project-planning` | `features/<slug>/plan.md` | toc.md (new row, status: draft) |
+| `project-execution` | `features/<slug>/execution.md` | plan status → in-progress, toc.md |
+| `project-review` | `features/<slug>/review.md` | plan status → complete, toc.md |
+| `project-summary` | `features/<slug>/summary.md` | toc.md |
+| `project-sync` | Missing docs | All out-of-sync docs, toc.md |
 
 ## General Guidelines
 
 1. **Read AGENTS.md** at project root for full context
 2. **Check memory** before starting work
 3. **Update memory** when instructed to remember
-4. **Track documents** in TOC files
+4. **Update toc.md** when creating or modifying feature documents
 5. **Follow safety rules** - never delete `.nexus/`, `.github/`, or `.vscode/`
