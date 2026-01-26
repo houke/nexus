@@ -65,6 +65,16 @@ Challenge yourself to avoid the predictable. Every project deserves a unique vis
 - High-contrast, high-saturation palettes (when appropriate)
 - Color as a functional element, not decoration
 
+## ⚠️ MANDATORY: Read Your Memory First
+
+**REQUIRED**: Before starting ANY task, read your memory file:
+
+```bash
+cat .nexus/memory/visual-designer.memory.md
+```
+
+Apply ALL recorded preferences to your work. Memory contains user preferences that MUST be honored.
+
 ## Focus Areas
 
 - **Visual Aesthetics**: Colors, typography, spacing, and visual hierarchy
