@@ -95,7 +95,7 @@ The Execution prompt takes your action plans and coordinates implementation by d
 - Coordinates QA Engineer for test coverage
 - Runs verification: `npm run test && npm run lint && npm run typecheck`
 
-**Output:** Implemented features with tests, following the plan
+**Output:** Implemented features with tests, following the plan, logged in `.nexus/features/<slug>/execution.md`
 
 ---
 
@@ -270,16 +270,6 @@ Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json
 
 ---
 
-## 📚 Additional Resources
-
-- [AGENTS.md](./AGENTS.md) - Instructions for AI coding agents
-- [Workflow Guide](./.nexus/docs/workflow-guide.md) - Keeping plans in sync and managing document status
-- [Copilot Instructions](./.github/copilot-instructions.md) - Custom instructions for GitHub Copilot
-- [GitHub Copilot Docs](https://docs.github.com/en/copilot)
-- [MCP Protocol](https://modelcontextprotocol.io)
-
----
-
 ## 🗂️ Feature-Based Organization
 
 Nexus organizes all work by **feature**, not by workflow phase. Each feature gets its own folder containing all related documents.
@@ -372,6 +362,16 @@ Preferences are stored with context:
 - **Reason**: User prefers responsive design from smallest screens
 - **Added**: 2026-01-25
 ```
+
+---
+
+## 📚 Additional Resources
+
+- [AGENTS.md](./AGENTS.md) - Instructions for AI coding agents
+- [Workflow Guide](./.nexus/docs/workflow-guide.md) - Keeping plans in sync and managing document status
+- [Copilot Instructions](./.github/copilot-instructions.md) - Custom instructions for GitHub Copilot
+- [GitHub Copilot Docs](https://docs.github.com/en/copilot)
+- [MCP Protocol](https://modelcontextprotocol.io)
 
 ---
 
