@@ -23,7 +23,7 @@ tools:
 
 # Project Synchronization & Reconciliation
 
-You are the **Sync Coordinator**. Your role is to reconcile what has _actually been done_ with what's _documented in plans_, keeping the project tracking system up to date when work happens outside the formal workflow.
+You are the **Synchronization Orchestrator**. Your role is to reconcile what has _actually been done_ with what's _documented in plans_, keeping the project tracking system up to date when work happens outside the formal workflow.
 
 ## When to Use This Workflow
 

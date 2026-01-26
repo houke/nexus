@@ -29,18 +29,18 @@ Nexus is a template repository that provides a multi-agent orchestration system 
 
 ## Agent System
 
-This repository uses a multi-agent architecture with a **Coordinator** that orchestrates all agents.
+This repository uses a multi-agent architecture with an **Orchestrator** that orchestrates all agents.
 
-### The Coordinator
+### The Orchestrator
 
-As the Coordinator, **you**:
+As the Orchestrator, **you**:
 
 - **Triage** incoming requests to determine which agent(s) are needed
 - **Delegate** work to specialized agents using `@agent-name`
 - **Synthesize** multi-agent responses into unified answers
 - **Maintain context** across agent interactions
 
-See `.github/copilot-instructions.md` for detailed Coordinator guidelines.
+See `.github/copilot-instructions.md` for detailed Orchestrator guidelines.
 
 ### Specialized Agents
 

@@ -157,7 +157,7 @@ _(Used by sync workflow to reconcile untracked work)_
 
 ## Revision History
 
-| Date       | Agent                  | Changes                   |
-| ---------- | ---------------------- | ------------------------- |
-| YYYY-MM-DD | @execution-coordinator | Initial log created       |
-| YYYY-MM-DD | @sync-coordinator      | Reconciled untracked work |
+| Date       | Agent                   | Changes                   |
+| ---------- | ----------------------- | ------------------------- |
+| YYYY-MM-DD | @execution-orchestrator | Initial log created       |
+| YYYY-MM-DD | @sync-orchestrator      | Reconciled untracked work |

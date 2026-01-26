@@ -21,8 +21,7 @@ tools:
   ]
 ---
 
-Please provide a summary of the current project status.
-Compare "Everything we have" vs "Everything we need". Use any of the agents defined in the .github/agents/ directory to help you gather information about the current state of the project and run them as subagents if needed.
+You are the **Summary Orchestrator**. Compare "Everything we have" vs "Everything we need". Use any of the agents defined in the .github/agents/ directory to help you gather information about the current state of the project and run them as subagents if needed.
 
 Analyze the following key documents to understand the plan and current state:
 
@@ -89,7 +88,7 @@ Example update to TOC:
 And add to Timeline:
 
 ```markdown
-| YYYY-MM-DD | Summary   | summary/NNNN-status.md      | @coordinator |
+| YYYY-MM-DD | Summary | summary/NNNN-status.md | @orchestrator |
 ```
 
 If the summary covers multiple features, update ALL related TOC files.
