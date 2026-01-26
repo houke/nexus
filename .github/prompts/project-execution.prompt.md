@@ -3,20 +3,21 @@ name: project-execution
 description: Execute action plans by coordinating specialized agents to implement features
 model: Claude Opus 4.5
 tools:
-  - vscode
-  - execute
-  - read
-  - edit
-  - search
-  - web
-  - io.github.upstash/context7/*
-  - agent
-  - git/*
-  - memory/*
-  - filesystem/*
-  - sequential-thinking/*
-  - playwright/*
-  - todo
+  [
+    'vscode',
+    'execute',
+    'read',
+    'edit',
+    'search',
+    'web',
+    'io.github.upstash/context7/*',
+    'agent',
+    'memory/*',
+    'filesystem/*',
+    'sequential-thinking/*',
+    'playwright/*',
+    'todo',
+  ]
 ---
 
 # Project Execution Orchestrator
@@ -175,6 +176,21 @@ Before writing any code:
 - Confirm user flows are documented → @ux-designer
 - Validate technical approach → @architect, @tech-lead
 
+#### Deferred Question Resolution
+
+**REQUIRED**: Check the plan's "Deferred to Execution" questions table.
+
+For each deferred question:
+
+1. **Route to assigned agent** or appropriate expert
+2. **Wait for answer** before proceeding with related work
+3. **Update the plan** immediately:
+   - Move question from "Deferred to Execution" to "Resolved During Execution 🔧" table
+   - Include: Answer, Answering Agent, Session Date
+4. **Log in execution.md** under "Questions Resolved" section
+
+The 🔧 icon indicates the answer came from execution phase (not planning).
+
 ### Phase 3: Implementation
 
 For each work item:
@@ -183,7 +199,7 @@ For each work item:
 1. @software-developer: Implement feature with tests
 2. @qa-engineer: Review tests, add edge cases
 3. @visual-designer: Polish UI (if applicable)
-4. Run verification: npm run test && npm run lint && npm run typecheck
+4. Run verification: ${PM:-npm} run test && ${PM:-npm} run lint && ${PM:-npm} run typecheck
 ```
 
 ### Phase 4: Integration
@@ -254,10 +270,10 @@ Track progress in the execution log:
 **EVERY implementation session MUST end with:**
 
 ```bash
-# Use your package manager (npm, pnpm, yarn, or bun)
-npm run test        # All tests pass
-npm run lint        # No lint errors
-npm run typecheck   # No type errors
+# PM is auto-detected or defaults to npm
+${PM:-npm} run test        # All tests pass
+${PM:-npm} run lint        # No lint errors
+${PM:-npm} run typecheck   # No type errors
 ```
 
 If any fail, **fix before proceeding**.
@@ -270,13 +286,13 @@ If any fail, **fix before proceeding**.
 # List all defined scripts
 cat package.json | grep -A 50 '"scripts"'
 
-# Test each script - use your package manager (npm run, pnpm, yarn, bun)
-npm run dev          # Dev server starts (Ctrl+C to exit)
-npm run build        # Completes without errors
-npm run preview      # Works after build (if exists)
-npm run test         # All tests pass
-npm run lint         # No errors
-npm run typecheck    # No errors (if exists)
+# Test each script using detected package manager (falls back to npm)
+${PM:-npm} run dev          # Dev server starts (Ctrl+C to exit)
+${PM:-npm} run build        # Completes without errors
+${PM:-npm} run preview      # Works after build (if exists)
+${PM:-npm} run test         # All tests pass
+${PM:-npm} run lint         # No errors
+${PM:-npm} run typecheck    # No errors (if exists)
 ```
 
 **A broken script = broken delivery.** Fix all scripts before completing.
@@ -333,34 +349,38 @@ Before running ANY terminal command:
 
 ### Detect Package Manager
 
-Before running commands, detect the project's package manager:
+Before running commands, detect the project's package manager. If `$PM` is already set, it will be used; otherwise it defaults to `npm`:
 
 ```bash
-# Check for lockfiles to determine package manager
-if [ -f "pnpm-lock.yaml" ]; then PM="pnpm"
-elif [ -f "yarn.lock" ]; then PM="yarn"
-elif [ -f "bun.lockb" ]; then PM="bun"
-else PM="npm"; fi
+# Auto-detect package manager from lockfiles (sets PM variable)
+if [ -z "$PM" ]; then
+  if [ -f "pnpm-lock.yaml" ]; then PM="pnpm"
+  elif [ -f "yarn.lock" ]; then PM="yarn"
+  elif [ -f "bun.lockb" ]; then PM="bun"
+  else PM="npm"; fi
+fi
 echo "Using: $PM"
 ```
 
-### Common Commands (use your package manager)
+> **Note**: Throughout this project, use `${PM:-npm}` to run scripts. This uses `$PM` if defined, otherwise falls back to `npm`.
+
+### Common Commands
 
 ```bash
 # Development
-npm run dev              # Start dev server
-npm run build            # Production build
+${PM:-npm} run dev              # Start dev server
+${PM:-npm} run build            # Production build
 
 # Testing
-npm run test             # Run all tests
-npm run test:e2e         # E2E tests
-npm run test -- --watch  # Watch mode
-npm run test:coverage    # Coverage report
+${PM:-npm} run test             # Run all tests
+${PM:-npm} run test:e2e         # E2E tests
+${PM:-npm} run test -- --watch  # Watch mode
+${PM:-npm} run test:coverage    # Coverage report
 
 # Quality
-npm run lint             # ESLint
-npm run typecheck        # TypeScript
-npm run lint -- --fix    # Auto-fix lint issues
+${PM:-npm} run lint             # ESLint
+${PM:-npm} run typecheck        # TypeScript
+${PM:-npm} run lint -- --fix    # Auto-fix lint issues
 ```
 
 ## Post-Execution Checklist

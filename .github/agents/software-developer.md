@@ -87,14 +87,36 @@ Invoke this agent when:
 - **→ @qa-engineer**: After implementation, for thorough testing and edge case review
 - **→ @tech-lead**: When encountering architectural decisions beyond your scope
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **implementation-patterns** - TDD workflow, Result pattern, service architecture
+- **test-generation** - Writing unit, integration, and E2E tests
+- **local-first-patterns** - OPFS, SQLite, sync strategies (when applicable)
+- **verify-code** - Code quality verification checklist
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem         | Recovery                                                           |
+| --------------- | ------------------------------------------------------------------ |
+| Tests failing   | Run `${PM:-npm} run test -- --watch` to isolate; fix one at a time |
+| Lint errors     | Run `${PM:-npm} run lint -- --fix` for auto-fixable issues         |
+| Type errors     | Check imports, run `${PM:-npm} run typecheck` with `--noEmit`      |
+| Build broken    | Check console for first error; often a missing dependency          |
+| Merge conflicts | Use `git stash`, resolve, then `git stash pop`                     |
+| Stuck/blocked   | Escalate to @tech-lead with clear problem statement                |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
 >
-> 1. Run all tests: `npm run test`
-> 2. Run linting: `npm run lint`
-> 3. Run type checking: `npm run typecheck`
+> 1. Run all tests: `${PM:-npm} run test`
+> 2. Run linting: `${PM:-npm} run lint`
+> 3. Run type checking: `${PM:-npm} run typecheck`
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure the codebase is in a clean, passing state before completing
 > 6. **Verify ALL package.json scripts work** - every script must run successfully
@@ -107,10 +129,10 @@ Before marking work complete, verify EVERY script in package.json runs:
 # List all scripts
 cat package.json | grep -A 50 '"scripts"'
 
-# Run each one using your package manager (npm run, pnpm, yarn, bun) - ALL must succeed
-npm run dev          # Start dev server (Ctrl+C to exit)
-npm run build        # Must complete without errors
-npm run test         # Must pass
-npm run lint         # Must pass
-npm run typecheck    # Must pass (if exists)
+# Run each one (PM defaults to npm if not set)
+${PM:-npm} run dev          # Start dev server (Ctrl+C to exit)
+${PM:-npm} run build        # Must complete without errors
+${PM:-npm} run test         # Must pass
+${PM:-npm} run lint         # Must pass
+${PM:-npm} run typecheck    # Must pass (if exists)
 ```

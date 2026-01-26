@@ -12,7 +12,6 @@ tools:
     'web',
     'io.github.upstash/context7/*',
     'agent',
-    'git/*',
     'memory/*',
     'filesystem/*',
     'sequential-thinking/*',

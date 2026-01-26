@@ -71,13 +71,34 @@ Invoke this agent when:
 - **→ @ux-designer**: For user flow design
 - **→ @software-developer**: For feature implementation
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **gamification-patterns** - Achievements, XP, streaks, reward systems
+- **frontend-ui-polish** - Celebration animations, "juice" effects
+- **user-flow-design** - Engagement loops, progression visibility
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem              | Recovery                                        |
+| -------------------- | ----------------------------------------------- |
+| Rewards feel hollow  | Add visual/audio feedback, increase rarity      |
+| Players confused     | Simplify onboarding, add tutorial prompts       |
+| Engagement dropping  | Analyze session data, add daily rewards/streaks |
+| Progression too fast | Rebalance XP curve, add prestige mechanics      |
+| Feature feels grindy | Add variety, surprise rewards, shortcuts        |
+| Negative feedback    | Listen, iterate quickly, communicate changes    |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
 >
-> 1. Run all tests: `npm run test`
-> 2. Run linting: `npm run lint`
+> 1. Run all tests: `${PM:-npm} run test`
+> 2. Run linting: `${PM:-npm} run lint`
 > 3. Test the feature manually to verify "game feel"
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure the codebase is in a clean, passing state before completing

@@ -130,13 +130,34 @@ opacity: 0.5;
 - **→ @software-developer**: For implementation of designs
 - **→ @ux-designer**: For UX consistency review
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **frontend-ui-polish** - Animations, transitions, "the juice"
+- **accessibility-audit** - Color contrast, motion preferences, focus states
+- **gamification-patterns** - Celebration effects, reward animations
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem                   | Recovery                                                   |
+| ------------------------- | ---------------------------------------------------------- |
+| Animation janky           | Check DevTools Performance tab, use transform/opacity only |
+| Layout breaks on resize   | Test at 320px, 768px, 1024px; use CSS Grid/Flexbox         |
+| Colors inaccessible       | Run contrast checker, adjust to meet WCAG AA (4.5:1)       |
+| Motion sickness reports   | Ensure `prefers-reduced-motion` is respected               |
+| Design doesn't match spec | Screenshot compare, check design tokens are applied        |
+| Z-index wars              | Audit z-index usage, establish layering system             |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
 >
-> 1. Run all tests: `npm run test`
-> 2. Run linting: `npm run lint`
+> 1. Run all tests: `${PM:-npm} run test`
+> 2. Run linting: `${PM:-npm} run lint`
 > 3. Verify animations work at 60fps using DevTools Performance tab
 > 4. Test responsive layouts at 320px, 768px, and 1024px widths
 > 5. Fix ALL errors and warnings, even if they were not introduced by your changes

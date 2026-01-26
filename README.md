@@ -241,7 +241,6 @@ To set Claude Opus 4.5 as your default:
 Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json`):
 
 - `context7` - Up-to-date library documentation
-- `git` - Git operations (diff, log, commit, branches)
 - `memory` - Knowledge graph for persistent context
 - `filesystem` - File operations
 - `sequential-thinking` - Complex problem decomposition

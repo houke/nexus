@@ -71,13 +71,33 @@ jobs:
 - **→ @security-agent**: For security configuration review
 - **→ @qa-engineer**: For test pipeline verification
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **security-audit** - CI/CD security, supply chain security
+- **test-generation** - CI test configuration, coverage reporting
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem           | Recovery                                                  |
+| ----------------- | --------------------------------------------------------- |
+| CI failing        | Check logs for first error, often dependency or env issue |
+| Build timeout     | Add caching, parallelize jobs, check for infinite loops   |
+| Deployment fails  | Rollback immediately, investigate in staging              |
+| Secret exposed    | Rotate immediately, audit access, update CI secrets       |
+| Flaky CI          | Add retries for network ops, check for race conditions    |
+| Permission denied | Check workflow permissions, verify token scopes           |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
 >
-> 1. Run all tests: `npm run test`
-> 2. Run linting: `npm run lint`
+> 1. Run all tests: `${PM:-npm} run test`
+> 2. Run linting: `${PM:-npm} run lint`
 > 3. Validate workflow syntax: `actionlint` if available
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure all CI checks pass before completing

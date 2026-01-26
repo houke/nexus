@@ -89,9 +89,9 @@ All work is organized by **feature**, not by workflow phase. This provides:
 
 The file `.nexus/toc.md` is the **single source of truth** for all features:
 
-| Feature | Status | Files | Agents | Last Edited |
-| ------- | ------ | ----- | ------ | ----------- |
-| user-auth | complete | plan, execution, review | @architect, @dev | 2026-01-26 |
+| Feature   | Status   | Files                   | Agents           | Last Edited |
+| --------- | -------- | ----------------------- | ---------------- | ----------- |
+| user-auth | complete | plan, execution, review | @architect, @dev | 2026-01-26  |
 
 **Always update toc.md** when creating or modifying feature documents.
 
@@ -210,6 +210,7 @@ Skills in `.github/skills/` provide domain-specific instructions:
 ### Feature Folders
 
 Use kebab-case for feature slugs:
+
 - `user-authentication`
 - `snake-game`
 - `data-sync-engine`
@@ -236,18 +237,19 @@ When adding or modifying code:
 
 ```bash
 # Detect package manager: check for pnpm-lock.yaml, yarn.lock, or package-lock.json
+# Use ${PM:-npm} throughout - this uses $PM if set, otherwise defaults to npm
 
 # Run all tests
-npm run test          # or: pnpm test, yarn test, bun test
+${PM:-npm} run test
 
 # Run with coverage
-npm run test:coverage
+${PM:-npm} run test:coverage
 
 # Type checking
-npm run typecheck
+${PM:-npm} run typecheck
 
 # Linting
-npm run lint
+${PM:-npm} run lint
 ```
 
 ## Verification Checklist

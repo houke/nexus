@@ -66,14 +66,35 @@ Invoke this agent when:
 - **→ @software-developer**: For bug fixes
 - **→ @devops**: For deployment verification
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **test-generation** - Vitest, React Testing Library, Playwright patterns
+- **accessibility-audit** - WCAG compliance, screen reader testing
+- **verify-code** - Code quality and coverage verification
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem                 | Recovery                                                   |
+| ----------------------- | ---------------------------------------------------------- |
+| Flaky tests             | Add `retry` config, check for race conditions, mock time   |
+| E2E tests timeout       | Increase timeout, add explicit waits, check selectors      |
+| Coverage drops          | Run `${PM:-npm} run test:coverage` to find uncovered lines |
+| A11y audit fails        | Document issue with WCAG reference, prioritize by impact   |
+| Test data pollution     | Ensure proper setup/teardown, use fresh fixtures           |
+| CI passes locally fails | Check environment differences, node version, OS            |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
 >
-> 1. Run all tests: `npm run test`
-> 2. Run linting: `npm run lint`
-> 3. Run E2E tests if applicable: `npm run test:e2e`
+> 1. Run all tests: `${PM:-npm} run test`
+> 2. Run linting: `${PM:-npm} run lint`
+> 3. Run E2E tests if applicable: `${PM:-npm} run test:e2e`
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Verify test coverage has not decreased
 > 6. Ensure the codebase is in a clean, passing state before completing
@@ -87,13 +108,13 @@ Before delivery, verify EVERY script in package.json actually runs:
 # Check what scripts exist
 cat package.json | grep -A 50 '"scripts"'
 
-# Test each script using your package manager (npm run, pnpm, yarn, bun)
-npm run dev          # Should start dev server
-npm run build        # Should complete without errors
-npm run test         # Should run and pass
-npm run lint         # Should complete
-npm run typecheck    # Should complete (if exists)
-npm run preview      # Should work after build (if exists)
+# Test each script (PM defaults to npm if not set)
+${PM:-npm} run dev          # Should start dev server
+${PM:-npm} run build        # Should complete without errors
+${PM:-npm} run test         # Should run and pass
+${PM:-npm} run lint         # Should complete
+${PM:-npm} run typecheck    # Should complete (if exists)
+${PM:-npm} run preview      # Should work after build (if exists)
 ```
 
 **If a script fails, it MUST be fixed before delivery.**

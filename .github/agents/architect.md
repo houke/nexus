@@ -46,12 +46,32 @@ Invoke this agent when:
 - **→ @tech-lead**: For code quality review of architectural patterns
 - **→ @security-agent**: For security review of data flows
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **local-first-patterns** - OPFS, SQLite, sync strategies, offline-first design
+- **security-audit** - Security review for data flows and architecture
+- **implementation-patterns** - Clean architecture, service patterns
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem                | Recovery                                                            |
+| ---------------------- | ------------------------------------------------------------------- |
+| Schema migration fails | Rollback to previous version, test migration in isolation           |
+| State machine stuck    | Add explicit transition logging, check guard conditions             |
+| Sync conflicts         | Document conflict resolution strategy, add last-write-wins fallback |
+| Performance issues     | Profile with DevTools, check for N+1 queries                        |
+| Design disagreement    | Document trade-offs, escalate with data to @tech-lead               |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
 >
-> 1. Run all tests: `npm run test`
-> 2. Run linting: `npm run lint`
+> 1. Run all tests: `${PM:-npm} run test`
+> 2. Run linting: `${PM:-npm} run lint`
 > 3. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 4. Ensure the codebase is in a clean, passing state before completing

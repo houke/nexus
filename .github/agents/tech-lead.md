@@ -54,13 +54,33 @@ Invoke this agent when:
 - **→ @qa-engineer**: For test coverage of new patterns
 - **→ @architect**: For system-level design decisions
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **implementation-patterns** - TDD workflow, clean architecture, Result types
+- **verify-code** - Comprehensive code quality verification
+- **test-generation** - Test patterns and coverage strategies
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem                | Recovery                                                    |
+| ---------------------- | ----------------------------------------------------------- |
+| Refactor breaks tests  | Revert to last passing commit, refactor in smaller steps    |
+| Type errors cascade    | Fix from the source type outward, not leaf components       |
+| Memory leaks           | Check useEffect cleanup, event listener removal             |
+| Performance regression | Profile before/after, revert if unclear cause               |
+| Code review deadlock   | Document both positions, bring in @architect for tiebreaker |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
 >
-> 1. Run all tests: `npm run test`
-> 2. Run linting: `npm run lint`
-> 3. Run type checking: `npm run typecheck`
+> 1. Run all tests: `${PM:-npm} run test`
+> 2. Run linting: `${PM:-npm} run lint`
+> 3. Run type checking: `${PM:-npm} run typecheck`
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure the codebase is in a clean, passing state before completing

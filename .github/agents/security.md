@@ -56,12 +56,31 @@ Invoke this agent when:
 - **→ @devops**: For CI/CD security configuration
 - **→ @tech-lead**: For architectural security review
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **security-audit** - OWASP Top 10, threat modeling, vulnerability assessment
+- **local-first-patterns** - Secure local storage, encryption at rest
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem                | Recovery                                                           |
+| ---------------------- | ------------------------------------------------------------------ |
+| Vulnerability found    | Document severity (CVSS), create fix plan, notify team             |
+| Audit fails            | Triage by severity: critical/high fix immediately, medium/low plan |
+| Secret leaked          | Rotate immediately, check git history, add to .gitignore           |
+| Dependency CVE         | Check if exploitable in context, update or find alternative        |
+| Auth bypass discovered | Disable feature if possible, hotfix with review                    |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]
 > After completing any work, you MUST:
 >
-> 1. Run vulnerability audit: `npm audit` (or pnpm/yarn equivalent)
-> 2. Run tests: `npm run test`
+> 1. Run vulnerability audit: `${PM:-npm} audit` (or pnpm/yarn equivalent)
+> 2. Run tests: `${PM:-npm} run test`
 > 3. Verify no secrets were committed
 > 4. Fix ALL high/critical vulnerabilities immediately

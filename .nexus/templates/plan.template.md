@@ -402,12 +402,30 @@ _(Collaborative: All agents)_
 
 ---
 
-## 13. Open Questions
+## 13. Open Questions & Answers
 
-_(Track decisions needed before/during implementation)_
+_(Track questions raised and their resolutions)_
 
-- [ ] **Q1**: [Question] — Assigned to: @[agent]
-- [ ] **Q2**: [Question] — Assigned to: @[agent]
+### Resolved During Planning ✅
+
+| ID  | Question        | Answer            | Answered By | Date       |
+| --- | --------------- | ----------------- | ----------- | ---------- |
+| Q1  | [Question text] | [Answer provided] | @[agent]    | YYYY-MM-DD |
+| Q2  | [Question text] | [Answer provided] | @[agent]    | YYYY-MM-DD |
+
+### Deferred to Execution 📋
+
+| ID  | Question        | Reason Deferred                | Assigned To |
+| --- | --------------- | ------------------------------ | ----------- |
+| Q3  | [Question text] | [Why it can't be answered now] | @[agent]    |
+
+### Resolved During Execution 🔧
+
+_(This section is updated by the execution workflow when deferred questions are answered)_
+
+| ID  | Question                                     | Answer | Answered By | Session Date |
+| --- | -------------------------------------------- | ------ | ----------- | ------------ |
+| —   | _No questions resolved during execution yet_ | —      | —           | —            |
 
 ---
 

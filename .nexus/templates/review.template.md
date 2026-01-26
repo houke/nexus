@@ -70,6 +70,26 @@ _(Repeat structure above for each reviewing agent)_
 
 ---
 
+## Questions & Answers
+
+_(Questions raised during review and their resolutions)_
+
+### Resolved by Agents 💬
+
+| ID  | Question                          | Context                                   | Answer            | Answered By |
+| --- | --------------------------------- | ----------------------------------------- | ----------------- | ----------- |
+| RQ1 | [Why was X implemented this way?] | [Where in code / what triggered question] | [Answer provided] | @[agent]    |
+
+### Escalated to User 👤
+
+_(Only if agents could not resolve — should be rare)_
+
+| ID  | Question                                | Agents Consulted | User Answer |
+| --- | --------------------------------------- | ---------------- | ----------- |
+| —   | _No questions required user escalation_ | —                | —           |
+
+---
+
 ## Common Themes
 
 [Patterns that emerged across multiple agent reviews]

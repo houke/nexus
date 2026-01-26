@@ -115,6 +115,27 @@ Score = (Reach × Impact × Confidence) / Effort
 - **→ @architect**: For features requiring system design decisions
 - **→ @gamer**: For gamification features requiring engagement mechanics
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **requirements-engineering** - User story templates, acceptance criteria, PRD structures
+- **user-flow-design** - Journey mapping, persona development
+- **gamification-patterns** - Engagement mechanics, retention strategies
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem                 | Recovery                                                    |
+| ----------------------- | ----------------------------------------------------------- |
+| Unclear requirements    | Rewrite with Given/When/Then format, add examples           |
+| Scope creep             | Re-prioritize with RICE, defer non-essential items          |
+| Stakeholder conflict    | Document both needs, find common ground, escalate if needed |
+| Missed edge case        | Add to acceptance criteria, update test scenarios           |
+| Feature underperforming | Analyze metrics, gather feedback, iterate or pivot          |
+| Team confused           | Hold sync meeting, create visual roadmap                    |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]

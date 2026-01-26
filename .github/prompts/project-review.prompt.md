@@ -12,7 +12,6 @@ tools:
     'web',
     'io.github.upstash/context7/*',
     'agent',
-    'git/*',
     'memory/*',
     'filesystem/*',
     'sequential-thinking/*',
@@ -69,6 +68,23 @@ If the working directory has uncommitted changes:
 - Use `git stash` to preserve changes if needed
 - **When in doubt, STOP and ask the user**
 
+## Context Gathering (REQUIRED)
+
+**Before starting any review**, you MUST read the feature documentation:
+
+1. **Read the Plan**: `.nexus/features/<slug>/plan.md`
+   - Understand the original requirements and decisions
+   - Note any Q&A that was resolved during planning
+   - Check for questions deferred to execution
+
+2. **Read the Execution Log**: `.nexus/features/<slug>/execution.md`
+   - Understand what was actually implemented
+   - Note any deviations from the plan
+   - Check for questions resolved during execution (🔧)
+   - Review any challenges and decisions made
+
+This context is essential for understanding **why** decisions were made, not just **what** was implemented.
+
 ## Process
 
 For each agent persona defined in the .github/agents directory, you will:
@@ -79,7 +95,7 @@ For each agent persona defined in the .github/agents directory, you will:
 
 - Apply code changes directly using edit tools
 - Follow TDD: write/update tests for fixes
-- Run verification after fixes: `npm run test && npm run lint && npm run typecheck`
+- Run verification after fixes: `${PM:-npm} run test && ${PM:-npm} run lint && ${PM:-npm} run typecheck`
 
 4. **Document both findings AND fixes** in their report section.
 5. **ALWAYS** write the final review to the feature folder.
@@ -138,6 +154,48 @@ The report should include:
 - A summary of total issues found, fixed, and overall codebase health improvement.
 
 Ensure that each subagent adheres to their defined "Focus Areas" and "Guidelines" when conducting their review.
+
+## Question Resolution Protocol
+
+During review, questions may arise about implementation decisions, architecture choices, or code patterns. Follow this protocol:
+
+### When Questions Arise
+
+1. **Check Existing Documentation First**
+   - Review the plan's Q&A sections (resolved during planning ✅ and execution 🔧)
+   - Check execution.md for "Challenges & Decisions" that may explain the choice
+   - The answer may already be documented
+
+2. **Route to the Appropriate Agent**
+   - Implementation questions → @software-developer who wrote it, or @tech-lead
+   - Architecture questions → @architect
+   - UX decisions → @ux-designer
+   - Security choices → @security-agent
+
+3. **Wait for Answer** — Do NOT proceed with review conclusions until questions are answered
+
+4. **Document the Exchange**
+   - Log both question AND answer in the review document
+   - Include: Question, Answer, Answering Agent
+
+### No Deferral Allowed
+
+**Questions during review CANNOT be deferred** — this is the final phase.
+
+Resolution hierarchy:
+
+1. **Subagent expertise** — Route to the agent best qualified to answer
+2. **Cross-agent discussion** — If needed, involve multiple agents
+3. **User escalation (LAST RESORT)** — Only after ALL review work is complete and agents cannot resolve
+
+### User Escalation Protocol
+
+If you must escalate to the user:
+
+1. **Complete all other review work first** — Do not interrupt the review flow
+2. **Batch all unresolved questions** — Present them together at the end
+3. **Provide context** — Include what was asked, who was consulted, why it remains unresolved
+4. **Document user answers** — Add to the review Q&A section with 👤 icon
 
 ## Feature Completion
 

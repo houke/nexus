@@ -128,6 +128,27 @@ Every interactive element needs:
 - **→ @software-developer**: For implementation of approved flows
 - **→ @qa-engineer**: For usability testing scenarios
 
+## Related Skills
+
+Load these skills for domain-specific guidance:
+
+- **user-flow-design** - Journey mapping, wireframe conventions, interaction patterns
+- **accessibility-audit** - WCAG compliance, keyboard navigation, screen readers
+- **requirements-engineering** - User stories, acceptance criteria
+
+## Error Recovery
+
+When things go wrong:
+
+| Problem                 | Recovery                                         |
+| ----------------------- | ------------------------------------------------ |
+| User confused by flow   | Add progressive disclosure, reduce steps         |
+| High drop-off rate      | Analyze funnel, simplify or add guidance         |
+| Accessibility complaint | Audit with screen reader, fix keyboard nav       |
+| Mobile unusable         | Redesign for thumb zone, increase touch targets  |
+| State not communicated  | Add loading/error/empty/success states           |
+| Conflicting feedback    | Document both perspectives, A/B test if possible |
+
 ## Mandatory Verification
 
 > [!IMPORTANT]

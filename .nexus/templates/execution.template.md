@@ -69,6 +69,16 @@ updated: 'YYYY-MM-DD'
   - **Owner**: @[agent]
   - **Resolution plan**: [Next steps]
 
+#### Questions Resolved 🔧
+
+_(Questions deferred from planning that were answered during this session)_
+
+| ID  | Question             | Answer            | Answered By |
+| --- | -------------------- | ----------------- | ----------- |
+| Q#  | [Question from plan] | [Answer provided] | @[agent]    |
+
+> **Note**: When resolving deferred questions, also update the plan's "Resolved During Execution 🔧" table.
+
 ---
 
 ### [YYYY-MM-DD] - [Another Session]
