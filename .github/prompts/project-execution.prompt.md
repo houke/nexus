@@ -386,6 +386,29 @@ fi
 echo "Using: $PM"
 ```
 
+## Time Tracking (REQUIRED)
+
+You, the orchestrator MUST track time spent by each agent during execution. When invoking a subagent:
+
+1. **Record start time** before delegating work to the agent
+2. **Record end time** when the agent reports completion
+3. **Calculate duration** in seconds
+
+### Time Tracking Table
+
+Maintain a `## Time Tracking` section in the execution document with this format:
+
+```markdown
+## Time Tracking
+
+| Agent               | Task           | Start               | End                 | Duration (s) |
+| ------------------- | -------------- | ------------------- | ------------------- | -----------: |
+| @software-developer | Implement auth | 2026-01-26T10:00:00 | 2026-01-26T10:15:30 |          930 |
+| @qa-engineer        | Write tests    | 2026-01-26T10:16:00 | 2026-01-26T10:25:00 |          540 |
+```
+
+**REQUIRED**: Update this table in real-time as agents complete their work. This data feeds into the summary phase.
+
 > **Note**: Throughout this project, use `${PM:-npm}` to run scripts. This uses `$PM` if defined, otherwise falls back to `npm`.
 
 ### Common Commands

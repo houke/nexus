@@ -85,6 +85,16 @@ All work is organized by **feature**, not by workflow phase. This provides:
 └── notes/         # Supporting materials
 ```
 
+### Time Tracking
+
+The orchestrator tracks time spent by each agent during all phases. Each feature document (`plan.md`, `execution.md`, `review.md`) contains a `## Time Tracking` table:
+
+| Agent      | Task          | Start               | End                 | Duration (s) |
+| ---------- | ------------- | ------------------- | ------------------- | -----------: |
+| @architect | System design | 2026-01-26T09:00:00 | 2026-01-26T09:08:00 |          480 |
+
+The summary phase aggregates this data across all phases for analysis.
+
 ### Master TOC
 
 The file `.nexus/toc.md` is the **single source of truth** for all features:

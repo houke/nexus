@@ -217,6 +217,29 @@ Write the review to:
 .nexus/features/<feature-slug>/review.md
 ```
 
+## Time Tracking (REQUIRED)
+
+You, the orchestrator MUST track time spent by each agent during review. When invoking a subagent:
+
+1. **Record start time** before delegating review work to the agent
+2. **Record end time** when the agent reports completion
+3. **Calculate duration** in seconds
+
+### Time Tracking Table
+
+Maintain a `## Time Tracking` section in the review document with this format:
+
+```markdown
+## Time Tracking
+
+| Agent           | Task           | Start               | End                 | Duration (s) |
+| --------------- | -------------- | ------------------- | ------------------- | -----------: |
+| @tech-lead      | Code review    | 2026-01-26T14:00:00 | 2026-01-26T14:12:00 |          720 |
+| @security-agent | Security audit | 2026-01-26T14:13:00 | 2026-01-26T14:25:00 |          720 |
+```
+
+**REQUIRED**: Update this table in real-time as agents complete their review tasks. This data feeds into the summary phase.
+
 Use the template from `.nexus/templates/review.template.md`.
 
 ### Review Document Update Policy

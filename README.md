@@ -183,6 +183,25 @@ The Summary prompt provides a snapshot of your project's current state by compar
 
 ---
 
+## ⏱️ Time Tracking
+
+Nexus automatically tracks time spent by each agent during planning, execution, and review phases. The orchestrator records start/end times when invoking subagents and maintains a `## Time Tracking` table in each feature document.
+
+| Agent               | Task           | Start               | End                 | Duration (s) |
+| ------------------- | -------------- | ------------------- | ------------------- | -----------: |
+| @architect          | System design  | 2026-01-26T09:00:00 | 2026-01-26T09:08:00 |          480 |
+| @software-developer | Implementation | 2026-01-26T09:10:00 | 2026-01-26T09:40:00 |         1800 |
+
+The **Summary prompt** aggregates all time tracking data across phases, showing:
+
+- Total time per agent
+- Total time per phase (plan, execution, review)
+- Which agents contributed to each feature
+
+This helps identify bottlenecks and understand where development effort is spent.
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -193,6 +212,7 @@ The Summary prompt provides a snapshot of your project's current state by compar
 │   │   ├── software-developer.md
 │   │   ├── security.md
 │   │   └── ...
+│   ├── commit-convention.md # Commit instructions
 │   ├── copilot-instructions.md  # Custom instructions for Copilot
 │   ├── prompts/          # Core workflow prompts
 │   │   ├── project-planning.prompt.md

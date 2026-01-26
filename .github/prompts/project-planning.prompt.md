@@ -128,3 +128,26 @@ status: draft
 ```
 
 **Important Note**: You must ensure that each agent adheres strictly to their defined "Focus Areas" and "Guidelines" when contributing to the plan.
+
+## Time Tracking (REQUIRED)
+
+You, the orchestrator MUST track time spent by each agent during planning. When invoking a subagent:
+
+1. **Record start time** before delegating work to the agent
+2. **Record end time** when the agent reports completion
+3. **Calculate duration** in seconds
+
+### Time Tracking Table
+
+Maintain a `## Time Tracking` section in the plan document with this format:
+
+```markdown
+## Time Tracking
+
+| Agent            | Task          | Start               | End                 | Duration (s) |
+| ---------------- | ------------- | ------------------- | ------------------- | -----------: |
+| @architect       | System design | 2026-01-26T09:00:00 | 2026-01-26T09:08:00 |          480 |
+| @product-manager | Requirements  | 2026-01-26T09:08:30 | 2026-01-26T09:15:00 |          390 |
+```
+
+**REQUIRED**: Update this table in real-time as agents complete their contributions. This data feeds into the summary phase.
