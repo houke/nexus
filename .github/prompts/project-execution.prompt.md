@@ -156,6 +156,54 @@ npm install -D vite typescript        # Add dependencies manually
 | @devops             | CI/CD, infrastructure    | Build, deploy, monitoring                    |
 | @security-agent     | Security, privacy        | Audits, threat models                        |
 
+## Subagent Invocation (REQUIRED)
+
+**You MUST invoke subagents for implementation work.** Do NOT attempt to do all the work yourself as you are the orchestrator.
+
+For EACH work item identified in the plan:
+
+1. **Invoke the appropriate subagent** using the agent system (e.g., `@software-developer`)
+2. **Provide full context** including the plan, specific task, and constraints
+3. **Wait for the subagent to complete** their work before moving to dependent tasks
+4. **Verify their output** meets the acceptance criteria
+5. **Log their contribution** in the execution document
+
+### Invocation Pattern
+
+```markdown
+## Task for @[agent-name]
+
+**Feature**: [feature-slug]
+**Work Item**: [ITEM-XXX]
+
+**Context**: [What we're building, link to plan.md]
+
+**Specific Task**: [Exactly what this agent should implement/create]
+
+**Inputs**:
+
+- Plan: `.nexus/features/<slug>/plan.md`
+- [Other relevant files]
+
+**Expected Output**:
+
+- [Specific deliverables: files, tests, configs]
+
+**Constraints**:
+
+- Must pass: `${PM:-npm} run test && ${PM:-npm} run lint && ${PM:-npm} run typecheck`
+- [Other constraints from the plan]
+
+**When Done**: Report back with files changed and verification results.
+```
+
+### Parallel vs Sequential
+
+- **Parallelize** independent work items (e.g., UI component + API service)
+- **Sequence** dependent items (e.g., data model before service layer)
+- **Always** invoke @software-developer for implementation code
+- **Always** invoke @qa-engineer for test coverage review
+
 ## Execution Workflow
 
 ### Phase 1: Feature Analysis
@@ -209,30 +257,6 @@ After all items complete:
 - Run full test suite
 - Performance verification
 - Accessibility audit → @qa-engineer
-
-## Delegation Format
-
-When delegating to an agent, provide:
-
-```markdown
-## Task for @[agent-name]
-
-**Context**: [What we're building and why]
-
-**Specific Ask**: [Exactly what you need from them]
-
-**Inputs**:
-
-- [Relevant files or references]
-
-**Expected Output**:
-
-- [What deliverable you expect]
-
-**Constraints**:
-
-- [Time, scope, or technical constraints]
-```
 
 ## Work Item Tracking
 
