@@ -1,5 +1,5 @@
 ---
-name: project-review
+name: nexus-review
 description: Run a code review using all agent personas from .github/agents
 model: Claude Opus 4.5
 tools:

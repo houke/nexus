@@ -1,5 +1,5 @@
 ---
-name: project-execution
+name: nexus-execution
 description: Execute action plans by coordinating specialized agents to implement features
 model: Claude Opus 4.5
 tools:

@@ -1,5 +1,5 @@
 ---
-name: project-sync
+name: nexus-sync
 description: Reconcile feature documentation with actual work done
 model: Claude Opus 4.5
 tools:
@@ -134,7 +134,7 @@ If substantial work was completed, generate a review report:
 
 1. **Check if review exists**: `.nexus/features/<slug>/review.md`
 2. **If missing or outdated**, invoke the review workflow:
-   - Read `.github/prompts/project-review.prompt.md`
+   - Read `.github/prompts/nexus-review.prompt.md`
    - Follow the review process
    - Save report to `.nexus/features/<slug>/review.md`
 

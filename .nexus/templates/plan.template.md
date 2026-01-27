@@ -26,7 +26,7 @@ status: 'draft' # draft → in-progress (execution) → review → complete
 > - `draft` → `in-progress`: When execution workflow starts
 > - `in-progress` → `review`: When ready for code review
 > - `review` → `complete`: When review workflow finishes
-> - If work happens outside formal workflows, run `project-sync` prompt to reconcile
+> - If work happens outside formal workflows, run `nexus-sync` prompt to reconcile
 
 ## 1. Executive Summary
 

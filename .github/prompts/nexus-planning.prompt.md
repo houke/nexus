@@ -1,5 +1,5 @@
 ---
-name: project-planning
+name: nexus-planning
 description: Orchestrate a comprehensive project planning session by invoking specialized agents
 model: Claude Opus 4.5
 tools:

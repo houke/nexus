@@ -1,5 +1,5 @@
 ---
-name: project-hotfix
+name: nexus-hotfix
 description: Expedited workflow for quick bug fixes with minimal ceremony but full traceability
 model: Claude Opus 4.5
 tools:

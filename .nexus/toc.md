@@ -57,7 +57,7 @@ LAST EDITED: Date of most recent change to any document in the feature folder
 2. Copy template: `cp .nexus/templates/plan.template.md .nexus/features/<slug>/plan.md`
 3. Add row to table above
 4. Fill out the plan document
-5. Use `project-execution` prompt to begin implementation
+5. Use `nexus-execution` prompt to begin implementation
 
 ## Workflow Quick Reference
 

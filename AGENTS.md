@@ -93,10 +93,10 @@ All work is organized by **feature**, not by workflow phase. This provides:
 
 ```
 .nexus/features/<feature-slug>/
-├── plan.md        # What we're building (from project-planning)
-├── execution.md   # How we built it (from project-execution)
-├── review.md      # Review findings (from project-review)
-├── summary.md     # Status snapshot (from project-summary)
+├── plan.md        # What we're building (from nexus-planning)
+├── execution.md   # How we built it (from nexus-execution)
+├── review.md      # Review findings (from nexus-review)
+├── summary.md     # Status snapshot (from nexus-summary)
 └── notes/         # Supporting materials
 ```
 
@@ -126,52 +126,52 @@ The file `.nexus/toc.md` is the **single source of truth** for all features:
 draft → in-progress → review → complete
 ```
 
-| Status        | Meaning                        | Set By              |
-| ------------- | ------------------------------ | ------------------- |
-| `draft`       | Planned but not started        | `project-planning`  |
-| `in-progress` | Currently being implemented    | `project-execution` |
-| `review`      | Implementation done, reviewing | `project-review`    |
-| `complete`    | Reviewed and finished          | `project-review`    |
+| Status        | Meaning                        | Set By            |
+| ------------- | ------------------------------ | ----------------- |
+| `draft`       | Planned but not started        | `nexus-planning`  |
+| `in-progress` | Currently being implemented    | `nexus-execution` |
+| `review`      | Implementation done, reviewing | `nexus-review`    |
+| `complete`    | Reviewed and finished          | `nexus-review`    |
 
 Additional: `on-hold`, `archived`
 
 ## Core Workflows
 
-### Planning (`project-planning.prompt.md`)
+### Planning (`nexus-planning.prompt.md`)
 
 - Orchestrates all agents to create comprehensive plans
 - Creates `.nexus/features/<slug>/plan.md`
 - Updates toc.md with new feature (status: `draft`)
 - Plans should NOT execute code, only document decisions
 
-### Execution (`project-execution.prompt.md`)
+### Execution (`nexus-execution.prompt.md`)
 
 - Takes plans and coordinates implementation
 - Creates `.nexus/features/<slug>/execution.md`
 - Updates plan status to `in-progress`
 - Updates toc.md
 
-### Review (`project-review.prompt.md`)
+### Review (`nexus-review.prompt.md`)
 
 - Comprehensive code review and **automatic fix** phase
 - Creates `.nexus/features/<slug>/review.md`
 - Updates plan status to `complete`
 - Updates toc.md
 
-### Sync (`project-sync.prompt.md`)
+### Sync (`nexus-sync.prompt.md`)
 
 - Reconciles documentation with actual work done
 - Use when work happens outside formal workflows
 - Updates all out-of-sync feature documents
 - Updates toc.md
 
-### Summary (`project-summary.prompt.md`)
+### Summary (`nexus-summary.prompt.md`)
 
 - Project status snapshot comparing "have" vs "need"
 - Creates/updates `.nexus/features/<slug>/summary.md`
 - Updates toc.md
 
-### Hotfix (`project-hotfix.prompt.md`)
+### Hotfix (`nexus-hotfix.prompt.md`)
 
 - Expedited workflow for small, well-understood bugs
 - Creates `.nexus/features/_hotfixes/<date>-<slug>.md`

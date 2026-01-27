@@ -4,9 +4,9 @@ This directory contains guides and reference documentation for the Nexus workflo
 
 ## Quick Start
 
-1. **Create a feature**: Run `project-planning` prompt
-2. **Implement it**: Run `project-execution` prompt  
-3. **Review it**: Run `project-review` prompt
+1. **Create a feature**: Run `nexus-planning` prompt
+2. **Implement it**: Run `nexus-execution` prompt
+3. **Review it**: Run `nexus-review` prompt
 4. **Track progress**: Check `.nexus/toc.md`
 
 ## Structure
@@ -36,11 +36,11 @@ This directory contains guides and reference documentation for the Nexus workflo
 
 ## Guides
 
-| Guide | Purpose |
-| ----- | ------- |
-| [workflow-guide.md](workflow-guide.md) | How to use the feature-based workflow system |
-| [../toc.md](../toc.md) | Master index of all features |
-| [../templates/README.md](../templates/README.md) | How to use templates |
+| Guide                                            | Purpose                                      |
+| ------------------------------------------------ | -------------------------------------------- |
+| [workflow-guide.md](workflow-guide.md)           | How to use the feature-based workflow system |
+| [../toc.md](../toc.md)                           | Master index of all features                 |
+| [../templates/README.md](../templates/README.md) | How to use templates                         |
 
 ## Key Concepts
 
@@ -56,19 +56,19 @@ All work is organized by **feature**, not by workflow phase:
 
 The file `toc.md` is the single source of truth for all features:
 
-| Feature | Status | Files | Agents | Last Edited |
-| ------- | ------ | ----- | ------ | ----------- |
-| user-auth | complete | plan, execution, review | @architect, @dev | 2026-01-26 |
+| Feature   | Status   | Files                   | Agents           | Last Edited |
+| --------- | -------- | ----------------------- | ---------------- | ----------- |
+| user-auth | complete | plan, execution, review | @architect, @dev | 2026-01-26  |
 
 ### Workflow Prompts
 
-| Prompt | Creates | Updates |
-| ------ | ------- | ------- |
-| `project-planning` | `features/<slug>/plan.md` | toc.md |
-| `project-execution` | `features/<slug>/execution.md` | plan status, toc.md |
-| `project-review` | `features/<slug>/review.md` | plan status, toc.md |
-| `project-summary` | `features/<slug>/summary.md` | toc.md |
-| `project-sync` | Missing docs | All out-of-sync docs |
+| Prompt            | Creates                        | Updates              |
+| ----------------- | ------------------------------ | -------------------- |
+| `nexus-planning`  | `features/<slug>/plan.md`      | toc.md               |
+| `nexus-execution` | `features/<slug>/execution.md` | plan status, toc.md  |
+| `nexus-review`    | `features/<slug>/review.md`    | plan status, toc.md  |
+| `nexus-summary`   | `features/<slug>/summary.md`   | toc.md               |
+| `nexus-sync`      | Missing docs                   | All out-of-sync docs |
 
 ## See Also
 

@@ -192,14 +192,14 @@ The file `.nexus/toc.md` is the **single source of truth** for all features:
 
 ### Workflow Prompts
 
-| Prompt              | Creates                               | Updates                           |
-| ------------------- | ------------------------------------- | --------------------------------- |
-| `project-planning`  | `features/<slug>/plan.md`             | toc.md (new row, status: draft)   |
-| `project-execution` | `features/<slug>/execution.md`        | plan status → in-progress, toc.md |
-| `project-review`    | `features/<slug>/review.md`           | plan status → complete, toc.md    |
-| `project-summary`   | `features/<slug>/summary.md`          | toc.md                            |
-| `project-sync`      | Missing docs                          | All out-of-sync docs, toc.md      |
-| `project-hotfix`    | `features/_hotfixes/<date>-<slug>.md` | toc.md                            |
+| Prompt            | Creates                               | Updates                           |
+| ----------------- | ------------------------------------- | --------------------------------- |
+| `nexus-planning`  | `features/<slug>/plan.md`             | toc.md (new row, status: draft)   |
+| `nexus-execution` | `features/<slug>/execution.md`        | plan status → in-progress, toc.md |
+| `nexus-review`    | `features/<slug>/review.md`           | plan status → complete, toc.md    |
+| `nexus-summary`   | `features/<slug>/summary.md`          | toc.md                            |
+| `nexus-sync`      | Missing docs                          | All out-of-sync docs, toc.md      |
+| `nexus-hotfix`    | `features/_hotfixes/<date>-<slug>.md` | toc.md                            |
 
 ## Inter-Agent Communication Protocol
 

@@ -1,5 +1,5 @@
 ---
-name: project-summary
+name: nexus-summary
 description: Get a summary of everything we have vs everything we need for features
 model: Claude Opus 4.5
 tools:
@@ -86,7 +86,7 @@ If creating a feature-specific summary, write to:
 If creating a project-wide summary, write to:
 
 ```
-.nexus/features/_project-summary/summary.md
+.nexus/features/_nexus-summary/summary.md
 ```
 
 Use the template from `.nexus/templates/summary.template.md`.
@@ -105,7 +105,7 @@ Use the template from `.nexus/templates/summary.template.md`.
 
 ```markdown
 ---
-feature: <feature-slug> | _project-summary
+feature: <feature-slug> | _nexus-summary
 date: [YYYY-MM-DD]
 agents: [@agent1, @agent2, ...]
 ---

@@ -6,14 +6,14 @@
 
 ## 🚀 Starting Work
 
-| I want to...          | Use Prompt          | How                                            |
-| --------------------- | ------------------- | ---------------------------------------------- |
-| Plan a new feature    | `project-planning`  | `Cmd+Shift+P` → "Chat: Run Prompt..." → Select |
-| Start implementing    | `project-execution` | Same as above                                  |
-| Review completed work | `project-review`    | Same as above                                  |
-| Get project status    | `project-summary`   | Same as above                                  |
-| Sync out-of-date docs | `project-sync`      | Same as above                                  |
-| Quick bug fix         | `project-hotfix`    | Same as above                                  |
+| I want to...          | Use Prompt        | How                                            |
+| --------------------- | ----------------- | ---------------------------------------------- |
+| Plan a new feature    | `nexus-planning`  | `Cmd+Shift+P` → "Chat: Run Prompt..." → Select |
+| Start implementing    | `nexus-execution` | Same as above                                  |
+| Review completed work | `nexus-review`    | Same as above                                  |
+| Get project status    | `nexus-summary`   | Same as above                                  |
+| Sync out-of-date docs | `nexus-sync`      | Same as above                                  |
+| Quick bug fix         | `nexus-hotfix`    | Same as above                                  |
 
 ---
 
@@ -57,14 +57,14 @@
 
 ## 📊 Feature Status
 
-| Status        | Meaning              | Set By              |
-| ------------- | -------------------- | ------------------- |
-| `draft`       | Planned, not started | `project-planning`  |
-| `in-progress` | Currently building   | `project-execution` |
-| `review`      | Under code review    | `project-review`    |
-| `complete`    | Done and approved    | `project-review`    |
-| `on-hold`     | Paused               | Manual              |
-| `archived`    | No longer needed     | Manual              |
+| Status        | Meaning              | Set By            |
+| ------------- | -------------------- | ----------------- |
+| `draft`       | Planned, not started | `nexus-planning`  |
+| `in-progress` | Currently building   | `nexus-execution` |
+| `review`      | Under code review    | `nexus-review`    |
+| `complete`    | Done and approved    | `nexus-review`    |
+| `on-hold`     | Paused               | Manual            |
+| `archived`    | No longer needed     | Manual            |
 
 ---
 
@@ -126,13 +126,13 @@ function validateToken() { ... }
 
 ## 🆘 When Things Go Wrong
 
-| Problem                  | Solution                                  |
-| ------------------------ | ----------------------------------------- |
-| Docs out of sync         | Run `project-sync` prompt                 |
-| Execution failed midway  | Use `/checkpoint resume`                  |
-| Agent not following plan | Re-read plan, add clarifying details      |
-| Tests breaking           | Run `git diff`, identify breaking change  |
-| Need quick fix           | Use `project-hotfix` instead of full flow |
+| Problem                  | Solution                                 |
+| ------------------------ | ---------------------------------------- |
+| Docs out of sync         | Run `nexus-sync` prompt                  |
+| Execution failed midway  | Use `/checkpoint resume`                 |
+| Agent not following plan | Re-read plan, add clarifying details     |
+| Tests breaking           | Run `git diff`, identify breaking change |
+| Need quick fix           | Use `nexus-hotfix` instead of full flow  |
 
 ---
 
@@ -154,27 +154,27 @@ Memory is stored in `.nexus/memory/<agent-name>.memory.md`
 ### New Feature (Full Flow)
 
 ```
-1. project-planning  → Creates plan.md
-2. project-execution → Creates execution.md
-3. project-review    → Creates review.md, marks complete
+1. nexus-planning  → Creates plan.md
+2. nexus-execution → Creates execution.md
+3. nexus-review    → Creates review.md, marks complete
 ```
 
 ### Quick Bug Fix
 
 ```
-1. project-hotfix → Diagnose, fix, verify in one session
+1. nexus-hotfix → Diagnose, fix, verify in one session
 ```
 
 ### Catch Up Documentation
 
 ```
-1. project-sync → Reconciles docs with actual changes
+1. nexus-sync → Reconciles docs with actual changes
 ```
 
 ### Check Progress
 
 ```
-1. project-summary → Shows have vs need
+1. nexus-summary → Shows have vs need
 ```
 
 ---

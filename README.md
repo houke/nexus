@@ -46,7 +46,7 @@ Nexus is a **template repository** designed to supercharge any new project with 
 
 Nexus provides five core prompts that guide you through the entire software development lifecycle:
 
-### 1️⃣ Planning Phase → `project-planning.prompt.md`
+### 1️⃣ Planning Phase → `nexus-planning.prompt.md`
 
 **When to use:** At the start of a new feature or project
 
@@ -56,7 +56,7 @@ The Planning prompt orchestrates a comprehensive planning session by invoking AL
 
 1. Open the Command Palette (`Cmd/Ctrl + Shift + P`)
 2. Select "Chat: Run Prompt..."
-3. Choose `project-planning`
+3. Choose `nexus-planning`
 4. Describe what you want to build
 
 **What happens:**
@@ -71,7 +71,7 @@ The Planning prompt orchestrates a comprehensive planning session by invoking AL
 
 ---
 
-### 2️⃣ Execution Phase → `project-execution.prompt.md`
+### 2️⃣ Execution Phase → `nexus-execution.prompt.md`
 
 **When to use:** After planning is complete and you're ready to build
 
@@ -81,7 +81,7 @@ The Execution prompt takes your action plans and coordinates implementation by d
 
 1. Open the Command Palette
 2. Select "Chat: Run Prompt..."
-3. Choose `project-execution`
+3. Choose `nexus-execution`
 4. Reference the feature to execute (or let it detect from `.nexus/toc.md`)
 
 **What happens:**
@@ -99,7 +99,7 @@ The Execution prompt takes your action plans and coordinates implementation by d
 
 ---
 
-### 3️⃣ Review & Fix Phase → `project-review.prompt.md`
+### 3️⃣ Review & Fix Phase → `nexus-review.prompt.md`
 
 **When to use:** After implementation, before merging
 
@@ -109,7 +109,7 @@ The Review prompt runs a comprehensive code review using ALL agent personas. Thi
 
 1. Open the Command Palette
 2. Select "Chat: Run Prompt..."
-3. Choose `project-review`
+3. Choose `nexus-review`
 4. Optionally specify files or features to review
 
 **What happens:**
@@ -124,7 +124,7 @@ The Review prompt runs a comprehensive code review using ALL agent personas. Thi
 
 ---
 
-### 4️⃣ Sync Phase → `project-sync.prompt.md`
+### 4️⃣ Sync Phase → `nexus-sync.prompt.md`
 
 **When to use:** When work happens outside formal workflows
 
@@ -134,7 +134,7 @@ The Sync prompt reconciles documentation with reality when you've been chatting 
 
 1. Open the Command Palette
 2. Select "Chat: Run Prompt..."
-3. Choose `project-sync`
+3. Choose `nexus-sync`
 
 **What happens:**
 
@@ -158,7 +158,7 @@ The Sync prompt reconciles documentation with reality when you've been chatting 
 
 ---
 
-### 5️⃣ Summary Phase → `project-summary.prompt.md`
+### 5️⃣ Summary Phase → `nexus-summary.prompt.md`
 
 **When to use:** Periodically, to assess project status
 
@@ -168,7 +168,7 @@ The Summary prompt provides a snapshot of your project's current state by compar
 
 1. Open the Command Palette
 2. Select "Chat: Run Prompt..."
-3. Choose `project-summary`
+3. Choose `nexus-summary`
 
 **What happens:**
 
@@ -183,7 +183,7 @@ The Summary prompt provides a snapshot of your project's current state by compar
 
 ---
 
-### Hotfix Workflow → `project-hotfix.prompt.md`
+### \* Hotfix Workflow → `nexus-hotfix.prompt.md`
 
 **When to use:** For small, well-understood bug fixes
 
@@ -257,12 +257,12 @@ The orchestrator automatically triggers checkpoints:
 │   ├── commit-convention.md # Commit instructions
 │   ├── copilot-instructions.md  # Custom instructions for Copilot
 │   ├── prompts/          # Core workflow prompts
-│   │   ├── project-planning.prompt.md
-│   │   ├── project-execution.prompt.md
-│   │   ├── project-review.prompt.md
-│   │   ├── project-sync.prompt.md
-│   │   ├── project-summary.prompt.md
-│   │   ├── project-hotfix.prompt.md   # Quick bug fixes
+│   │   ├── nexus-planning.prompt.md
+│   │   ├── nexus-execution.prompt.md
+│   │   ├── nexus-review.prompt.md
+│   │   ├── nexus-sync.prompt.md
+│   │   ├── nexus-summary.prompt.md
+│   │   ├── nexus-hotfix.prompt.md   # Quick bug fixes
 │   └── skills/           # Specialized skill instructions
 ├── .nexus/               # Generated outputs
 │   ├── toc.md            # Master feature index (START HERE)
@@ -316,19 +316,19 @@ Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json
 ```
 1. Create a new repo from this template
 2. Open in VS Code
-3. Run "project-planning" prompt:
+3. Run "nexus-planning" prompt:
    "I want to build a task management app with offline support"
 4. Review the generated plan in .nexus/features/<feature>/plan.md
 5. Check .nexus/toc.md to see your feature tracked
-6. Run "project-execution" prompt to start building
-7. Run "project-review" prompt before committing
-8. Run "project-summary" to track progress
+6. Run "nexus-execution" prompt to start building
+7. Run "nexus-review" prompt before committing
+8. Run "nexus-summary" to track progress
 
 # Alternative: Quick iteration workflow
-1. Run "project-planning" for initial plan
+1. Run "nexus-planning" for initial plan
 2. Chat directly with agents: "@software-developer implement auth"
-3. Run "project-sync" to update documentation
-4. Run "project-review" for final audit
+3. Run "nexus-sync" to update documentation
+4. Run "nexus-review" for final audit
 ```
 
 ---

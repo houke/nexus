@@ -12,7 +12,7 @@ checkpoint: null # null | 'saved' | 'resumed'
 
 **Plan Reference**: [plan.md](./plan.md)
 
-> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `project-sync` to update retroactively.
+> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `nexus-sync` to update retroactively.
 
 ---
 

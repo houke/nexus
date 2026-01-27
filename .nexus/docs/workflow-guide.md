@@ -34,14 +34,15 @@ Every feature flows through these states:
 draft → in-progress → review → complete
 ```
 
-| Status        | Meaning                     | Set By              |
-| ------------- | --------------------------- | ------------------- |
-| `draft`       | Planned but not started     | `project-planning`  |
-| `in-progress` | Currently being implemented | `project-execution` |
-| `review`      | Implementation done, reviewing | `project-review` |
-| `complete`    | Reviewed and finished       | `project-review`    |
+| Status        | Meaning                        | Set By            |
+| ------------- | ------------------------------ | ----------------- |
+| `draft`       | Planned but not started        | `nexus-planning`  |
+| `in-progress` | Currently being implemented    | `nexus-execution` |
+| `review`      | Implementation done, reviewing | `nexus-review`    |
+| `complete`    | Reviewed and finished          | `nexus-review`    |
 
 Additional statuses:
+
 - `on-hold` - Paused, not actively worked on
 - `archived` - No longer relevant
 
@@ -51,11 +52,12 @@ Additional statuses:
 
 The file `.nexus/toc.md` is the **master index** of all features:
 
-| Feature | Status | Files | Agents | Last Edited |
-| ------- | ------ | ----- | ------ | ----------- |
-| user-auth | in-progress | plan, execution | @architect, @dev | 2026-01-26 |
+| Feature   | Status      | Files           | Agents           | Last Edited |
+| --------- | ----------- | --------------- | ---------------- | ----------- |
+| user-auth | in-progress | plan, execution | @architect, @dev | 2026-01-26  |
 
 **Always update toc.md** when:
+
 - Creating a new feature
 - Changing feature status
 - Adding new documents to a feature
@@ -66,27 +68,27 @@ The file `.nexus/toc.md` is the **master index** of all features:
 
 ### Starting a New Feature
 
-1. Run `project-planning` prompt
+1. Run `nexus-planning` prompt
 2. Creates `.nexus/features/<slug>/plan.md`
 3. Updates `.nexus/toc.md` with new row (status: `draft`)
 
 ### Implementing a Feature
 
-1. Run `project-execution` prompt
+1. Run `nexus-execution` prompt
 2. Creates `.nexus/features/<slug>/execution.md`
 3. Updates plan status to `in-progress`
 4. Updates toc.md
 
 ### Reviewing a Feature
 
-1. Run `project-review` prompt
+1. Run `nexus-review` prompt
 2. Creates `.nexus/features/<slug>/review.md`
 3. Updates plan status to `complete`
 4. Updates toc.md
 
 ### Checking Status
 
-1. Run `project-summary` prompt
+1. Run `nexus-summary` prompt
 2. Creates/updates `.nexus/features/<slug>/summary.md`
 3. Updates toc.md
 
@@ -105,7 +107,7 @@ When you bypass the formal **planning → execution → review** workflow and ta
 
 ## The Solution: Sync Workflow
 
-Use `project-sync` to reconcile documentation with actual work.
+Use `nexus-sync` to reconcile documentation with actual work.
 
 ### When to Run Sync
 
@@ -113,18 +115,18 @@ Use `project-sync` to reconcile documentation with actual work.
 # Scenario 1: Direct agent work
 You: "@software-developer fix the auth bug"
 # → Work happens, but plan doesn't update
-# → Solution: Run project-sync prompt
+# → Solution: Run nexus-sync prompt
 
 # Scenario 2: Multiple ad-hoc changes
 You: "@ux-designer tweak the header"
 You: "@visual-designer adjust colors"
 # → Multiple changes, no tracking
-# → Solution: Run project-sync prompt
+# → Solution: Run nexus-sync prompt
 
 # Scenario 3: Before formal review
 You: "Let's run a code review"
 # → But work wasn't tracked via execution workflow
-# → Solution: Run project-sync first, then review
+# → Solution: Run nexus-sync first, then review
 ```
 
 ### What Sync Does
@@ -143,16 +145,16 @@ You: "Let's run a code review"
 ### Option A: Formal (Best for Large Features)
 
 ```
-1. Run project-planning prompt
+1. Run nexus-planning prompt
    → Creates features/<slug>/plan.md (status: draft)
    → Updates toc.md
 
-2. Run project-execution prompt
+2. Run nexus-execution prompt
    → Creates features/<slug>/execution.md
    → Updates plan status to in-progress
    → Implements the feature
 
-3. Run project-review prompt
+3. Run nexus-review prompt
    → Creates features/<slug>/review.md
    → Audits and fixes issues
    → Updates status to complete
@@ -165,7 +167,7 @@ You: "Let's run a code review"
 ### Option B: Direct + Sync (Acceptable for Quick Work)
 
 ```
-1. Run project-planning prompt
+1. Run nexus-planning prompt
    → Creates plan (status: draft)
 
 2. Talk directly to agents
@@ -173,7 +175,7 @@ You: "Let's run a code review"
    You: "@qa-engineer add tests"
    → Work happens, but not tracked
 
-3. Run project-sync prompt
+3. Run nexus-sync prompt
    → Detects changes
    → Updates feature status
    → Creates execution log retroactively
@@ -204,7 +206,7 @@ To manually update a feature's status, edit the plan's frontmatter:
 ---
 title: Feature Name
 date: 2026-01-25
-status: 'in-progress'  # Change this: draft | in-progress | review | complete
+status: 'in-progress' # Change this: draft | in-progress | review | complete
 ---
 ```
 
@@ -247,14 +249,14 @@ To keep features synchronized with reality:
 
 ## Quick Reference
 
-| I want to...               | Use this prompt       |
-| -------------------------- | --------------------- |
-| Start a new feature        | `project-planning`    |
-| Implement a feature        | `project-execution`   |
-| Fix something quickly      | Chat with agent, then `project-sync` |
-| Review and fix issues      | `project-review`      |
-| Check feature status       | `project-summary`     |
-| Update stale documentation | `project-sync`        |
+| I want to...               | Use this prompt                    |
+| -------------------------- | ---------------------------------- |
+| Start a new feature        | `nexus-planning`                   |
+| Implement a feature        | `nexus-execution`                  |
+| Fix something quickly      | Chat with agent, then `nexus-sync` |
+| Review and fix issues      | `nexus-review`                     |
+| Check feature status       | `nexus-summary`                    |
+| Update stale documentation | `nexus-sync`                       |
 
 ---
 
