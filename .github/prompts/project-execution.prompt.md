@@ -171,12 +171,17 @@ bun init                     # May ask questions
 git clean -i                 # Interactive clean
 rm -i                        # Interactive remove
 any command with -i flag     # Usually means interactive
+playwright show-report       # Starts server, hangs waiting for Ctrl+C
+npm run dev                  # Starts dev server, blocks terminal
+any server/watch command     # Unless isBackground=true
 
 # ✅ ALWAYS USE NON-INTERACTIVE ALTERNATIVES
 npm init -y                  # Auto-accept defaults
 pnpm init -y                 # Auto-accept defaults
 yarn init -y                 # Auto-accept defaults
 bun init -y                  # Auto-accept defaults
+playwright test              # Run tests, don't serve report
+${PM:-npm} run build         # Build, don't serve
 ```
 
 If a command might prompt for input, either:

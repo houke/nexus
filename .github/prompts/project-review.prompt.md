@@ -45,6 +45,9 @@ pnpm init                    # Interactive - asks questions
 yarn init                    # Interactive - asks questions
 bun init                     # May ask questions
 git clean -i                 # Interactive clean
+playwright show-report       # Starts server, hangs waiting for Ctrl+C
+npm run dev                  # Starts dev server, blocks terminal
+any server/watch command     # Unless explicitly needed and isBackground=true
 ```
 
 Always use non-interactive alternatives (`-y`, `--yes` flags) or skip and document for manual execution.
