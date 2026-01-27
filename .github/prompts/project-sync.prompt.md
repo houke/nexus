@@ -10,7 +10,6 @@ tools:
     'edit',
     'search',
     'web',
-    'io.github.upstash/context7/*',
     'agent',
     'memory/*',
     'filesystem/*',

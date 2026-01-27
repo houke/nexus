@@ -183,6 +183,24 @@ The Summary prompt provides a snapshot of your project's current state by compar
 
 ---
 
+### Hotfix Workflow → `project-hotfix.prompt.md`
+
+**When to use:** For small, well-understood bug fixes
+
+The Hotfix prompt provides an expedited path for quick fixes that still maintains traceability.
+
+**What happens:**
+
+- @software-developer diagnoses and fixes the bug
+- @qa-engineer validates the fix
+- Minimal documentation auto-generated
+- Logged to `.nexus/features/_hotfixes/`
+
+**Use hotfix when:** Clear bug, isolated fix, <5 files affected  
+**Don't use when:** Unclear cause, requires refactoring, feature request
+
+---
+
 ## ⏱️ Time Tracking
 
 Nexus automatically tracks time spent by each agent during planning, execution, and review phases. The orchestrator records start/end times when invoking subagents and maintains a `## Time Tracking` table in each feature document.
@@ -199,26 +217,6 @@ The **Summary prompt** aggregates all time tracking data across phases, showing:
 - Which agents contributed to each feature
 
 This helps identify bottlenecks and understand where development effort is spent.
-
----
-
-## Additional Workflows
-
-### Hotfix Workflow → `project-hotfix.prompt.md`
-
-**When to use:** For small, well-understood bug fixes
-
-The Hotfix prompt provides an expedited path for quick fixes that still maintains traceability.
-
-**What happens:**
-
-- @software-developer diagnoses and fixes the bug
-- @qa-engineer validates the fix
-- Minimal documentation auto-generated
-- Logged to `.nexus/features/_hotfixes/`
-
-**Use hotfix when:** Clear bug, isolated fix, <5 files affected  
-**Don't use when:** Unclear cause, requires refactoring, feature request
 
 ---
 
@@ -306,7 +304,6 @@ To set Claude Opus 4.5 as your default:
 
 Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json`):
 
-- `context7` - Up-to-date library documentation
 - `memory` - Knowledge graph for persistent context
 - `filesystem` - File operations
 - `sequential-thinking` - Complex problem decomposition
