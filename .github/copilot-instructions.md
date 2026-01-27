@@ -168,9 +168,9 @@ Each feature has its own folder containing all related documents:
 
 The file `.nexus/toc.md` is the **single source of truth** for all features:
 
-| Feature | Status | Files | Agents | Last Edited |
-| ------- | ------ | ----- | ------ | ----------- |
-| user-auth | complete | plan, execution, review | @architect, @dev | 2026-01-26 |
+| Feature   | Status   | Files                   | Agents           | Last Edited |
+| --------- | -------- | ----------------------- | ---------------- | ----------- |
+| user-auth | complete | plan, execution, review | @architect, @dev | 2026-01-26  |
 
 ### Feature Status Values
 
@@ -192,13 +192,119 @@ The file `.nexus/toc.md` is the **single source of truth** for all features:
 
 ### Workflow Prompts
 
-| Prompt | Creates | Updates |
-| ------ | ------- | ------- |
-| `project-planning` | `features/<slug>/plan.md` | toc.md (new row, status: draft) |
-| `project-execution` | `features/<slug>/execution.md` | plan status → in-progress, toc.md |
-| `project-review` | `features/<slug>/review.md` | plan status → complete, toc.md |
-| `project-summary` | `features/<slug>/summary.md` | toc.md |
-| `project-sync` | Missing docs | All out-of-sync docs, toc.md |
+| Prompt              | Creates                               | Updates                           |
+| ------------------- | ------------------------------------- | --------------------------------- |
+| `project-planning`  | `features/<slug>/plan.md`             | toc.md (new row, status: draft)   |
+| `project-execution` | `features/<slug>/execution.md`        | plan status → in-progress, toc.md |
+| `project-review`    | `features/<slug>/review.md`           | plan status → complete, toc.md    |
+| `project-summary`   | `features/<slug>/summary.md`          | toc.md                            |
+| `project-sync`      | Missing docs                          | All out-of-sync docs, toc.md      |
+| `project-hotfix`    | `features/_hotfixes/<date>-<slug>.md` | toc.md                            |
+
+## Inter-Agent Communication Protocol
+
+Agents can collaborate directly using these patterns:
+
+### Direct Handoffs
+
+Standard delegation from one agent to another:
+
+```markdown
+@architect → @software-developer: "Implement this schema"
+```
+
+### Consultation Pattern
+
+When an agent needs expertise from another without handing off:
+
+```markdown
+## Consultation Request for @security
+
+**From**: @software-developer
+**Topic**: Input validation approach
+**Context**: Implementing user registration form
+**Question**: Is this validation sufficient for SQL injection prevention?
+**Urgency**: Medium
+
+[Code snippet or details]
+```
+
+The consulted agent responds with:
+
+```markdown
+## Consultation Response from @security
+
+**To**: @software-developer
+**Verdict**: Needs improvement 🟡
+**Recommendation**: [Specific advice]
+**Confidence**: HIGH 🟢
+```
+
+### Escalation Pattern
+
+When a decision is beyond an agent's expertise:
+
+```markdown
+## Escalation to @tech-lead
+
+**From**: @software-developer
+**Blocker**: Cannot decide between Approach A and Approach B
+**Context**: [Situation details]
+**Options Considered**:
+
+1. Approach A - [Pros/cons]
+2. Approach B - [Pros/cons]
+   **My Recommendation**: [If any]
+   **Impact of Delay**: [How this blocks progress]
+```
+
+## Checkpoint System
+
+The checkpoint system allows saving and resuming execution progress.
+
+### Checkpoint Commands
+
+| Command              | Action                                | When to Use                  |
+| -------------------- | ------------------------------------- | ---------------------------- |
+| `/checkpoint save`   | Save current progress to execution.md | Before ending a long session |
+| `/checkpoint resume` | Read execution.md and continue        | Starting a new session       |
+| `/checkpoint status` | Show completed vs pending items       | Checking progress            |
+
+### Orchestrator Checkpoint Triggers
+
+The orchestrator should automatically trigger checkpoints when:
+
+1. **Time-based**: After 30+ minutes of continuous work
+2. **Milestone-based**: After completing a major action item
+3. **Before handoffs**: Before delegating to a different agent
+4. **On blockers**: When hitting a blocker that pauses work
+
+### Agent Checkpoint Protocol
+
+Agents can request checkpoints:
+
+```markdown
+## Checkpoint Request from @software-developer
+
+**Reason**: Completed IMPL-001 through IMPL-005, need to pause
+**Completed Items**: [List]
+**In Progress**: [Current item]
+**Next Steps**: [What to do on resume]
+```
+
+### Checkpoint Data Structure
+
+Checkpoints are stored in the execution.md file:
+
+```markdown
+## Checkpoint: YYYY-MM-DD HH:MM:SS
+
+**Status**: saved | resumed
+**Completed**: [List of completed action items]
+**In Progress**: [Current work]
+**Next**: [What to do next]
+**Context**: [Important state to preserve]
+```
 
 ## General Guidelines
 

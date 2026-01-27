@@ -202,6 +202,49 @@ This helps identify bottlenecks and understand where development effort is spent
 
 ---
 
+## Additional Workflows
+
+### Hotfix Workflow → `project-hotfix.prompt.md`
+
+**When to use:** For small, well-understood bug fixes
+
+The Hotfix prompt provides an expedited path for quick fixes that still maintains traceability.
+
+**What happens:**
+
+- @software-developer diagnoses and fixes the bug
+- @qa-engineer validates the fix
+- Minimal documentation auto-generated
+- Logged to `.nexus/features/_hotfixes/`
+
+**Use hotfix when:** Clear bug, isolated fix, <5 files affected  
+**Don't use when:** Unclear cause, requires refactoring, feature request
+
+---
+
+## 💾 Checkpoint System
+
+Long execution sessions can save and resume progress using checkpoints.
+
+### Commands
+
+| Command              | Action                                |
+| -------------------- | ------------------------------------- |
+| `/checkpoint save`   | Save current progress to execution.md |
+| `/checkpoint resume` | Continue from last checkpoint         |
+| `/checkpoint status` | Show completed vs pending items       |
+
+### Automatic Triggers
+
+The orchestrator automatically triggers checkpoints:
+
+- After 30+ minutes of continuous work
+- After completing major action items
+- Before delegating to different agents
+- When hitting blockers
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -211,6 +254,7 @@ This helps identify bottlenecks and understand where development effort is spent
 │   │   ├── architect.md
 │   │   ├── software-developer.md
 │   │   ├── security.md
+│   │   ├── _template.md      # Template for new agents
 │   │   └── ...
 │   ├── commit-convention.md # Commit instructions
 │   ├── copilot-instructions.md  # Custom instructions for Copilot
@@ -219,19 +263,21 @@ This helps identify bottlenecks and understand where development effort is spent
 │   │   ├── project-execution.prompt.md
 │   │   ├── project-review.prompt.md
 │   │   ├── project-sync.prompt.md
-│   │   └── project-summary.prompt.md
+│   │   ├── project-summary.prompt.md
+│   │   ├── project-hotfix.prompt.md   # Quick bug fixes
 │   └── skills/           # Specialized skill instructions
 ├── .nexus/               # Generated outputs
 │   ├── toc.md            # Master feature index (START HERE)
 │   ├── features/         # Feature folders (one per feature)
-│   │   └── <feature-slug>/
-│   │       ├── plan.md
-│   │       ├── execution.md
-│   │       ├── review.md
-│   │       └── notes/
+│   │   ├── <feature-slug>/
+│   │   │   ├── plan.md
+│   │   │   ├── execution.md
+│   │   │   ├── review.md
+│   │   │   └── notes/
+│   │   ├── _hotfixes/    # Quick fix documentation
 │   ├── templates/        # Document templates
 │   ├── memory/           # Agent memory files (persistent preferences)
-│   └── docs/             # Guides and reference
+│   └── docs/             # Guides and reference (incl. CHEATSHEET.md)
 ├── .vscode/
 │   └── mcp.json          # MCP server configuration
 ├── AGENTS.md             # Agent instructions for AI coding tools

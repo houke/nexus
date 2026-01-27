@@ -127,6 +127,8 @@ _(If this document is updated for subsequent reviews)_
 
 ## Revision History
 
-| Date       | Agent                | Changes        |
-| ---------- | -------------------- | -------------- |
-| YYYY-MM-DD | @review-orchestrator | Initial review |
+| Date & Time         | Agent                | Changes                       |
+| ------------------- | -------------------- | ----------------------------- |
+| YYYY-MM-DD HH:MM:SS | @review-orchestrator | Initial review                |
+| YYYY-MM-DD HH:MM:SS | @orchestrator        | [Description of changes made] |
+| YYYY-MM-DD HH:MM:SS | @[agent-name]        | [Agent-specific changes]      |

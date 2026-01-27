@@ -63,7 +63,22 @@ Key agents are defined in `.github/agents/`:
 | DevOps             | `devops.md`             | CI/CD, infrastructure, deployment                |
 | Gamer              | `gamer.md`              | Gamification mechanics, engagement               |
 
+**Utility files:**
+| File | Purpose |
+| ---- | ------- |
+| `_template.md` | Template for creating new agents |
+
 When working on this codebase, respect the separation of concerns defined by each agent's expertise.
+
+### Inter-Agent Communication
+
+Agents collaborate using these patterns (see `.github/copilot-instructions.md` for full details):
+
+| Pattern            | When to Use                    | Example                                              |
+| ------------------ | ------------------------------ | ---------------------------------------------------- |
+| **Direct Handoff** | Transfer work to another agent | `@architect → @software-developer: "Implement this"` |
+| **Consultation**   | Get advice without handing off | `@dev asks @security: "Is this validation safe?"`    |
+| **Escalation**     | Decision beyond expertise      | `@dev escalates to @tech-lead: "Which approach?"`    |
 
 ## Feature-Based Workflow
 
@@ -155,6 +170,34 @@ Additional: `on-hold`, `archived`
 - Project status snapshot comparing "have" vs "need"
 - Creates/updates `.nexus/features/<slug>/summary.md`
 - Updates toc.md
+
+### Hotfix (`project-hotfix.prompt.md`)
+
+- Expedited workflow for small, well-understood bugs
+- Creates `.nexus/features/_hotfixes/<date>-<slug>.md`
+- Minimal ceremony, full traceability
+- Use instead of full workflow for quick fixes
+
+## Checkpoint System
+
+Long execution sessions can save and resume progress using checkpoints.
+
+### Checkpoint Commands
+
+| Command              | Action                        | When to Use                  |
+| -------------------- | ----------------------------- | ---------------------------- |
+| `/checkpoint save`   | Save progress to execution.md | Before ending a long session |
+| `/checkpoint resume` | Continue from saved state     | Starting a new session       |
+| `/checkpoint status` | Show completed vs pending     | Checking progress            |
+
+### Automatic Triggers
+
+The orchestrator automatically triggers checkpoints:
+
+- After 30+ minutes of continuous work
+- After completing major action items
+- Before delegating to different agents
+- When hitting blockers
 
 ## Workflow Best Practices
 

@@ -111,6 +111,8 @@ agents: ['@agent1', '@agent2']
 
 ## Revision History
 
-| Date       | Agent                 | Changes         |
-| ---------- | --------------------- | --------------- |
-| YYYY-MM-DD | @summary-orchestrator | Initial summary |
+| Date & Time         | Agent                 | Changes                       |
+| ------------------- | --------------------- | ----------------------------- |
+| YYYY-MM-DD HH:MM:SS | @summary-orchestrator | Initial summary created       |
+| YYYY-MM-DD HH:MM:SS | @orchestrator         | [Description of changes made] |
+| YYYY-MM-DD HH:MM:SS | @[agent-name]         | [Agent-specific changes]      |

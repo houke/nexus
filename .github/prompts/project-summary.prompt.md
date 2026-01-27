@@ -98,7 +98,9 @@ Use the template from `.nexus/templates/summary.template.md`.
 
 1. If feature-specific: Add `summary` to that feature's Files column
 2. Update Last Edited date
-3. Add any agents who contributed to the summary
+3. **ALWAYS** add an initial entry to the "## Revision History" section with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent @summary-orchestrator (or @orchestrator if made directly from main chat), and description "Initial summary created".
+4. **ALWAYS** add an initial entry to the "## Revision History" section with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent @summary-orchestrator (or @orchestrator if made directly from main chat), and description "Initial summary created".
+5. Add any agents who contributed to the summary
 
 ## Document Structure
 

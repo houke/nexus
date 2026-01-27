@@ -98,7 +98,14 @@ For each agent persona defined in the .github/agents directory, you will:
 - Run verification after fixes: `${PM:-npm} run test && ${PM:-npm} run lint && ${PM:-npm} run typecheck`
 
 4. **Document both findings AND fixes** in their report section.
-5. **ALWAYS** write the final review to the feature folder.
+
+5. **Synthesis**:
+   - Collect all agent review reports.
+   - Consolidate into the review document at `.nexus/features/<slug>/review.md` using the template structure.
+   - Update the plan status to `complete` when review is finished.
+   - Update toc.md with the new status and files.
+   - **ALWAYS** append an entry to the "## Revision History" section when creating or updating the review with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent identifier (@review-orchestrator or @orchestrator if from main chat, or specific @agent-name), and a brief description of what was reviewed/changed.
+6. **ALWAYS** write the final review to the feature folder.
 
 ## Agent Fix Instructions
 

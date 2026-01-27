@@ -59,6 +59,7 @@ You are the **Planning Orchestrator**. Your goal is to orchestrate a detailed pl
 5. **Final Output**:
    - The output should be a single markdown document.
    - **ALWAYS** write the output to the feature folder and update the master TOC.
+   - **ALWAYS** add an initial entry to the "## Revision History" section with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent @planning-orchestrator (or @orchestrator if made directly from main chat), and description "Initial plan created".
 
 ## Feature-Based Output Protocol
 

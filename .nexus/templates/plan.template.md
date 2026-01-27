@@ -454,6 +454,8 @@ Related documents in this feature folder:
 
 ## Revision History
 
-| Date       | Author   | Changes       |
-| ---------- | -------- | ------------- |
-| YYYY-MM-DD | @[agent] | Initial draft |
+| Date & Time         | Agent                  | Changes                       |
+| ------------------- | ---------------------- | ----------------------------- |
+| YYYY-MM-DD HH:MM:SS | @planning-orchestrator | Initial plan created          |
+| YYYY-MM-DD HH:MM:SS | @orchestrator          | [Description of changes made] |
+| YYYY-MM-DD HH:MM:SS | @[agent-name]          | [Agent-specific changes]      |

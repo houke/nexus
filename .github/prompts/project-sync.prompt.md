@@ -206,6 +206,8 @@ After sync, provide the user:
 2. **Status snapshot**: Current feature progress
 3. **Recommendations**: What should happen next (review? continue execution?)
 
+**ALWAYS** append an entry to the "## Revision History" section of any documents you create or update with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent @sync-orchestrator (or @orchestrator if made directly from main chat), and a brief description of the sync changes made.
+
 ---
 
 **Remember**: This is a reconciliation workflow, not a replacement for the primary planning → execution → review cycle. Use it to get back on track, then encourage proper workflow usage going forward.

@@ -3,6 +3,7 @@ feature: '<feature-slug>'
 status: 'in-progress' # in-progress | blocked | complete
 started: 'YYYY-MM-DD'
 updated: 'YYYY-MM-DD'
+checkpoint: null # null | 'saved' | 'resumed'
 ---
 
 # Execution Log: [Feature Title]
@@ -28,6 +29,61 @@ updated: 'YYYY-MM-DD'
 - 🔄 In Progress: Y action items
 - ⏳ Not Started: Z action items
 - **Overall**: XX% complete
+
+---
+
+## Checkpoints
+
+> Use checkpoints to save and resume long execution sessions.
+> Commands: `/checkpoint save`, `/checkpoint resume`, `/checkpoint status`
+
+### Latest Checkpoint
+
+**Status**: No checkpoint saved yet
+
+<!--
+When a checkpoint is saved, update this section:
+
+**Status**: Saved at YYYY-MM-DD HH:MM:SS
+**Completed Items**: IMPL-001, IMPL-002, IMPL-003
+**In Progress**: IMPL-004 (50% complete)
+**Next Steps**: Finish IMPL-004, then start IMPL-005
+**Context to Preserve**:
+- Variable X is set to Y because...
+- We chose approach A over B because...
+- Waiting on: [any blockers]
+-->
+
+### Checkpoint History
+
+| Timestamp | Action | Items Completed | Notes              |
+| --------- | ------ | --------------- | ------------------ |
+| —         | —      | —               | No checkpoints yet |
+
+---
+
+## Traceability
+
+> Links between requirements, code, and tests for audit trail.
+
+### Requirement → Code Mapping
+
+| Requirement ID | Description | Implementation       | Tests                       |
+| -------------- | ----------- | -------------------- | --------------------------- |
+| IMPL-001       | [From plan] | `src/file.ts:10-50`  | `tests/file.test.ts:5-30`   |
+| IMPL-002       | [From plan] | `src/other.ts:20-80` | `tests/other.test.ts:10-45` |
+
+### Code Comment Convention
+
+When implementing, add traceability comments:
+
+```typescript
+// @requirement IMPL-001 from features/<slug>/plan.md#action-items
+// @decision Q2 resolved by @architect on YYYY-MM-DD
+function implementedFeature() {
+  // Implementation
+}
+```
 
 ---
 
@@ -168,7 +224,9 @@ _(Used by sync workflow to reconcile untracked work)_
 
 ## Revision History
 
-| Date       | Agent                   | Changes                   |
-| ---------- | ----------------------- | ------------------------- |
-| YYYY-MM-DD | @execution-orchestrator | Initial log created       |
-| YYYY-MM-DD | @sync-orchestrator      | Reconciled untracked work |
+| Date & Time         | Agent                   | Changes                       |
+| ------------------- | ----------------------- | ----------------------------- |
+| YYYY-MM-DD HH:MM:SS | @execution-orchestrator | Initial log created           |
+| YYYY-MM-DD HH:MM:SS | @sync-orchestrator      | Reconciled untracked work     |
+| YYYY-MM-DD HH:MM:SS | @orchestrator           | [Description of changes made] |
+| YYYY-MM-DD HH:MM:SS | @[agent-name]           | [Agent-specific changes]      |
