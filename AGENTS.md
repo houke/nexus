@@ -100,16 +100,6 @@ All work is organized by **feature**, not by workflow phase. This provides:
 └── notes/         # Supporting materials
 ```
 
-### Time Tracking
-
-The orchestrator tracks time spent by each agent during all phases. Each feature document (`plan.md`, `execution.md`, `review.md`) contains a `## Time Tracking` table:
-
-| Agent      | Task          | Start               | End                 | Duration (s) |
-| ---------- | ------------- | ------------------- | ------------------- | -----------: |
-| @architect | System design | 2026-01-26T09:00:00 | 2026-01-26T09:08:00 |          480 |
-
-The summary phase aggregates this data across all phases for analysis.
-
 ### Master TOC
 
 The file `.nexus/toc.md` is the **single source of truth** for all features:
@@ -375,6 +365,37 @@ npm init -y && npm install -D vite typescript
 ```
 
 **Template files are SACRED. Work around them, never remove them.**
+
+### 5. Use `.nexus/tmp/` Instead of System `/tmp`
+
+All temporary files MUST be written to `.nexus/tmp/` instead of system `/tmp`:
+
+```bash
+# ❌ FORBIDDEN - System temp directory
+/tmp/my-temp-file.txt
+/tmp/test-output/
+
+# ✅ REQUIRED - Project temp directory
+.nexus/tmp/my-temp-file.txt
+.nexus/tmp/test-output/
+```
+
+**Why**: System `/tmp` is shared, may have permission issues, and doesn't keep artifacts with the project for debugging.
+
+### 6. Clean Up After Yourself
+
+Agents MUST clean up any temporary files they create in `.nexus/tmp/`:
+
+```bash
+# Create temp files for your work
+mkdir -p .nexus/tmp/my-agent-work
+# ... do work ...
+
+# REQUIRED: Clean up when done
+rm -rf .nexus/tmp/my-agent-work
+```
+
+**Exception**: If debugging requires preserving temp files, document what was left and why in the execution log.
 
 ## Context for New Features
 

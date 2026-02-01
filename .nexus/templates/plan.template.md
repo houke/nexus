@@ -117,7 +117,7 @@ CREATE TABLE example (
 ```typescript
 // TypeScript interfaces
 interface Example {
-  id: string;
+  id: string
   // ...
 }
 ```

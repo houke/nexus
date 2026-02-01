@@ -1,7 +1,7 @@
 ---
 name: nexus-summary
 description: Get a summary of everything we have vs everything we need for features
-model: Claude Opus 4.5
+model: Claude Sonnet 4.5
 tools:
   [
     'vscode',
@@ -131,25 +131,6 @@ agents: [@agent1, @agent2, ...]
 ## Progress Metrics
 
 [Quantitative progress if available: % complete, test coverage, etc.]
-
-## Time Tracking Summary
-
-[Aggregate time tracking data from all phases - planning, execution, and review]
-
-### Aggregated Time by Agent
-
-| Agent               | Plan (s) | Execution (s) | Review (s) | Total (s) |
-| ------------------- | -------- | ------------- | ---------- | --------- |
-| @architect          | 480      | 0             | 720        | 1200      |
-| @software-developer | 0        | 1800          | 0          | 1800      |
-
-### Aggregated Time by Phase
-
-| Phase     | Total Time (s) | Agents Involved                   |
-| --------- | -------------- | --------------------------------- |
-| plan      | 870            | @architect, @product-manager      |
-| execution | 2340           | @software-developer, @qa-engineer |
-| review    | 1440           | @tech-lead, @security-agent       |
 
 ## Agent Assessments
 

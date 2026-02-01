@@ -1,7 +1,7 @@
 ---
 name: nexus-sync
 description: Reconcile feature documentation with actual work done
-model: Claude Opus 4.5
+model: Claude Sonnet 4.5
 tools:
   [
     'vscode',

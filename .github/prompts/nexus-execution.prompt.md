@@ -449,6 +449,140 @@ ${PM:-npm} run typecheck    # No errors (if exists)
 
 **A broken script = broken delivery.** Fix all scripts before completing.
 
+## ⛔ MANDATORY: Delivery Sign-off Phase
+
+Before declaring execution complete, **BOTH** @qa-engineer and @tech-lead **MUST** sign off. This is NON-NEGOTIABLE.
+
+### Phase 5: QA Sign-off (@qa-engineer)
+
+@qa-engineer must perform a **comprehensive E2E review**:
+
+````markdown
+## Task for @qa-engineer
+
+**Mode**: FULL E2E REVIEW
+
+**Requirements**:
+
+1. **Run ALL automated tests**: `${PM:-npm} run test && ${PM:-npm} run test:e2e`
+2. **Manually click through the interface** using Playwright or a browser:
+   - Test every user flow end-to-end
+   - Test error states and edge cases
+   - Test on different viewport sizes (mobile, tablet, desktop)
+3. **Accessibility audit**: Run axe-core or Lighthouse a11y checks
+4. **Document any issues found**
+
+**If issues are found**:
+
+- Create a list of issues with severity
+- Route each issue to the agent who built it (usually @software-developer or @visual-designer)
+- Wait for fixes
+- Re-test after fixes
+- Repeat until all issues resolved
+
+**Sign-off format** (REQUIRED when complete):
+
+```markdown
+## ✅ QA Sign-off
+
+**Date**: YYYY-MM-DD
+**Agent**: @qa-engineer
+**Status**: APPROVED ✅
+
+### Testing Completed
+
+- [x] Unit tests pass
+- [x] E2E tests pass
+- [x] Manual UI walkthrough complete
+- [x] Accessibility audit pass
+- [x] All issues resolved
+
+**Notes**: [Any observations or recommendations]
+```
+````
+
+**Do NOT sign off** if ANY issues remain unresolved.
+
+````
+
+### Phase 6: Tech Lead Sign-off (@tech-lead)
+
+After QA sign-off, @tech-lead must perform a **full code review**:
+
+```markdown
+## Task for @tech-lead
+
+**Mode**: FULL CODE REVIEW
+
+**Requirements**:
+1. **Review ALL code changes** introduced during execution
+2. **Check for**:
+   - Code quality and readability
+   - Proper TypeScript types (no `any` abuse)
+   - Memory leaks (event listeners, subscriptions)
+   - Performance concerns
+   - Security issues
+   - Test coverage adequacy
+   - Design pattern adherence
+3. **Run verification**: `${PM:-npm} run test && ${PM:-npm} run lint && ${PM:-npm} run typecheck`
+
+**If issues are found**:
+- Document each issue with file location and concern
+- Route to the agent who wrote the code
+- Wait for fixes
+- Re-review after fixes
+- Repeat until satisfied
+
+**Sign-off format** (REQUIRED when complete):
+```markdown
+## ✅ Tech Lead Sign-off
+
+**Date**: YYYY-MM-DD
+**Agent**: @tech-lead
+**Status**: APPROVED ✅
+
+### Review Completed
+- [x] Code quality acceptable
+- [x] Types properly defined
+- [x] No memory leaks detected
+- [x] Performance acceptable
+- [x] Security review pass
+- [x] Test coverage adequate
+- [x] All issues resolved
+
+**Notes**: [Any observations or technical debt to track]
+````
+
+**Do NOT sign off** if ANY issues remain unresolved.
+
+````
+
+### Completion Gate
+
+**Execution is ONLY complete when BOTH sign-offs are present:**
+
+```markdown
+## Delivery Status
+
+- [ ] @qa-engineer sign-off: ⏳ Pending
+- [ ] @tech-lead sign-off: ⏳ Pending
+
+**Overall**: ❌ NOT READY FOR DELIVERY
+````
+
+Changes to:
+
+```markdown
+## Delivery Status
+
+- [x] @qa-engineer sign-off: ✅ Approved (YYYY-MM-DD)
+- [x] @tech-lead sign-off: ✅ Approved (YYYY-MM-DD)
+
+**Overall**: ✅ READY FOR DELIVERY
+```
+
+**NO EXCEPTIONS**: Do not mark execution complete or update plan status until both have signed off.
+
 ## Handling Blockers
 
 When blocked, delegate to the appropriate agent:
@@ -514,29 +648,6 @@ fi
 echo "Using: $PM"
 ```
 
-## Time Tracking (REQUIRED)
-
-You, the orchestrator MUST track time spent by each agent during execution. When invoking a subagent:
-
-1. **Record start time** before delegating work to the agent
-2. **Record end time** when the agent reports completion
-3. **Calculate duration** in seconds
-
-### Time Tracking Table
-
-Maintain a `## Time Tracking` section in the execution document with this format:
-
-```markdown
-## Time Tracking
-
-| Agent               | Task           | Start               | End                 | Duration (s) |
-| ------------------- | -------------- | ------------------- | ------------------- | -----------: |
-| @software-developer | Implement auth | 2026-01-26T10:00:00 | 2026-01-26T10:15:30 |          930 |
-| @qa-engineer        | Write tests    | 2026-01-26T10:16:00 | 2026-01-26T10:25:00 |          540 |
-```
-
-**REQUIRED**: Update this table in real-time as agents complete their work. This data feeds into the summary phase.
-
 > **Note**: Throughout this project, use `${PM:-npm}` to run scripts. This uses `$PM` if defined, otherwise falls back to `npm`.
 
 ### Common Commands
@@ -566,8 +677,11 @@ Before declaring execution complete:
 - [ ] All tests passing (`npm run test`)
 - [ ] No lint errors (`npm run lint`)
 - [ ] No type errors (`npm run typecheck`)
+- [ ] E2E tests passing (`npm run test:e2e`)
 - [ ] Manual testing performed
 - [ ] Documentation updated (if applicable)
 - [ ] Plan status updated to `in-progress`
 - [ ] Execution log written to feature folder
 - [ ] toc.md updated
+- [ ] **@qa-engineer sign-off obtained** ✅
+- [ ] **@tech-lead sign-off obtained** ✅
