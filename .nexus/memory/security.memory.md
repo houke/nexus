@@ -10,12 +10,11 @@ Persistent preferences and learned patterns for the **@security-agent** agent.
 
 _No preferences recorded yet._
 
-<!--
+<!-- 
 Example entry:
 ### Data Classification
 - **Preference**: App handles PII - apply strict data handling rules
 - **Reason**: Regulatory compliance required
-- **Added**: 2026-01-25
 -->
 
 ## Security Requirements

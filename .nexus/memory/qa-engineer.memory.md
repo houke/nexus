@@ -10,12 +10,11 @@ Persistent preferences and learned patterns for the **@qa-engineer** agent.
 
 _No preferences recorded yet._
 
-<!--
+<!-- 
 Example entry:
 ### Screen Reader Testing
 - **Preference**: Always test with VoiceOver and NVDA
 - **Reason**: User base includes many screen reader users
-- **Added**: 2026-01-25
 -->
 
 ## Testing Priorities

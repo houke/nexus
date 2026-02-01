@@ -111,3 +111,24 @@ When things go wrong:
 > 3. Validate workflow syntax: `actionlint` if available
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure all CI checks pass before completing
+> 6. Clean up any temporary files created in `.nexus/tmp/`
+
+## Self-Verification Before Delivery
+
+> [!CAUTION]
+> **Before providing ANY instructions to the user** (commands to run, URLs to visit, etc.), you MUST:
+>
+> 1. **Run the command yourself** and verify it works
+> 2. **Test the CI/CD workflow locally** if possible (e.g., `act` for GitHub Actions)
+> 3. **Verify deployment endpoints** are accessible if applicable
+> 4. **Only after confirming it works**, share with the user
+>
+> Never give the user instructions you haven't verified yourself.
+
+## Temporary Files
+
+When you need to create temporary files:
+
+- **ALWAYS** use `.nexus/tmp/` instead of system `/tmp`
+- **ALWAYS** clean up after yourself when done
+- **DOCUMENT** any temp files left behind (with reason) in execution log

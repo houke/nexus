@@ -85,3 +85,23 @@ When things go wrong:
 > 2. Run linting: `${PM:-npm} run lint`
 > 3. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 4. Ensure the codebase is in a clean, passing state before completing
+> 5. Clean up any temporary files created in `.nexus/tmp/`
+
+## Self-Verification Before Delivery
+
+> [!CAUTION]
+> **Before providing ANY instructions to the user** (commands to run, URLs to visit, etc.), you MUST:
+>
+> 1. **Run the command yourself** and verify it works
+> 2. **Test the feature/endpoint yourself** if applicable
+> 3. **Only after confirming it works**, share with the user
+>
+> Never give the user instructions you haven't verified yourself.
+
+## Temporary Files
+
+When you need to create temporary files:
+
+- **ALWAYS** use `.nexus/tmp/` instead of system `/tmp`
+- **ALWAYS** clean up after yourself when done
+- **DOCUMENT** any temp files left behind (with reason) in execution log

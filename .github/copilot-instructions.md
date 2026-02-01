@@ -95,7 +95,6 @@ Add a new entry under the appropriate section in the agent's memory file:
 
 - **Preference**: [What to remember]
 - **Reason**: [Why, if provided]
-- **Added**: [YYYY-MM-DD]
 ```
 
 #### Example Memory Update
@@ -111,7 +110,6 @@ Add to `.nexus/memory/software-developer.memory.md`:
 
 - **Preference**: Always implement mobile-first, starting with mobile breakpoints
 - **Reason**: User preference for responsive design starting from smallest screens
-- **Added**: 2026-01-25
 ```
 
 ### Memory Categories
@@ -136,8 +134,7 @@ Each memory file has sections for different types of preferences:
 1. **Never delete** existing memory entries unless explicitly asked
 2. **Update** entries if new information supersedes old
 3. **Categorize** entries appropriately
-4. **Date** all entries for context
-5. **Be specific** - vague memories are useless
+4. **Be specific** - vague memories are useless
 
 ### Conflict Resolution
 

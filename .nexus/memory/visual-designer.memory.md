@@ -15,7 +15,6 @@ Example entry:
 ### Brand Color
 - **Preference**: Primary brand color is #4F46E5
 - **Reason**: Matches company brand guidelines
-- **Added**: 2026-01-25
 -->
 
 ## Color Palette

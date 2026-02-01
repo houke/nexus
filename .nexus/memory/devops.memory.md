@@ -10,12 +10,11 @@ Persistent preferences and learned patterns for the **@devops** agent.
 
 _No preferences recorded yet._
 
-<!--
+<!-- 
 Example entry:
 ### Package Manager
 - **Preference**: Always use pnpm
 - **Reason**: Faster installs, better disk space usage
-- **Added**: 2026-01-25
 -->
 
 ## CI/CD Preferences

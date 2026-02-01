@@ -12,14 +12,12 @@ Persistent preferences and learned patterns for the **@software-developer** agen
 
 - **Preference**: When adding packages required for a feature, always search the web for the latest stable version (prefer official registry pages or release notes) and pin the dependency to a specific version range.
 - **Reason**: Keeps dependencies up-to-date, reduces risk from outdated or vulnerable packages, and ensures compatibility with project constraints.
-- **Added**: 2026-01-27
 
 <!--
 Example entry:
 ### Mobile-First Development
 - **Preference**: Always implement mobile-first
 - **Reason**: User prefers responsive design starting from mobile
-- **Added**: 2026-01-25
 -->
 
 ## Coding Standards

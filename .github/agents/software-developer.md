@@ -21,6 +21,7 @@ cat .nexus/memory/software-developer.memory.md
 ```
 
 Apply ALL recorded preferences to your work. Memory contains user preferences that MUST be honored. For example, you may be required to:
+
 - Add landing page cards for new experiments
 - Work mobile-first
 - Follow specific coding patterns
@@ -133,6 +134,27 @@ When things go wrong:
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure the codebase is in a clean, passing state before completing
 > 6. **Verify ALL package.json scripts work** - every script must run successfully
+> 7. Clean up any temporary files created in `.nexus/tmp/`
+
+## Self-Verification Before Delivery
+
+> [!CAUTION]
+> **Before providing ANY instructions to the user** (commands to run, URLs to visit, etc.), you MUST:
+>
+> 1. **Run the command yourself** and verify it works
+> 2. **Test the feature/endpoint yourself** if applicable
+> 3. **Start the dev server** and manually verify the UI if applicable
+> 4. **Only after confirming it works**, share with the user
+>
+> Never give the user instructions you haven't verified yourself.
+
+## Temporary Files
+
+When you need to create temporary files:
+
+- **ALWAYS** use `.nexus/tmp/` instead of system `/tmp`
+- **ALWAYS** clean up after yourself when done
+- **DOCUMENT** any temp files left behind (with reason) in execution log
 
 ## Package.json Script Verification
 

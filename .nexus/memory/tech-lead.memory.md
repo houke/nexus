@@ -8,19 +8,19 @@ Persistent preferences and learned patterns for the **@tech-lead** agent.
 
 ## Project Preferences
 
-### Always Check Package Versions
-
-- **Preference**: When adding packages required for a feature, always search the web for the latest stable version (prefer official registry pages or release notes) and pin the dependency to a specific version range.
-- **Reason**: Keeps dependencies up-to-date, reduces risk from outdated or vulnerable packages, and ensures compatibility with project constraints.
-- **Added**: 2026-01-27
+_No preferences recorded yet._
 
 <!--
 Example entry:
 ### Composition Preference
 - **Preference**: Always prefer composition over inheritance
 - **Reason**: Better testability and flexibility
-- **Added**: 2026-01-25
 -->
+
+### Always Check Package Versions
+
+- **Preference**: When adding packages required for a feature, always search the web for the latest stable version (prefer official registry pages or release notes) and pin the dependency to a specific version range.
+- **Reason**: Keeps dependencies up-to-date, reduces risk from outdated or vulnerable packages, and ensures compatibility with project constraints.
 
 ## Code Quality Standards
 

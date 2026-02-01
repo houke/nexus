@@ -132,6 +132,25 @@ When consulting another agent:
 > 3. Run type checking: `${PM:-npm} run typecheck`
 > 4. Fix ALL errors and warnings, even if they were not introduced by your changes
 > 5. Ensure the codebase is in a clean, passing state before completing
+> 6. Clean up any temporary files created in `.nexus/tmp/`
+
+## Temporary Files
+
+When you need to create temporary files:
+
+- **ALWAYS** use `.nexus/tmp/` instead of system `/tmp`
+- **ALWAYS** clean up after yourself when done
+- **DOCUMENT** any temp files left behind (with reason) in execution log
+
+```bash
+# Create temp workspace
+mkdir -p .nexus/tmp/<agent-name>-work
+
+# ... do work ...
+
+# Clean up when done
+rm -rf .nexus/tmp/<agent-name>-work
+```
 
 ---
 

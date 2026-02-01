@@ -137,6 +137,27 @@ When things go wrong:
 > 5. Verify test coverage has not decreased
 > 6. Ensure the codebase is in a clean, passing state before completing
 > 7. **Verify ALL package.json scripts work** - run each script defined in package.json to ensure none are broken
+> 8. Clean up any temporary files created in `.nexus/tmp/`
+
+## Self-Verification Before Delivery
+
+> [!CAUTION]
+> **Before providing ANY instructions to the user** (commands to run, URLs to visit, etc.), you MUST:
+>
+> 1. **Run the command yourself** and verify it works
+> 2. **Run ALL test suites yourself** and confirm they pass
+> 3. **Manually click through the UI** using Playwright or a browser to verify user flows
+> 4. **Only after confirming it works**, share with the user
+>
+> Never give the user instructions you haven't verified yourself.
+
+## Temporary Files
+
+When you need to create temporary files:
+
+- **ALWAYS** use `.nexus/tmp/` instead of system `/tmp`
+- **ALWAYS** clean up after yourself when done
+- **DOCUMENT** any temp files left behind (with reason) in execution log
 
 ## Package.json Script Verification
 
