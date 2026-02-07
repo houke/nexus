@@ -1,6 +1,7 @@
 ---
 name: security-agent
 description: Security Agent focused on application security, OWASP best practices, dependency auditing, and secure local-first data handling
+user-invokable: false
 handoffs:
   - label: Fix Security Issue
     agent: software-developer

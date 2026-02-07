@@ -1,6 +1,7 @@
 ---
 name: product-manager
 description: Requirements owner defining user stories, acceptance criteria, and feature priorities to maximize user value
+user-invokable: false
 handoffs:
   - label: Design User Flows
     agent: ux-designer

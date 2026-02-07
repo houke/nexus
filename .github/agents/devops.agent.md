@@ -1,6 +1,7 @@
 ---
 name: devops
 description: DevOps Engineer focused on CI/CD, release automation, security, and GitHub Actions
+user-invokable: false
 handoffs:
   - label: Security Audit
     agent: security-agent

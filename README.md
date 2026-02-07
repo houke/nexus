@@ -249,10 +249,10 @@ The orchestrator automatically triggers checkpoints:
 .
 ├── .github/
 │   ├── agents/           # Agent persona definitions
-│   │   ├── architect.md
-│   │   ├── software-developer.md
-│   │   ├── security.md
-│   │   ├── _template.md      # Template for new agents
+│   │   ├── architect.agent.md
+│   │   ├── software-developer.agent.md
+│   │   ├── security.agent.md
+│   │   ├── _template.agent.md      # Template for new agents
 │   │   └── ...
 │   ├── commit-convention.md # Commit instructions
 │   ├── copilot-instructions.md  # Custom instructions for Copilot

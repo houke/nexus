@@ -1,6 +1,7 @@
 ---
 name: nexus-review
 description: Run a code review using all agent personas from .github/agents
+agent: Nexus
 model: Claude Opus 4.5
 tools:
   [
@@ -11,7 +12,6 @@ tools:
     'search',
     'web',
     'agent',
-    'memory/*',
     'filesystem/*',
     'sequential-thinking/*',
     'playwright/*',
@@ -21,7 +21,25 @@ tools:
 
 # Comprehensive Code Review & Fix
 
+> **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
+
 You are the **Review Orchestrator**. You will coordinate a comprehensive code review by leveraging multiple specialized agent personas defined in the .github/agents directory. **This is not a passive review—each agent MUST fix the issues they find.**
+
+## ⚠️ REQUIRED: Read Nexus Configuration
+
+**BEFORE starting**, read the `.nexusrc` file to get the Nexus repository path:
+
+```bash
+if [ -f ".nexusrc" ]; then
+  source .nexusrc
+  echo "✅ Nexus repo path: $NEXUS_REPO_PATH"
+else
+  echo "❌ .nexusrc not found. Run nexus-init first."
+  exit 1
+fi
+```
+
+Store this path - you'll use it to access templates: `$NEXUS_REPO_PATH/.nexus/templates/`
 
 ## Review & Fix Philosophy
 
@@ -226,7 +244,13 @@ Write the review to:
 .nexus/features/<feature-slug>/review.md
 ```
 
-Use the template from `.nexus/templates/review.template.md`.
+Use the template from `$NEXUS_REPO_PATH/.nexus/templates/review.template.md`.
+
+To read it:
+
+```bash
+cat $NEXUS_REPO_PATH/.nexus/templates/review.template.md
+```
 
 ### Review Document Update Policy
 
@@ -325,3 +349,86 @@ issues-fixed: [total count]
 
 [Any items that could not be auto-fixed, with owners]
 ```
+
+## Mandatory QA & Tech-Lead Sign-off
+
+**AFTER** any fixes have been applied and before presenting the final report, obtain final sign-off:
+
+### 1. QA Engineer Sign-off
+
+Delegate to @qa-engineer using `runSubagent`:
+
+```javascript
+runSubagent({
+  agentName: 'qa-engineer',
+  description: 'Final quality validation after fixes',
+  prompt: `Please review the final state of the feature after all review fixes and verify:
+  - All automated tests passing
+  - No new regressions introduced by fixes
+  - Quality standards maintained
+  
+  Provide either:
+  - ✅ SIGN-OFF: Approved
+  - 🔴 ISSUES: List blockers`,
+});
+```
+
+### 2. Tech Lead Sign-off
+
+Delegate to @tech-lead using `runSubagent`:
+
+```javascript
+runSubagent({
+  agentName: 'tech-lead',
+  description: 'Final architectural sign-off',
+  prompt: `Please review the final state of the feature after all review fixes and verify:
+  - Architectural integrity maintained
+  - Patterns and standards followed
+  - No technical debt introduced by fixes
+  
+  Provide either:
+  - ✅ SIGN-OFF: Approved
+  - 🔴 ISSUES: List blockers`,
+});
+```
+
+### 3. Resolve Sign-off issues
+
+If any blockers are raised during sign-off, you MUST address them and re-run the sign-off cycle.
+
+## Mandatory User Satisfaction Verification
+
+**AFTER** completing all reviews and fixes, verify user satisfaction using `ask_questions` tool:
+
+```javascript
+ask_questions({
+  questions: [
+    {
+      header: 'Satisfied?',
+      question:
+        "Are you happy with the code review and fixes? (Select 'Other' to provide specific feedback)",
+      allowFreeformInput: true,
+      options: [{ label: 'Yes, review looks complete!' }],
+    },
+  ],
+});
+```
+
+### Handling User Feedback
+
+- **If user selects "Yes"**: Review is complete, finalize the report
+- **If user provides feedback (Other/free input)**:
+  1. Analyze the feedback to understand concerns
+  2. Determine which agent needs to address it
+  3. Delegate using `runSubagent` to the appropriate agent
+  4. Have them fix the issues
+  5. Re-run verification (tests, lint, typecheck)
+  6. Update the review report with additional fixes
+  7. Ask satisfaction question again
+  8. Repeat until user is satisfied
+
+**ONLY** after user confirms satisfaction should you:
+
+- Update toc.md status to `complete`
+- Finalize the review document
+- Mark the feature as done

@@ -50,23 +50,26 @@ See `.github/copilot-instructions.md` for detailed Orchestrator guidelines.
 
 Key agents are defined in `.github/agents/`:
 
-| Agent              | File                    | Purpose                                          |
-| ------------------ | ----------------------- | ------------------------------------------------ |
-| Architect          | `architect.md`          | System design, schemas, local-first architecture |
-| Software Developer | `software-developer.md` | Implementation, TDD, production code             |
-| Tech Lead          | `tech-lead.md`          | Code quality, patterns, architectural decisions  |
-| QA Engineer        | `qa-engineer.md`        | Testing, edge cases, accessibility               |
-| Security Agent     | `security.md`           | Security audits, OWASP, vulnerabilities          |
-| Product Manager    | `product-manager.md`    | Requirements, priorities, acceptance criteria    |
-| UX Designer        | `ux-designer.md`        | User flows, wireframes, interactions             |
-| Visual Designer    | `visual-designer.md`    | UI polish, animations, styling                   |
-| DevOps             | `devops.md`             | CI/CD, infrastructure, deployment                |
-| Gamer              | `gamer.md`              | Gamification mechanics, engagement               |
+| Agent              | File                         | Purpose                                                      |
+| ------------------ | ---------------------------- | ------------------------------------------------------------ |
+| Nexus              | `nexus.agent.md`              | **Orchestrator** - Triages and delegates to all other agents |
+| Architect          | `architect.agent.md`          | System design, schemas, local-first architecture             |
+| Software Developer | `software-developer.agent.md` | Implementation, TDD, production code                         |
+| Tech Lead          | `tech-lead.agent.md`          | Code quality, patterns, architectural decisions              |
+| QA Engineer        | `qa-engineer.agent.md`        | Testing, edge cases, accessibility                           |
+| Security Agent     | `security.agent.md`           | Security audits, OWASP, vulnerabilities                      |
+| Product Manager    | `product-manager.agent.md`    | Requirements, priorities, acceptance criteria                |
+| UX Designer        | `ux-designer.agent.md`        | User flows, wireframes, interactions                         |
+| Visual Designer    | `visual-designer.agent.md`    | UI polish, animations, styling                               |
+| DevOps             | `devops.agent.md`             | CI/CD, infrastructure, deployment                            |
+| Gamer              | `gamer.agent.md`              | Gamification mechanics, engagement                           |
 
 **Utility files:**
 | File | Purpose |
 | ---- | ------- |
-| `_template.md` | Template for creating new agents |
+| `_template.agent.md` | Template for creating new agents |
+
+**Note**: The Nexus orchestrator should be invoked via `@nexus` when you want pure orchestration without direct implementation. It exclusively delegates using `runSubagent` and never writes code itself.
 
 When working on this codebase, respect the separation of concerns defined by each agent's expertise.
 
@@ -127,6 +130,8 @@ Additional: `on-hold`, `archived`
 
 ## Core Workflows
 
+> 💡 **Orchestration Requirement**: All core workflows below are **restricted to the @Nexus agent**. These prompts are designed for orchestration and delegation, ensuring consistent quality and cross-agent coordination.
+
 ### Planning (`nexus-planning.prompt.md`)
 
 - Orchestrates all agents to create comprehensive plans
@@ -145,6 +150,28 @@ Additional: `on-hold`, `archived`
 
 - Comprehensive code review and **automatic fix** phase
 - Creates `.nexus/features/<slug>/review.md`
+- Updates plan status to `complete`
+- Updates toc.md
+
+### Sync (`nexus-sync.prompt.md`)
+
+- Reconciles documentation with actual work done
+- Use when work happens outside formal workflows
+- Updates all out-of-sync feature documents
+- Updates toc.md
+
+### Summary (`nexus-summary.prompt.md`)
+
+- Project status snapshot comparing "have" vs "need"
+- Creates/updates `.nexus/features/<slug>/summary.md`
+- Updates toc.md
+
+### Hotfix (`nexus-hotfix.prompt.md`)
+
+- Expedited workflow for small, well-understood bugs
+- Creates `.nexus/features/_hotfixes/<date>-<slug>.md`
+- Minimal ceremony, full traceability
+- Use instead of full workflow for quick fixes
 - Updates plan status to `complete`
 - Updates toc.md
 

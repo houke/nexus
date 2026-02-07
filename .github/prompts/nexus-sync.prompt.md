@@ -1,6 +1,7 @@
 ---
 name: nexus-sync
 description: Reconcile feature documentation with actual work done
+agent: Nexus
 model: Claude Sonnet 4.5
 tools:
   [
@@ -11,7 +12,6 @@ tools:
     'search',
     'web',
     'agent',
-    'memory/*',
     'filesystem/*',
     'sequential-thinking/*',
     'playwright/*',
@@ -20,6 +20,8 @@ tools:
 ---
 
 # Project Synchronization & Reconciliation
+
+> **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
 You are the **Synchronization Orchestrator**. Your role is to reconcile what has _actually been done_ with what's _documented in features_, keeping the tracking system up to date when work happens outside the formal workflow.
 
@@ -206,6 +208,40 @@ After sync, provide the user:
 3. **Recommendations**: What should happen next (review? continue execution?)
 
 **ALWAYS** append an entry to the "## Revision History" section of any documents you create or update with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent @sync-orchestrator (or @orchestrator if made directly from main chat), and a brief description of the sync changes made.
+
+## Mandatory User Satisfaction Verification
+
+**AFTER** completing the synchronization, verify user satisfaction using `ask_questions` tool:
+
+```javascript
+ask_questions({
+  questions: [
+    {
+      header: 'Satisfied?',
+      question:
+        "Does the synchronized documentation accurately reflect the work done? (Select 'Other' to provide specific feedback)",
+      allowFreeformInput: true,
+      options: [{ label: 'Yes, sync looks accurate!' }],
+    },
+  ],
+});
+```
+
+### Handling User Feedback
+
+- **If user selects "Yes"**: Sync is complete, finalize all document updates
+- **If user provides feedback (Other/free input)**:
+  1. Analyze the feedback to understand discrepancies
+  2. Re-analyze git history or code changes as needed
+  3. Update feature documents with corrected information
+  4. Ask satisfaction question again
+  5. Repeat until user is satisfied
+
+**ONLY** after user confirms satisfaction should you:
+
+- Finalize all document updates
+- Update toc.md
+- Add revision history entries
 
 ---
 

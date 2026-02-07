@@ -1,6 +1,7 @@
 ---
 name: architect
 description: Senior System Architect for database schemas, state machines, cloud infrastructure, and local-first design
+user-invokable: false
 handoffs:
   - label: Implement Design
     agent: software-developer

@@ -1,6 +1,7 @@
 ---
 name: software-developer
 description: Implementation specialist focused on writing production-ready, tested code following TDD practices
+user-invokable: false
 handoffs:
   - label: Request Testing Review
     agent: qa-engineer

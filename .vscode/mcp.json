@@ -1,17 +1,14 @@
 {
   "servers": {
-    // 🧠 Persistent memory for long conversations and project context
-    "memory": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"]
-    },
-
     // 📁 Enhanced filesystem operations for batch file handling
     "filesystem": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${workspaceFolder}"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${workspaceFolder}"
+      ]
     },
 
     // 🎭 Playwright E2E test automation and browser debugging

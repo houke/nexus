@@ -1,6 +1,7 @@
 ---
 name: visual-designer
 description: UI/UX Designer focused on visual aesthetics, animations, responsive design, and "the juice" that makes interactions feel premium
+user-invokable: false
 handoffs:
   - label: Implement Design
     agent: software-developer
