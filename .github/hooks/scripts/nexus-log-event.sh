@@ -142,6 +142,12 @@ detect_agent() {
 SESSION_ID="$(get_session_id)"
 FEATURE="$(get_current_feature)"
 
+# Initialize variables used across event types (prevents undefined variable errors)
+AGENT=""
+TOOL_NAME=""
+TOOL_DESC=""
+PROMPT=""
+
 case "$EVENT" in
 
   # -------------------------------------------------------------------------
@@ -149,6 +155,11 @@ case "$EVENT" in
   # -------------------------------------------------------------------------
     SOURCE="$(echo "$INPUT" | jq -r '.source // .cwd // "unknown"')"   
     PROMPT="$(echo "$INPUT" | jq -r '.initialPrompt // .transcript_path // ""')"
+
+    # Generate new session ID for new sessions
+    if [[ -z "$SESSION_ID" ]]; then
+      SESSION_ID="$(echo "${TIMESTAMP:-$$}${RANDOM}" | shasum | cut -c1-8)"
+    fi
     set_session_state "$SESSION_ID" ""
 
     # Detect feature from initial prompt
@@ -327,85 +338,3 @@ esac
 # Write to audit log
 # ---------------------------------------------------------------------------
 echo "$ENTRY" >> "$AUDIT_LOG"
-
-# ---------------------------------------------------------------------------
-# Send to Pixel Office (if server is running)
-# ---------------------------------------------------------------------------
-PIXEL_OFFICE_PORT="${PIXEL_OFFICE_PORT:-3848}"
-PIXEL_OFFICE_HOST="${PIXEL_OFFICE_HOST:-localhost}"
-
-# Map hook events to Pixel Office chat events
-map_to_chat_event() {
-  local hook_event="$1"
-  case "$hook_event" in
-    sessionStart) echo "chat:start" ;;
-    sessionEnd) echo "chat:complete" ;;
-    userPromptSubmitted) echo "chat:message" ;;
-    preToolUse) echo "chat:message" ;;
-    postToolUse) echo "chat:complete" ;;
-    errorOccurred) echo "chat:error" ;;
-    *) echo "chat:message" ;;
-  esac
-}
-
-# Map tool names to agent roles
-map_tool_to_agent() {
-  local tool_name="$1"
-  local detected_agent="$2"
-  
-  # If runSubagent, use the detected agent
-  if [[ -n "$detected_agent" ]]; then
-    echo "$detected_agent"
-    return
-  fi
-  
-  # Map actual Copilot tool names to agents
-  case "$tool_name" in
-    run_in_terminal|bash) echo "devops" ;;
-    copilot_*eplace*|copilot_*dit*|copilot_*reate*|create_file|edit_*) echo "software-developer" ;;
-    copilot_*ead*|read_file|grep_search|semantic_search|file_search|list_*) echo "orchestrator" ;;
-    get_errors|copilot_*test*) echo "qa-engineer" ;;
-    copilot_runSubagent|runSubagent) echo "${detected_agent:-orchestrator}" ;;
-    *) echo "orchestrator" ;;
-  esac
-}
-
-# Build and send Pixel Office event (non-blocking, ignore failures)
-send_pixel_office_event() {
-  local chat_type
-  chat_type="$(map_to_chat_event "$EVENT")"
-  
-  local agent_role="${AGENT:-orchestrator}"
-  if [[ "$EVENT" == "preToolUse" || "$EVENT" == "postToolUse" ]]; then
-    agent_role="$(map_tool_to_agent "$TOOL_NAME" "$AGENT")"
-  fi
-  
-  local message="${TOOL_DESC:-$PROMPT}"
-  [[ -z "$message" ]] && message="$EVENT"
-  
-  # Truncate message to 200 chars
-  message="${message:0:200}"
-  
-  local payload
-  payload="$(jq -nc \
-    --arg type "$chat_type" \
-    --arg sessionId "$SESSION_ID" \
-    --arg agentRole "$agent_role" \
-    --arg message "$message" \
-    --argjson timestamp "$(date +%s)000" \
-    '{type: $type, sessionId: $sessionId, agentRole: $agentRole, message: $message, timestamp: $timestamp}')"
-  
-  # Send non-blocking (timeout 1 second, background)
-  curl -s -X POST \
-    -H "Content-Type: application/json" \
-    -d "$payload" \
-    --connect-timeout 1 \
-    --max-time 2 \
-    "http://${PIXEL_OFFICE_HOST}:${PIXEL_OFFICE_PORT}/api/chat-event" \
-    >/dev/null 2>&1 &
-}
-
-# Only send if not already disabled
-if [[ "${PIXEL_OFFICE_DISABLED:-}" != "true" ]]; then
-  send_pixel_office_event
-fi
