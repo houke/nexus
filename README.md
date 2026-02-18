@@ -22,6 +22,7 @@ Nexus is a **template repository** designed to supercharge any new project with 
 | 🧪 **QA Engineer**        | Testing, edge cases, accessibility audits                 |
 | ⚙️ **DevOps**             | CI/CD, infrastructure, deployment                         |
 | 🔐 **Security Agent**     | Security audits, OWASP, vulnerability assessment          |
+| 🔍 **SEO Specialist**     | Technical SEO, content optimization, search rankings      |
 
 ---
 
@@ -388,6 +389,7 @@ Each agent has a persistent memory file that stores user preferences and learned
 ├── product-manager.memory.md
 ├── qa-engineer.memory.md
 ├── security.memory.md
+├── seo-specialist.memory.md
 ├── software-developer.memory.md
 ├── tech-lead.memory.md
 ├── ux-designer.memory.md

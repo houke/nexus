@@ -50,8 +50,8 @@ See `.github/copilot-instructions.md` for detailed Orchestrator guidelines.
 
 Key agents are defined in `.github/agents/`:
 
-| Agent              | File                         | Purpose                                                      |
-| ------------------ | ---------------------------- | ------------------------------------------------------------ |
+| Agent              | File                          | Purpose                                                      |
+| ------------------ | ----------------------------- | ------------------------------------------------------------ |
 | Nexus              | `nexus.agent.md`              | **Orchestrator** - Triages and delegates to all other agents |
 | Architect          | `architect.agent.md`          | System design, schemas, local-first architecture             |
 | Software Developer | `software-developer.agent.md` | Implementation, TDD, production code                         |
@@ -63,6 +63,7 @@ Key agents are defined in `.github/agents/`:
 | Visual Designer    | `visual-designer.agent.md`    | UI polish, animations, styling                               |
 | DevOps             | `devops.agent.md`             | CI/CD, infrastructure, deployment                            |
 | Gamer              | `gamer.agent.md`              | Gamification mechanics, engagement                           |
+| SEO Specialist     | `seo-specialist.agent.md`     | Technical SEO, content optimization, search rankings         |
 
 **Utility files:**
 | File | Purpose |
@@ -268,9 +269,11 @@ Skills in `.github/skills/` provide domain-specific instructions:
 - `accessibility-audit` - WCAG compliance auditing
 - `frontend-ui-polish` - UI/UX excellence and animations
 - `gamification-patterns` - Achievements, XP, rewards
+- `google-official-seo-guide` - Official Google SEO documentation and best practices
 - `implementation-patterns` - TDD, coding standards
 - `local-first-patterns` - OPFS, SQLite, sync strategies
 - `security-audit` - Security vulnerability assessment
+- `seo-aeo-best-practices` - SEO and AEO optimization strategies
 - `test-generation` - Vitest, RTL, Playwright tests
 - `user-flow-design` - Journey mapping, wireframes
 - `verify-code` - Code quality verification
