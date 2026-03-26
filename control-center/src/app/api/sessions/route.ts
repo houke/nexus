@@ -296,9 +296,7 @@ function discoverWorkspaces(
         const projectName = path.basename(projectPath);
 
         if (filterDirs.length > 0) {
-          const matches = filterDirs.some((dir) =>
-            projectPath.startsWith(dir),
-          );
+          const matches = filterDirs.some((dir) => projectPath.startsWith(dir));
           if (!matches) continue;
         }
 
@@ -524,7 +522,9 @@ function buildFlow(requests: ParsedRequest[]) {
 
   let nodeId = 0;
 
-  steps.push({ nodes: [{ id: 'start', label: 'Session start', kind: 'system' }] });
+  steps.push({
+    nodes: [{ id: 'start', label: 'Session start', kind: 'system' }],
+  });
 
   for (let i = 0; i < requests.length; i++) {
     const req = requests[i];
@@ -532,7 +532,7 @@ function buildFlow(requests: ParsedRequest[]) {
     const promptText =
       req.messageText && req.messageText.length > 40
         ? `${req.messageText.slice(0, 38)}…`
-        : req.messageText ?? 'Prompt';
+        : (req.messageText ?? 'Prompt');
     steps.push({
       nodes: [{ id: `user-${nodeId++}`, label: promptText, kind: 'user' }],
     });
@@ -621,8 +621,7 @@ function buildSession(
     ? new Date(creationMs).toISOString()
     : new Date().toISOString();
 
-  const title =
-    str(state, 'customTitle') ?? str(state, 'title') ?? null;
+  const title = str(state, 'customTitle') ?? str(state, 'title') ?? null;
 
   const requests = extractRequests(state);
 
@@ -694,7 +693,7 @@ function buildSession(
   const lastActivityMs =
     lastRequestTs.length > 0
       ? Math.max(...lastRequestTs)
-      : creationMs ?? Date.now();
+      : (creationMs ?? Date.now());
   const lastActivity = new Date(lastActivityMs).toISOString();
 
   // Status
@@ -778,29 +777,9 @@ function buildSession(
 
 /* ---------- GET handler ---------- */
 
-export async function GET(request: NextRequest) {
-  const homeDir = os.homedir();
-  const defaultDir = path.join(homeDir, 'Apps');
-
-  const { searchParams } = new URL(request.url);
-  const dirsParam = searchParams.get('dirs');
-  let filterDirs: string[] = [defaultDir];
-
-  if (dirsParam) {
-    try {
-      const parsedDirs = JSON.parse(decodeURIComponent(dirsParam));
-      if (Array.isArray(parsedDirs) && parsedDirs.length > 0) {
-        filterDirs = parsedDirs.filter(
-          (v): v is string => typeof v === 'string' && v.trim().length > 0,
-        );
-      }
-    } catch {
-      // Fall back to default.
-    }
-  }
-
+export async function GET() {
   const storageRoots = getWorkspaceStorageRoots();
-  const workspaces = discoverWorkspaces(storageRoots, filterDirs);
+  const workspaces = discoverWorkspaces(storageRoots, []);
 
   const allSessions: SessionRecord[] = [];
   let totalSessionFiles = 0;
@@ -834,7 +813,6 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json({
     sessions: allSessions,
-    searchedRoots: filterDirs,
     foundLogs: totalSessionFiles,
   });
 }

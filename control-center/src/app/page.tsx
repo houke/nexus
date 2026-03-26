@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ARCHIVED_SESSIONS_KEY = 'nexusArchivedSessions';
 const ARCHIVED_PROJECTS_KEY = 'nexusArchivedProjects';
@@ -89,7 +89,6 @@ type Session = {
 
 type SessionsPayload = {
   sessions: Session[];
-  searchedRoots: string[];
   foundLogs: number;
 };
 
@@ -165,9 +164,13 @@ function getEventDetail(event: SessionEvent) {
   }
   if (event.event === 'turnComplete') {
     const parts: string[] = [];
-    if (event.inputTokens) parts.push(`${event.inputTokens.toLocaleString()} input tokens`);
-    if (event.outputTokens) parts.push(`${event.outputTokens.toLocaleString()} output tokens`);
-    return parts.length > 0 ? parts.join(', ') : (event.detail ?? 'Turn completed');
+    if (event.inputTokens)
+      parts.push(`${event.inputTokens.toLocaleString()} input tokens`);
+    if (event.outputTokens)
+      parts.push(`${event.outputTokens.toLocaleString()} output tokens`);
+    return parts.length > 0
+      ? parts.join(', ')
+      : (event.detail ?? 'Turn completed');
   }
   if (event.event === 'errorOccurred') {
     return event.errorMessage ?? event.detail ?? 'Unknown error';
@@ -191,13 +194,17 @@ function FlowChart({ flow }: { flow: Session['flow'] }) {
   const padTop = 18;
 
   const maxCols = Math.max(
-    ...Array.from({ length: stepCount }, (_, s) =>
-      nodes.filter((n) => n.step === s).length,
+    ...Array.from(
+      { length: stepCount },
+      (_, s) => nodes.filter((n) => n.step === s).length,
     ),
     1,
   );
 
-  const width = Math.max(440, padX * 2 + maxCols * nodeW + (maxCols - 1) * colGap);
+  const width = Math.max(
+    440,
+    padX * 2 + maxCols * nodeW + (maxCols - 1) * colGap,
+  );
   const height = padTop + stepCount * (nodeH + stepGap);
 
   const pos = (node: SessionFlowNode) => {
@@ -301,43 +308,34 @@ export default function Home() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [customDirs, setCustomDirs] = useState<string[]>([]);
-  const [dirInput, setDirInput] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [searchedRoots, setSearchedRoots] = useState<string[]>([]);
   const [foundLogs, setFoundLogs] = useState(0);
   const [detailTab, setDetailTab] = useState<'timeline' | 'flow'>('timeline');
   const [archivedSessionIds, setArchivedSessionIds] = useState<string[]>([]);
-  const [archivedProjectPaths, setArchivedProjectPaths] = useState<string[]>([]);
+  const [archivedProjectPaths, setArchivedProjectPaths] = useState<string[]>(
+    [],
+  );
   const [showArchived, setShowArchived] = useState(false);
   const [hideInactive, setHideInactive] = useState(false);
 
-  const loadSessions = async (dirs: string[]) => {
+  const loadSessions = async () => {
     setLoading(true);
     setErrorMessage(null);
 
-    let url = '/api/sessions';
-    if (dirs.length > 0) {
-      url += `?dirs=${encodeURIComponent(JSON.stringify(dirs))}`;
-    }
-
     try {
-      const response = await fetch(url);
+      const response = await fetch('/api/sessions');
       if (!response.ok) {
         throw new Error(`Request failed with ${response.status}`);
       }
 
       const data = (await response.json()) as SessionsPayload;
       setSessions(data.sessions ?? []);
-      setSearchedRoots(data.searchedRoots ?? []);
       setFoundLogs(data.foundLogs ?? 0);
     } catch (error) {
       setErrorMessage(
         error instanceof Error ? error.message : 'Failed to load sessions.',
       );
       setSessions([]);
-      setSearchedRoots([]);
       setFoundLogs(0);
     } finally {
       setLoading(false);
@@ -345,17 +343,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const saved = window.localStorage.getItem('nexusDirs');
-    let initialDirs: string[] = [];
-    if (saved) {
-      try {
-        initialDirs = JSON.parse(saved) as string[];
-        setCustomDirs(initialDirs);
-      } catch {
-        window.localStorage.removeItem('nexusDirs');
-      }
-    }
-
     const savedArchived = window.localStorage.getItem(ARCHIVED_SESSIONS_KEY);
     if (savedArchived) {
       try {
@@ -378,7 +365,9 @@ export default function Home() {
     );
     if (savedArchivedProjects) {
       try {
-        const parsedArchivedProjects = JSON.parse(savedArchivedProjects) as string[];
+        const parsedArchivedProjects = JSON.parse(
+          savedArchivedProjects,
+        ) as string[];
         if (Array.isArray(parsedArchivedProjects)) {
           setArchivedProjectPaths(
             parsedArchivedProjects.filter(
@@ -402,7 +391,7 @@ export default function Home() {
       setHideInactive(true);
     }
 
-    void loadSessions(initialDirs);
+    void loadSessions();
   }, []);
 
   useEffect(() => {
@@ -420,7 +409,8 @@ export default function Home() {
     const isProjectArchived = archivedProjectPaths.includes(
       selectedSession.projectPath,
     );
-    const isHiddenByArchive = (isArchived || isProjectArchived) && !showArchived;
+    const isHiddenByArchive =
+      (isArchived || isProjectArchived) && !showArchived;
     const isHiddenByStatus =
       hideInactive && selectedSession.status === 'inactive';
 
@@ -456,23 +446,6 @@ export default function Home() {
   useEffect(() => {
     window.localStorage.setItem(HIDE_INACTIVE_KEY, String(hideInactive));
   }, [hideInactive]);
-
-  const saveSettings = () => {
-    window.localStorage.setItem('nexusDirs', JSON.stringify(customDirs));
-    setSettingsOpen(false);
-    void loadSessions(customDirs);
-  };
-
-  const addWatchDirectory = (event: FormEvent) => {
-    event.preventDefault();
-    const value = dirInput.trim();
-    if (!value || customDirs.includes(value)) {
-      return;
-    }
-
-    setCustomDirs([...customDirs, value]);
-    setDirInput('');
-  };
 
   const toggleArchived = (sessionId: string) => {
     setArchivedSessionIds((current) =>
@@ -526,9 +499,13 @@ export default function Home() {
     return true;
   });
 
-  const archivedCount = sessions.filter((session) => archivedSessions.has(session.id)).length;
+  const archivedCount = sessions.filter((session) =>
+    archivedSessions.has(session.id),
+  ).length;
   const archivedProjectCount = archivedProjectPaths.length;
-  const inactiveCount = sessions.filter((session) => session.status === 'inactive').length;
+  const inactiveCount = sessions.filter(
+    (session) => session.status === 'inactive',
+  ).length;
 
   const totalEvents = visibleSessions.reduce(
     (sum, session) => sum + session.summary.eventCount,
@@ -570,16 +547,7 @@ export default function Home() {
             </p>
           </div>
           <div className='hero-actions'>
-            <button
-              className='button button-muted'
-              onClick={() => setSettingsOpen(true)}
-            >
-              Watch dirs
-            </button>
-            <button
-              className='button'
-              onClick={() => void loadSessions(customDirs)}
-            >
+            <button className='button' onClick={() => void loadSessions()}>
               Refresh
             </button>
           </div>
@@ -590,7 +558,8 @@ export default function Home() {
             <span className='metric-label'>Sessions</span>
             <strong>{visibleSessions.length}</strong>
             <small>
-              {sessions.length} total, {archivedCount} session archived, {archivedProjectCount} project archived
+              {sessions.length} total, {archivedCount} session archived,{' '}
+              {archivedProjectCount} project archived
             </small>
           </article>
           <article className='metric-card'>
@@ -624,18 +593,10 @@ export default function Home() {
 
         <section className='panel panel-meta'>
           <div>
-            <span className='panel-kicker'>Search roots</span>
-            <p>
-              {searchedRoots.length > 0
-                ? searchedRoots.join(' | ')
-                : 'No search roots configured'}
-            </p>
-          </div>
-          <div>
             <span className='panel-kicker'>Data source</span>
             <p>
-              All data comes directly from VS Code chat session storage
-              (both Code and Code Insiders). Token counts match the debug panel.
+              All data comes directly from VS Code chat session storage (both
+              Code and Code Insiders). Token counts match the debug panel.
             </p>
           </div>
         </section>
@@ -659,7 +620,8 @@ export default function Home() {
           </div>
           <div className='hero-actions'>
             <span className='toolbar-copy'>
-              Archive is local to this Control Center view. It does not remove or modify VS Code chats.
+              Archive is local to this Control Center view. It does not remove
+              or modify VS Code chats.
             </span>
             {inactiveCount > 0 ? (
               <button
@@ -698,7 +660,7 @@ export default function Home() {
               <h2>No visible sessions</h2>
               <p>
                 Adjust the inactive or archive filters, or start a Copilot chat
-                in a VS Code workspace under a watched directory.
+                in VS Code to generate session data.
               </p>
             </div>
           ) : (
@@ -724,98 +686,103 @@ export default function Home() {
                     );
 
                     return (
-                    <tr key={session.id}>
-                      <td>
-                        <div className='status-stack'>
-                          <span
-                            className={`status-pill status-${session.status}`}
-                          >
-                            {session.status}
-                          </span>
-                          {isArchived ? (
-                            <span className='status-pill status-archived'>
-                              archived
+                      <tr key={session.id}>
+                        <td>
+                          <div className='status-stack'>
+                            <span
+                              className={`status-pill status-${session.status}`}
+                            >
+                              {session.status}
                             </span>
-                          ) : null}
-                          {isProjectArchived ? (
-                            <span className='status-pill status-project-archived'>
-                              project archived
+                            {isArchived ? (
+                              <span className='status-pill status-archived'>
+                                archived
+                              </span>
+                            ) : null}
+                            {isProjectArchived ? (
+                              <span className='status-pill status-project-archived'>
+                                project archived
+                              </span>
+                            ) : null}
+                          </div>
+                        </td>
+                        <td>
+                          <div className='project-cell'>
+                            <strong>{session.project}</strong>
+                            <span>
+                              {session.agents.join(' | ') ||
+                                'No agents detected'}
                             </span>
-                          ) : null}
-                        </div>
-                      </td>
-                      <td>
-                        <div className='project-cell'>
-                          <strong>{session.project}</strong>
-                          <span>
-                            {session.agents.join(' | ') || 'No agents detected'}
-                          </span>
-                        </div>
-                      </td>
-                      <td className='prompt-cell'>
-                        <div className='session-cell'>
-                          <strong className='session-title'>
-                            {session.title ?? 'Untitled chat'}
-                          </strong>
-                          {session.prompt ? (
-                            <span className='session-prompt'>
-                              {session.prompt}
+                          </div>
+                        </td>
+                        <td className='prompt-cell'>
+                          <div className='session-cell'>
+                            <strong className='session-title'>
+                              {session.title ?? 'Untitled chat'}
+                            </strong>
+                            {session.prompt ? (
+                              <span className='session-prompt'>
+                                {session.prompt}
+                              </span>
+                            ) : null}
+                          </div>
+                        </td>
+                        <td>
+                          <div className='stat-stack'>
+                            <strong>
+                              {session.diagnostics.turns.count ?? 'n/a'}
+                            </strong>
+                            <span className='signal-chip'>
+                              {session.diagnostics.turns.source}
                             </span>
-                          ) : null}
-                        </div>
-                      </td>
-                      <td>
-                        <div className='stat-stack'>
-                          <strong>
-                            {session.diagnostics.turns.count ?? 'n/a'}
-                          </strong>
-                          <span className='signal-chip'>
-                            {session.diagnostics.turns.source}
-                          </span>
-                        </div>
-                      </td>
-                      <td>
-                        <div className='stat-stack'>
-                          <strong>{session.summary.toolCalls}</strong>
-                          <span>
-                            {session.summary.successfulToolCalls} ok /{' '}
-                            {session.summary.failedToolCalls} fail
-                          </span>
-                        </div>
-                      </td>
-                      <td>{session.summary.errors}</td>
-                      <td>{formatDate(session.lastActivity)}</td>
-                      <td>
-                        <div className='action-row'>
-                          <button
-                            className='button button-muted'
-                            onClick={() => setSelectedSession(session)}
-                          >
-                            Inspect
-                          </button>
-                          <button
-                            className='button'
-                            onClick={() => openVscode(session.projectPath)}
-                          >
-                            Workspace
-                          </button>
-                          <button
-                            className='button button-muted'
-                            onClick={() => toggleArchived(session.id)}
-                            type='button'
-                          >
-                            {isArchived ? 'Unarchive' : 'Archive'}
-                          </button>
-                          <button
-                            className='button button-muted'
-                            onClick={() => toggleProjectArchived(session.projectPath)}
-                            type='button'
-                          >
-                            {isProjectArchived ? 'Unarchive project' : 'Archive project'}
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                          </div>
+                        </td>
+                        <td>
+                          <div className='stat-stack'>
+                            <strong>{session.summary.toolCalls}</strong>
+                            <span>
+                              {session.summary.successfulToolCalls} ok /{' '}
+                              {session.summary.failedToolCalls} fail
+                            </span>
+                          </div>
+                        </td>
+                        <td>{session.summary.errors}</td>
+                        <td>{formatDate(session.lastActivity)}</td>
+                        <td>
+                          <div className='action-row'>
+                            <button
+                              className='button button-muted'
+                              onClick={() => setSelectedSession(session)}
+                            >
+                              Inspect
+                            </button>
+                            <button
+                              className='button'
+                              onClick={() => openVscode(session.projectPath)}
+                            >
+                              Workspace
+                            </button>
+                            <button
+                              className='button button-muted'
+                              onClick={() => toggleArchived(session.id)}
+                              type='button'
+                            >
+                              {isArchived ? 'Unarchive' : 'Archive'}
+                            </button>
+                            <button
+                              className='button button-muted'
+                              onClick={() =>
+                                toggleProjectArchived(session.projectPath)
+                              }
+                              type='button'
+                            >
+                              {isProjectArchived
+                                ? 'Unarchive project'
+                                : 'Archive project'}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
                     );
                   })}
                 </tbody>
@@ -837,7 +804,9 @@ export default function Home() {
               <div className='action-row'>
                 <button
                   className='button button-muted'
-                  onClick={() => toggleProjectArchived(selectedSession.projectPath)}
+                  onClick={() =>
+                    toggleProjectArchived(selectedSession.projectPath)
+                  }
                   type='button'
                 >
                   {archivedProjects.has(selectedSession.projectPath)
@@ -914,7 +883,7 @@ export default function Home() {
                       ? selectedSession.models.join(', ')
                       : 'Unavailable'}
                   </strong>
-                    <small>From VS Code chat session data</small>
+                  <small>From VS Code chat session data</small>
                 </article>
               </section>
 
@@ -928,7 +897,11 @@ export default function Home() {
                       </span>
                     </div>
                     <div className='detail-actions'>
-                      <div className='detail-tabs' role='tablist' aria-label='Session detail views'>
+                      <div
+                        className='detail-tabs'
+                        role='tablist'
+                        aria-label='Session detail views'
+                      >
                         <button
                           type='button'
                           className={detailTab === 'timeline' ? 'active' : ''}
@@ -951,7 +924,9 @@ export default function Home() {
                       <div className='action-row'>
                         <button
                           className='button button-muted'
-                          onClick={() => openVscode(selectedSession.projectPath)}
+                          onClick={() =>
+                            openVscode(selectedSession.projectPath)
+                          }
                         >
                           Open workspace
                         </button>
@@ -1051,85 +1026,6 @@ export default function Home() {
                   </div>
                 </article>
               </section>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {settingsOpen ? (
-        <div className='modal-overlay' onClick={() => setSettingsOpen(false)}>
-          <div
-            className='modal modal-compact'
-            onClick={(event) => event.stopPropagation()}
-          >
-            <header className='modal-header'>
-              <div>
-                <p className='eyebrow'>Watch directories</p>
-                <h2>Scan roots</h2>
-              </div>
-              <button
-                className='button button-muted'
-                onClick={() => setSettingsOpen(false)}
-              >
-                Close
-              </button>
-            </header>
-
-            <div className='modal-body'>
-              <p className='settings-copy'>
-                Add absolute directories to filter VS Code workspaces by project
-                path. If empty, the control center shows workspaces under ~/Apps.
-              </p>
-
-              <div className='dir-list'>
-                {customDirs.length === 0 ? (
-                  <div className='empty-inline'>
-                    Using the default ~/Apps root.
-                  </div>
-                ) : null}
-                {customDirs.map((dir) => (
-                  <div key={dir} className='dir-item'>
-                    <span>{dir}</span>
-                    <button
-                      className='button button-muted'
-                      onClick={() =>
-                        setCustomDirs(
-                          customDirs.filter((value) => value !== dir),
-                        )
-                      }
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              <form className='dir-form' onSubmit={addWatchDirectory}>
-                <input
-                  value={dirInput}
-                  onChange={(event) => setDirInput(event.target.value)}
-                  placeholder='/Users/name/Projects'
-                />
-                <button className='button' type='submit'>
-                  Add root
-                </button>
-              </form>
-
-              <div className='action-row action-row-end'>
-                <button
-                  className='button button-muted'
-                  onClick={() => {
-                    setCustomDirs([]);
-                    setDirInput('');
-                    window.localStorage.removeItem('nexusDirs');
-                  }}
-                >
-                  Reset
-                </button>
-                <button className='button' onClick={saveSettings}>
-                  Save and rescan
-                </button>
-              </div>
             </div>
           </div>
         </div>
