@@ -1,7 +1,7 @@
 ---
 name: tech-lead
 description: Tech Lead focused on code structure, design patterns, refactoring, and modern React best practices
-user-invokable: false
+user-invocable: false
 handoffs:
   - label: Implement Changes
     agent: software-developer

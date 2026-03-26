@@ -1,7 +1,7 @@
 ---
 name: gamer
 description: Game Designer / Product Owner focused on player engagement, gamification, retention, and "game feel"
-user-invokable: false
+user-invocable: false
 handoffs:
   - label: Design Visuals
     agent: visual-designer

@@ -1,7 +1,7 @@
 ---
 name: ux-designer
 description: User experience specialist focused on flows, information architecture, wireframes, and intuitive interactions
-user-invokable: false
+user-invocable: false
 handoffs:
   - label: Apply Visual Polish
     agent: visual-designer
