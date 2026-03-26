@@ -10,10 +10,19 @@ Nexus is a template repository that provides a multi-agent orchestration system 
 
 ```
 .github/
-├── agents/       # Agent persona definitions (chatagent format)
-├── copilot-instructions.md  # Custom instructions for GitHub Copilot
-├── prompts/      # Workflow prompts for planning, execution, review, summary
-└── skills/       # Specialized skill instructions (SKILL.md files)
+├── plugin/
+│   └── marketplace.json             # Plugin marketplace catalog
+├── copilot-instructions.md      # Custom instructions for GitHub Copilot
+└── prompts/      # Workflow prompts for planning, execution, review, summary
+
+plugins/
+└── nexus/                   # Nexus agent plugin
+    ├── .github/
+    │   └── plugin/
+    │       └── plugin.json  # Plugin manifest
+    ├── .mcp.json            # MCP server definitions
+    ├── agents/              # Agent persona definitions (chatagent format)
+    └── skills/              # Specialized skill instructions (SKILL.md files)
 
 .nexus/           # Generated outputs directory
 ├── toc.md        # Master feature index (START HERE)
@@ -48,27 +57,27 @@ See `.github/copilot-instructions.md` for detailed Orchestrator guidelines.
 
 ### Specialized Agents
 
-Key agents are defined in `.github/agents/`:
+Key agents are defined in `plugins/nexus/agents/`:
 
-| Agent              | File                          | Purpose                                                      |
-| ------------------ | ----------------------------- | ------------------------------------------------------------ |
-| Nexus              | `nexus.agent.md`              | **Orchestrator** - Triages and delegates to all other agents |
-| Architect          | `architect.agent.md`          | System design, schemas, local-first architecture             |
-| Software Developer | `software-developer.agent.md` | Implementation, TDD, production code                         |
-| Tech Lead          | `tech-lead.agent.md`          | Code quality, patterns, architectural decisions              |
-| QA Engineer        | `qa-engineer.agent.md`        | Testing, edge cases, accessibility                           |
-| Security Agent     | `security.agent.md`           | Security audits, OWASP, vulnerabilities                      |
-| Product Manager    | `product-manager.agent.md`    | Requirements, priorities, acceptance criteria                |
-| UX Designer        | `ux-designer.agent.md`        | User flows, wireframes, interactions                         |
-| Visual Designer    | `visual-designer.agent.md`    | UI polish, animations, styling                               |
-| DevOps             | `devops.agent.md`             | CI/CD, infrastructure, deployment                            |
-| Gamer              | `gamer.agent.md`              | Gamification mechanics, engagement                           |
-| SEO Specialist     | `seo-specialist.agent.md`     | Technical SEO, content optimization, search rankings         |
+| Agent              | File                                               | Purpose                                                      |
+| ------------------ | -------------------------------------------------- | ------------------------------------------------------------ |
+| Nexus              | `plugins/nexus/agents/nexus.agent.md`              | **Orchestrator** - Triages and delegates to all other agents |
+| Architect          | `plugins/nexus/agents/architect.agent.md`          | System design, schemas, local-first architecture             |
+| Software Developer | `plugins/nexus/agents/software-developer.agent.md` | Implementation, TDD, production code                         |
+| Tech Lead          | `plugins/nexus/agents/tech-lead.agent.md`          | Code quality, patterns, architectural decisions              |
+| QA Engineer        | `plugins/nexus/agents/qa-engineer.agent.md`        | Testing, edge cases, accessibility                           |
+| Security Agent     | `plugins/nexus/agents/security.agent.md`           | Security audits, OWASP, vulnerabilities                      |
+| Product Manager    | `plugins/nexus/agents/product-manager.agent.md`    | Requirements, priorities, acceptance criteria                |
+| UX Designer        | `plugins/nexus/agents/ux-designer.agent.md`        | User flows, wireframes, interactions                         |
+| Visual Designer    | `plugins/nexus/agents/visual-designer.agent.md`    | UI polish, animations, styling                               |
+| DevOps             | `plugins/nexus/agents/devops.agent.md`             | CI/CD, infrastructure, deployment                            |
+| Gamer              | `plugins/nexus/agents/gamer.agent.md`              | Gamification mechanics, engagement                           |
+| SEO Specialist     | `plugins/nexus/agents/seo-specialist.agent.md`     | Technical SEO, content optimization, search rankings         |
 
 **Utility files:**
 | File | Purpose |
 | ---- | ------- |
-| `_template.agent.md` | Template for creating new agents |
+| `plugins/nexus/agents/_template.agent.md` | Template for creating new agents (if present) |
 
 **Note**: The Nexus orchestrator should be invoked via `@nexus` when you want pure orchestration without direct implementation. It exclusively delegates using `runSubagent` and never writes code itself.
 
@@ -264,7 +273,7 @@ Each agent has a persistent memory file in `.nexus/memory/` that stores user pre
 
 ## Skills System
 
-Skills in `.github/skills/` provide domain-specific instructions:
+Skills in `plugins/nexus/skills/` provide domain-specific instructions:
 
 - `accessibility-audit` - WCAG compliance auditing
 - `frontend-ui-polish` - UI/UX excellence and animations
@@ -431,7 +440,7 @@ rm -rf .nexus/tmp/my-agent-work
 
 When adding new features:
 
-1. Check if a relevant agent exists in `.github/agents/`
-2. Check if a relevant skill exists in `.github/skills/`
+1. Check if a relevant agent exists in `plugins/nexus/agents/`
+2. Check if a relevant skill exists in `plugins/nexus/skills/`
 3. Follow the patterns established in similar existing files
 4. Update this AGENTS.md if adding new agents or significant capabilities

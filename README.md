@@ -249,13 +249,6 @@ The orchestrator automatically triggers checkpoints:
 ```
 .
 ├── .github/
-│   ├── agents/           # Agent persona definitions
-│   │   ├── architect.agent.md
-│   │   ├── software-developer.agent.md
-│   │   ├── security.agent.md
-│   │   ├── _template.agent.md      # Template for new agents
-│   │   └── ...
-│   ├── commit-convention.md # Commit instructions
 │   ├── copilot-instructions.md  # Custom instructions for Copilot
 │   ├── prompts/          # Core workflow prompts
 │   │   ├── nexus-planning.prompt.md
@@ -263,8 +256,10 @@ The orchestrator automatically triggers checkpoints:
 │   │   ├── nexus-review.prompt.md
 │   │   ├── nexus-sync.prompt.md
 │   │   ├── nexus-summary.prompt.md
-│   │   ├── nexus-hotfix.prompt.md   # Quick bug fixes
-│   └── skills/           # Specialized skill instructions
+│   │   ├── nexus-hotfix.prompt.md
+│   │   └── nexus-init.prompt.md
+│   └── plugin/
+│       └── marketplace.json     # Plugin marketplace catalog
 ├── .nexus/               # Generated outputs
 │   ├── toc.md            # Master feature index (START HERE)
 │   ├── features/         # Feature folders (one per feature)
@@ -273,12 +268,21 @@ The orchestrator automatically triggers checkpoints:
 │   │   │   ├── execution.md
 │   │   │   ├── review.md
 │   │   │   └── notes/
-│   │   ├── _hotfixes/    # Quick fix documentation
+│   │   └── _hotfixes/    # Quick fix documentation
 │   ├── templates/        # Document templates
 │   ├── memory/           # Agent memory files (persistent preferences)
-│   └── docs/             # Guides and reference (incl. CHEATSHEET.md)
+│   └── docs/             # Guides and reference
 ├── .vscode/
 │   └── mcp.json          # MCP server configuration
+├── control-center/       # Next.js dashboard app
+├── plugins/
+│   └── nexus/
+│       ├── agents/       # Agent persona definitions
+│       │   ├── nexus.agent.md
+│       │   ├── architect.agent.md
+│       │   ├── software-developer.agent.md
+│       │   └── ...
+│       └── skills/       # Specialized skill instructions
 ├── AGENTS.md             # Agent instructions for AI coding tools
 └── README.md
 ```

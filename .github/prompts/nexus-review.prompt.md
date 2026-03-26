@@ -122,9 +122,12 @@ For each agent persona defined in the .github/agents directory, you will:
 5. **Synthesis**:
    - Collect all agent review reports.
    - Consolidate into the review document at `.nexus/features/<slug>/review.md` using the template structure.
-   - Update the plan status to `complete` when review is finished.
-   - Update toc.md with the new status and files.
-   - **ALWAYS** append an entry to the "## Revision History" section when creating or updating the review with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent identifier (@review-orchestrator or @orchestrator if from main chat, or specific @agent-name), and a brief description of what was reviewed/changed.
+
+- Write or update the review document before asking the user for final confirmation.
+- If review work is finished but awaiting user confirmation, set the feature status to `review` rather than `complete`.
+- Update toc.md with the new status and files.
+- **ALWAYS** append an entry to the "## Revision History" section when creating or updating the review with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent identifier (@review-orchestrator or @orchestrator if from main chat, or specific @agent-name), and a brief description of what was reviewed/changed.
+
 6. **ALWAYS** write the final review to the feature folder.
 
 ## Agent Fix Instructions
@@ -396,9 +399,20 @@ runSubagent({
 
 If any blockers are raised during sign-off, you MUST address them and re-run the sign-off cycle.
 
+## Mandatory Review Draft Persistence
+
+**BEFORE** asking the user for final satisfaction, you MUST persist the review output:
+
+1. Write or update `.nexus/features/<slug>/review.md` with the synthesized review findings, fixes, verification results, and any remaining action items.
+2. Append the current revision-history entry so the user can inspect the latest review iteration.
+3. Update the feature status to `review` in any relevant tracking document if you are waiting on user confirmation.
+4. Ensure `.nexus/toc.md` reflects that the review document now exists.
+
+The user must be able to read the actual written review before being asked whether they are satisfied.
+
 ## Mandatory User Satisfaction Verification
 
-**AFTER** completing all reviews and fixes, verify user satisfaction using `ask_questions` tool:
+**AFTER** the review document has been written and all reviews and fixes are complete, verify user satisfaction using `ask_questions` tool:
 
 ```javascript
 ask_questions({
@@ -406,7 +420,7 @@ ask_questions({
     {
       header: 'Satisfied?',
       question:
-        "Are you happy with the code review and fixes? (Select 'Other' to provide specific feedback)",
+        "Is the written review and its fixes complete and accurate? (Select 'Other' to provide specific feedback)",
       allowFreeformInput: true,
       options: [{ label: 'Yes, review looks complete!' }],
     },
@@ -430,5 +444,6 @@ ask_questions({
 **ONLY** after user confirms satisfaction should you:
 
 - Update toc.md status to `complete`
-- Finalize the review document
+- Update the plan status from `in-progress` or `review` to `complete`
+- Finalize the review document as the approved version
 - Mark the feature as done

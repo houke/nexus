@@ -8,7 +8,7 @@
 
 | Feature           | Status | Files | Agents | Last Edited |
 | ----------------- | ------ | ----- | ------ | ----------- |
-| _No features yet_ | —      | —     | —      | —           |
+| [agentlytics-vscode-analysis](features/agentlytics-vscode-analysis/) | draft | [plan](features/agentlytics-vscode-analysis/plan.md) | @nexus, @architect, @security-agent, @software-developer, @qa-engineer, @tech-lead | 2026-03-14 (v1.4) |
 
 <!--
 USAGE:
