@@ -2,6 +2,13 @@
 
 Multi-agent orchestration system for GitHub Copilot. Provides a team of specialized AI personas that collaborate to plan, build, and review software — each with a distinct role, memory, and handoff protocol.
 
+## Installation
+
+```
+# Using VS Code Agent Plugins
+# Add houke/nexus to chat.plugins.marketplaces, then install (CMD/CTRL + SHIFT + X) from @agentPlugins
+```
+
 ## What's Included
 
 ### Agents
