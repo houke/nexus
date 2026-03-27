@@ -8,14 +8,14 @@
 
 ## 🚀 Starting Work
 
-| I want to...          | Slash Command | How                                         |
-| --------------------- | ------------- | ------------------------------------------- |
-| Plan a new feature    | `/plan`       | Invoke @nexus or use slash command           |
-| Start implementing    | `/execute`    | Invoke @nexus or use slash command           |
-| Review completed work | `/review`     | Invoke @nexus or use slash command           |
-| Get project status    | `/summary`    | Invoke @nexus or use slash command           |
-| Sync out-of-date docs | `/sync`       | Invoke @nexus or use slash command           |
-| Quick bug fix         | `/hotfix`     | Invoke @nexus or use slash command           |
+| I want to...          | Slash Command | How                                                                 |
+| --------------------- | ------------- | ------------------------------------------------------------------- |
+| Plan a new feature    | `/plan`       | Invoke @nexus or use slash command                                  |
+| Start implementing    | `/execute`    | Invoke @nexus or use slash command                                  |
+| Review completed work | `/review`     | Invoke @nexus or use slash command                                  |
+| Get project status    | `/summary`    | Invoke @nexus or use slash command                                  |
+| Sync out-of-date docs | `/sync`       | Invoke @nexus or use slash command                                  |
+| Quick bug fix         | `/hotfix`     | Invoke @nexus or use slash command                                  |
 | Initialize new repo   | `/init`       | Initialize lightweight Nexus scaffolding in a downstream repository |
 
 `/init` ensures these exist: `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md`.
@@ -27,7 +27,7 @@
 ### Direct Agent Commands
 
 | I want to...        | Talk to             | Example Prompt                                  |
-| -------------------- | ------------------- | ----------------------------------------------- |
+| ------------------- | ------------------- | ----------------------------------------------- |
 | Design a system     | @architect          | "Design the data model for user authentication" |
 | Write code          | @software-developer | "Implement the login form component"            |
 | Review code quality | @tech-lead          | "Review this hook for best practices"           |
@@ -197,9 +197,9 @@ Memory is stored in `.nexus/memory/<agent-name>.memory.md`
 
 ## 📚 Key Files
 
-| File                              | Purpose                    |
-| --------------------------------- | -------------------------- |
-| `.nexus/toc.md`                   | Master feature index       |
-| `AGENTS.md`                       | Agent system documentation |
+| File                                  | Purpose                    |
+| ------------------------------------- | -------------------------- |
+| `.nexus/toc.md`                       | Master feature index       |
+| `AGENTS.md`                           | Agent system documentation |
 | `plugins/nexus/agents/nexus.agent.md` | Orchestrator instructions  |
-| `.nexus/memory/*.memory.md`       | Agent preferences          |
+| `.nexus/memory/*.memory.md`           | Agent preferences          |
