@@ -8,8 +8,7 @@
 
 | Feature           | Status | Files | Agents | Last Edited |
 | ----------------- | ------ | ----- | ------ | ----------- |
-| [agentlytics-vscode-analysis](features/agentlytics-vscode-analysis/) | draft | [plan](features/agentlytics-vscode-analysis/plan.md) | @nexus, @architect, @security-agent, @software-developer, @qa-engineer, @tech-lead | 2026-03-14 (v1.4) |
-| [nexus-workflows-skill](features/nexus-workflows-skill/) | draft | [plan](features/nexus-workflows-skill/plan.md) | @architect | 2026-03-26 |
+| _No features yet_ | —      | —     | —      | —           |
 
 <!--
 USAGE:
@@ -34,12 +33,6 @@ AGENTS column: List all agents who contributed using @mentions
 
 LAST EDITED: Date of most recent change to any document in the feature folder
 -->
-
-## Quick Links
-
-- **Templates**: [plugins/nexus/skills/nexus-workflows/templates/](../../plugins/nexus/skills/nexus-workflows/templates/) - Document templates for new features
-- **Memory**: [.nexus/memory/](memory/) - Agent preference files
-- **Workflows**: [plugins/nexus/skills/nexus-workflows/workflows/](../../plugins/nexus/skills/nexus-workflows/workflows/) - Workflow prompts
 
 ## Status Legend
 

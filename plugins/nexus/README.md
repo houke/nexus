@@ -66,7 +66,9 @@ The plugin ships with orchestration workflows in `skills/nexus-workflows/workflo
 | `hotfix.md`    | `/hotfix`     | Expedited workflow for small, well-understood bugs.             |
 | `sync.md`      | `/sync`       | Reconcile documentation with actual work done.                  |
 | `summary.md`   | `/summary`    | Project status snapshot — "have" vs "need".                     |
-| `init.md`      | `/init`       | Initialize a new repository with the full Nexus system.         |
+| `init.md`      | `/init`       | Ensure a downstream repository has `.nexus/`, `AGENTS.md`, `features/.gitkeep`, agent memory files, `toc.md`, and `tmp/`. |
+
+`/init` ensures `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md` exist before Nexus starts substantive orchestration work.
 
 ## How It Works
 

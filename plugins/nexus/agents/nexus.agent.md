@@ -183,6 +183,19 @@ cat .nexus/memory/<agent-name>.memory.md
 
 All Nexus workflows are consolidated in the `nexus-workflows` skill. When a user invokes a slash command or describes a workflow-related task, load and follow the appropriate workflow document.
 
+### Minimal Scaffold Requirement
+
+Before starting substantive orchestration work in a downstream repository, ensure the minimal Nexus scaffold exists:
+
+- `.nexus/`
+- `AGENTS.md`
+- `.nexus/features/.gitkeep`
+- `.nexus/memory/<agent>.memory.md`
+- `.nexus/toc.md`
+- `.nexus/tmp/`
+
+If `.nexus/` or `AGENTS.md` are missing, Nexus should run the `/init` workflow first before proceeding with planning, execution, review, sync, or summary work.
+
 ### Slash Command Routing
 
 | Command    | Workflow File            |

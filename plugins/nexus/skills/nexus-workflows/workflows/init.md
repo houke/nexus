@@ -4,15 +4,17 @@
 
 > **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
-You are the **Initialization Orchestrator**. Your role is to set up a new repository with the Nexus multi-agent orchestration system. Agents, skills, and templates are provided by the installed Nexus plugin — the init workflow only needs to create the lightweight project scaffolding.
+You are the **Initialization Orchestrator**. Your role is to ensure a downstream repository has the minimal Nexus scaffolding required by the orchestrator. Agents, skills, and templates are provided by the installed Nexus plugin, so the init workflow only needs to ensure `.nexus/` and `AGENTS.md` exist with the expected baseline structure.
+
+> **Important**: This workflow is for repositories that want to use Nexus, not for the Nexus source repository itself.
 
 ## Initialization Process
 
 Follow these steps in order:
 
-### Step 1: Create .nexus Directory Structure
+### Step 1: Ensure .nexus Directory Structure
 
-Create the project-specific Nexus scaffolding:
+Create or repair the project-specific Nexus scaffolding:
 
 ```bash
 echo "📁 Creating .nexus directory structure..."
@@ -21,6 +23,7 @@ echo "📁 Creating .nexus directory structure..."
 mkdir -p .nexus/features
 mkdir -p .nexus/memory
 mkdir -p .nexus/tmp
+touch .nexus/features/.gitkeep
 echo "✅ Created .nexus directories"
 
 # Create TOC
@@ -43,6 +46,12 @@ This is the master feature index for the project. All features are tracked here.
 - `archived` - No longer relevant
 EOF
 echo "✅ Created toc.md"
+
+# Create empty agent memory files
+for agent in architect devops gamer nexus product-manager qa-engineer security seo-specialist software-developer tech-lead ux-designer visual-designer; do
+  touch ".nexus/memory/${agent}.memory.md"
+done
+echo "✅ Ensured agent memory files"
 ```
 
 ### Step 2: Update .gitignore
@@ -74,15 +83,19 @@ Use the edit tool to add these rules:
 
 ### Step 3: Create AGENTS.md
 
-Create a simple AGENTS.md at the repository root:
+Create AGENTS.md only if the repository does not already have one:
 
 ```bash
-cat > AGENTS.md << 'EOF'
+if [ ! -f "AGENTS.md" ]; then
+  cat > AGENTS.md << 'EOF'
 # AGENTS.md
 
 If you encounter something surprising or confusing in this project, flag it as a comment.
 EOF
-echo "✅ Created AGENTS.md"
+  echo "✅ Created AGENTS.md"
+else
+  echo "ℹ️ AGENTS.md already exists; leaving it unchanged"
+fi
 ```
 
 ### Step 4: Initialize Git Tracking
@@ -98,7 +111,7 @@ git status
 
 echo ""
 echo "💡 Suggested commit message:"
-echo "chore: Initialize Nexus multi-agent orchestration system"
+echo "chore: initialize Nexus project scaffolding"
 ```
 
 ### Step 5: Verification & Next Steps
@@ -111,9 +124,11 @@ echo "🔍 Final verification..."
 [ -d ".nexus" ] && echo "✅ .nexus directory exists"
 [ -d ".nexus/features" ] && echo "✅ features/ directory exists"
 [ -d ".nexus/memory" ] && echo "✅ memory/ directory exists"
+[ -f ".nexus/features/.gitkeep" ] && echo "✅ features/.gitkeep exists"
 [ -d ".nexus/tmp" ] && echo "✅ tmp/ directory exists"
 [ -f ".nexus/toc.md" ] && echo "✅ toc.md exists"
 [ -f "AGENTS.md" ] && echo "✅ AGENTS.md exists"
+[ -f ".nexus/memory/nexus.memory.md" ] && echo "✅ agent memory files exist"
 ```
 
 Provide user with next steps:
@@ -123,10 +138,7 @@ Provide user with next steps:
 
 ### Next Steps
 
-1. **Commit the changes**:
-   ```bash
-   git commit -m "chore: Initialize Nexus multi-agent orchestration system"
-   ```
+1. **Commit the changes**: `git commit -m "chore: initialize Nexus project scaffolding"`
 
 2. **Start using Nexus**:
    - **Plan a feature**: `/plan` or invoke `@nexus`
@@ -134,7 +146,11 @@ Provide user with next steps:
    - **Review code**: `/review`
    - **Get project status**: `/summary`
 
-3. **Customize agents**: Create memory files in `.nexus/memory/` with preferences
+3. **Understand scope**:
+  - `/init` is for downstream repositories that adopt Nexus
+  - The Nexus source repository itself does not need to be initialized by Nexus
+
+4. **Customize agents**: Edit the files in `.nexus/memory/` with repository-specific preferences
 ```
 
 ## Mandatory User Satisfaction Verification
@@ -147,7 +163,7 @@ ask_questions({
     {
       header: 'Satisfied?',
       question:
-        "Is the Nexus system initialized correctly in your repository? (Select 'Other' to provide specific feedback)",
+        "Is the Nexus initialization guidance correct for this downstream repository? (Select 'Other' to provide specific feedback)",
       allowFreeformInput: true,
       options: [
         { label: 'Yes, looks perfect!' },
@@ -173,13 +189,13 @@ ask_questions({
 ### If MCP Servers Don't Load
 
 ```markdown
-**After initialization, reload VS Code**:
+**After initialization, reload VS Code if you are using the plugin surface**:
 
 1. Cmd+Shift+P (Mac) or Ctrl+Shift+P (Windows/Linux)
 2. Type "Reload Window"
 3. Press Enter
 
-MCP servers will be activated on reload.
+Plugin-scoped MCP servers will be activated on reload.
 ```
 
 ### If Git Tracking Issues
@@ -192,4 +208,6 @@ git add -f .nexus/ AGENTS.md .gitignore
 ## Important Notes
 
 - Agent memory files are initialized empty for the new repository
+- The features folder includes a `.gitkeep` so the scaffold survives in git before the first feature is created
 - The toc.md starts empty, ready for first feature tracking
+- `/init` is for downstream repositories that want Nexus scaffolding; it is not intended for the Nexus source repository

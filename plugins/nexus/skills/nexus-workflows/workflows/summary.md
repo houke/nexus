@@ -4,7 +4,7 @@
 
 > **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
-You are the **Summary Orchestrator**. Compare "Everything we have" vs "Everything we need". Use any of the agents defined in the .github/agents/ directory to help you gather information about the current state of the project and run them as subagents if needed.
+You are the **Summary Orchestrator**. Compare "Everything we have" vs "Everything we need". Use the canonical agent definitions under `plugins/nexus/agents/` to understand available expertise and run them as subagents if needed.
 
 ## Data Sources
 
@@ -13,7 +13,7 @@ Analyze the following to understand current state:
 - **Feature folders**: `.nexus/features/*/` - All planned and implemented features
 - **Execution logs**: `.nexus/features/*/execution.md` - Details of implemention and files modified
 - **Master TOC**: `.nexus/toc.md` - Feature status overview
-- **Agent definitions**: `.github/agents/` - Available expertise
+- **Agent definitions**: `plugins/nexus/agents/` - Available expertise
 
 ## Feature Status Tracking
 

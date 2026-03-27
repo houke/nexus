@@ -8,7 +8,7 @@ Nexus unites specialized AI agents, from strategic Architects to rigorous Securi
 
 ## ✨ What is Nexus?
 
-Nexus is a **template repository** designed to supercharge any new project with a team of specialized AI agents. Instead of working with a single AI assistant, Nexus gives you access to an entire digital team:
+Nexus is designed to supercharge any new project with a team of specialized AI agents, skills, mcp servers and more. Instead of working with a single AI assistant, Nexus gives you access to an entire digital team:
 
 | Agent                     | Expertise                                                 |
 | ------------------------- | --------------------------------------------------------- |
@@ -31,15 +31,15 @@ Nexus is a **template repository** designed to supercharge any new project with 
 ### Prerequisites
 
 - **VS Code** with GitHub Copilot extension
-- **Claude Opus 4.5** (recommended model for best results)
-- MCP servers configured (see `.vscode/mcp.json`)
 
 ### Using This Template
 
 1. Click **"Use this template"** on GitHub to create a new repository
 2. Clone your new repository
 3. Open in VS Code
-4. Start with `/plan` to begin your project
+4. This repository is the Nexus source repo itself. Do not run `/init` here.
+5. In downstream repositories that adopt Nexus, run `/init` to ensure `.nexus/` and `AGENTS.md` exist, including `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, and `.nexus/tmp/`.
+6. Start with `/plan` to begin your project
 
 ---
 
@@ -250,7 +250,6 @@ The orchestrator automatically triggers checkpoints:
 ```
 .
 ├── .github/
-│   ├── copilot-instructions.md  # Custom instructions for Copilot
 │   └── plugin/
 │       └── marketplace.json     # Plugin marketplace catalog
 ├── .nexus/               # Generated outputs
@@ -264,11 +263,10 @@ The orchestrator automatically triggers checkpoints:
 │   │   └── _hotfixes/    # Quick fix documentation
 │   ├── memory/           # Agent memory files (persistent preferences)
 │   └── tmp/              # Temporary working files
-├── .vscode/
-│   └── mcp.json          # MCP server configuration
 ├── control-center/       # Next.js dashboard app
 ├── plugins/
 │   └── nexus/
+│       ├── .mcp.json      # Plugin-scoped MCP server definitions
 │       ├── agents/       # Agent persona definitions
 │       │   ├── nexus.agent.md
 │       │   ├── architect.agent.md
@@ -299,12 +297,13 @@ To set Claude Opus 4.5 as your default:
 
 ### MCP Servers
 
-Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json`):
+Nexus currently declares these plugin-scoped MCP servers in `plugins/nexus/.mcp.json`:
 
-- `memory` - Knowledge graph for persistent context
 - `filesystem` - File operations
 - `sequential-thinking` - Complex problem decomposition
 - `playwright` - Browser automation for testing
+
+This repository does not currently include a committed `.vscode/mcp.json` workspace file or root Copilot compatibility config.
 
 ---
 
@@ -313,19 +312,19 @@ Nexus works best with these MCP servers enabled (configured in `.vscode/mcp.json
 ```
 1. Create a new repo from this template
 2. Open in VS Code
-3. Run "nexus-planning" prompt:
+3. Run `/plan`:
    "I want to build a task management app with offline support"
 4. Review the generated plan in .nexus/features/<feature>/plan.md
 5. Check .nexus/toc.md to see your feature tracked
-6. Run "nexus-execution" prompt to start building
-7. Run "nexus-review" prompt before committing
-8. Run "nexus-summary" to track progress
+6. Run `/execute` to start building
+7. Run `/review` before committing
+8. Run `/summary` to track progress
 
 # Alternative: Quick iteration workflow
-1. Run "nexus-planning" for initial plan
+1. Run `/plan` for initial plan
 2. Chat directly with agents: "@software-developer implement auth"
-3. Run "nexus-sync" to update documentation
-4. Run "nexus-review" for final audit
+3. Run `/sync` to update documentation
+4. Run `/review` for final audit
 ```
 
 ---
@@ -430,7 +429,8 @@ Preferences are stored with context:
 
 - [AGENTS.md](./AGENTS.md) - Instructions for AI coding agents
 - [Workflow Guide](./plugins/nexus/skills/nexus-workflows/docs/workflow-guide.md) - Keeping plans in sync and managing document status
-- [Copilot Instructions](./.github/copilot-instructions.md) - Custom instructions for GitHub Copilot
+- [Nexus Orchestrator Agent](./plugins/nexus/agents/nexus.agent.md) - Current orchestrator behavior and delegation rules
+- [Plugin README](./plugins/nexus/README.md) - Plugin packaging, agents, skills, and MCP overview
 - [GitHub Copilot Docs](https://docs.github.com/en/copilot)
 - [MCP Protocol](https://modelcontextprotocol.io)
 

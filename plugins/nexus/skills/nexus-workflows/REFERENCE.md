@@ -16,7 +16,9 @@
 | Get project status    | `/summary`    | Invoke @nexus or use slash command           |
 | Sync out-of-date docs | `/sync`       | Invoke @nexus or use slash command           |
 | Quick bug fix         | `/hotfix`     | Invoke @nexus or use slash command           |
-| Initialize new repo   | `/init`       | Invoke @nexus or use slash command           |
+| Initialize new repo   | `/init`       | Initialize lightweight Nexus scaffolding in a downstream repository |
+
+`/init` ensures these exist: `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md`.
 
 ---
 
@@ -199,5 +201,5 @@ Memory is stored in `.nexus/memory/<agent-name>.memory.md`
 | --------------------------------- | -------------------------- |
 | `.nexus/toc.md`                   | Master feature index       |
 | `AGENTS.md`                       | Agent system documentation |
-| `.github/copilot-instructions.md` | Orchestrator instructions  |
+| `plugins/nexus/agents/nexus.agent.md` | Orchestrator instructions  |
 | `.nexus/memory/*.memory.md`       | Agent preferences          |

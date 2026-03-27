@@ -25,7 +25,9 @@ Unified workflow orchestration for the Nexus multi-agent system.
 | `/sync`    | Sync      | —                      | Updates existing feature docs              |
 | `/summary` | Summary   | summary.template.md    | .nexus/features/<slug>/summary.md          |
 | `/hotfix`  | Hotfix    | hotfix.template.md     | .nexus/features/_hotfixes/<date>-<slug>.md |
-| `/init`    | Init      | —                      | .nexus/, AGENTS.md, .gitignore scaffolding |
+| `/init`    | Init      | —                      | .nexus/, AGENTS.md, .gitignore scaffolding, features/.gitkeep, agent memory files |
+
+`/init` ensures `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md` exist.
 
 Also accepts long-form: `/nexus-workflows plan`, `/nexus-workflows execute`, etc.
 
