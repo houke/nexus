@@ -45,6 +45,14 @@ Nexus is a **template repository** designed to supercharge any new project with 
 
 ## 🔄 The Nexus Workflow
 
+### How `@nexus` Should Behave
+
+`@nexus` is the orchestrator, not an implementation agent. Its default behavior is to assess the request and delegate substantive work to the appropriate specialist agents.
+
+Use direct Nexus responses mainly for conversational Q&A, clarification, explanation, or lightweight brainstorming. For planning, implementation, review, research, design, and execution work, Nexus should delegate rather than perform the work itself.
+
+Every final Nexus response should also end with a user satisfaction check so the conversation explicitly closes the loop, even when the interaction was only Q&A.
+
 Nexus provides core workflows (via slash commands) that guide you through the entire software development lifecycle:
 
 ### 1️⃣ Planning Phase → `/plan`

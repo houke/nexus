@@ -2,6 +2,7 @@
 name: product-manager
 description: Requirements owner defining user stories, acceptance criteria, and feature priorities to maximize user value
 user-invocable: false
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: Design User Flows
     agent: ux-designer

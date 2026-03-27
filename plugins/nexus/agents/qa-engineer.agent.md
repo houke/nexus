@@ -2,6 +2,7 @@
 name: qa-engineer
 description: QA Engineer focused on testing, edge cases, bug hunting, and accessibility failures
 user-invocable: false
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: Fix Bug
     agent: software-developer

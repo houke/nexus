@@ -2,6 +2,7 @@
 name: security-agent
 description: Security Agent focused on application security, OWASP best practices, dependency auditing, and secure local-first data handling
 user-invocable: false
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: Fix Security Issue
     agent: software-developer

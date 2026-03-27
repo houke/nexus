@@ -77,6 +77,14 @@ The **Nexus Orchestrator** (`@nexus`) acts as a team lead. When you invoke a wor
 3. Synthesizes all responses into a unified output
 4. Always closes with a QA + Tech Lead review cycle
 
+### Nexus Response Policy
+
+The `@nexus` orchestrator defaults to assessment and delegation for substantive work. If your request involves planning, implementation, review, research, design, or other action-oriented work, Nexus should route that work to specialist agents instead of doing it directly.
+
+The only normal exception is direct conversational Q&A. If you are asking for explanation, clarification, lightweight brainstorming, or general guidance, Nexus may answer directly without delegation.
+
+In all cases, including direct Q&A, every final Nexus response should end with a user satisfaction check using the question flow.
+
 Agents can also hand off to each other directly — for example, `@architect` hands implementation details to `@software-developer`, which then hands testing to `@qa-engineer`.
 
 ## Source

@@ -2,6 +2,7 @@
 name: software-developer
 description: Implementation specialist focused on writing production-ready, tested code following TDD practices
 user-invocable: false
+model: Claude Opus 4.6 (copilot)
 handoffs:
   - label: Request Testing Review
     agent: qa-engineer

@@ -2,6 +2,7 @@
 name: ux-designer
 description: User experience specialist focused on flows, information architecture, wireframes, and intuitive interactions
 user-invocable: false
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: Apply Visual Polish
     agent: visual-designer

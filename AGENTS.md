@@ -79,6 +79,8 @@ Key agents are defined in `plugins/nexus/agents/`:
 
 **Note**: The Nexus orchestrator should be invoked via `@nexus` when you want pure orchestration without direct implementation. It exclusively delegates using `runSubagent` and never writes code itself.
 
+For Nexus behavior, treat delegation as the default for substantive work. Nexus may answer direct user Q&A itself when the interaction is purely conversational, explanatory, or clarifying, but every final Nexus response should still end with a user satisfaction check.
+
 When working on this codebase, respect the separation of concerns defined by each agent's expertise.
 
 ### Inter-Agent Communication
@@ -144,15 +146,15 @@ Additional: `on-hold`, `archived`
 
 ### Slash Commands
 
-| Command    | Workflow                                  | Purpose                                       |
-| ---------- | ----------------------------------------- | --------------------------------------------- |
-| `/plan`    | `workflows/planning.md`                   | Orchestrate comprehensive feature plans        |
-| `/execute` | `workflows/execution.md`                  | Coordinate implementation from plans           |
-| `/review`  | `workflows/review.md`                     | Code review with automatic fixes               |
-| `/sync`    | `workflows/sync.md`                       | Reconcile docs with actual work                |
-| `/summary` | `workflows/summary.md`                    | Project status snapshot (have vs need)         |
-| `/hotfix`  | `workflows/hotfix.md`                     | Expedited bug fixes with traceability          |
-| `/init`    | `workflows/init.md`                       | Initialize Nexus in a new repository           |
+| Command    | Workflow                 | Purpose                                 |
+| ---------- | ------------------------ | --------------------------------------- |
+| `/plan`    | `workflows/planning.md`  | Orchestrate comprehensive feature plans |
+| `/execute` | `workflows/execution.md` | Coordinate implementation from plans    |
+| `/review`  | `workflows/review.md`    | Code review with automatic fixes        |
+| `/sync`    | `workflows/sync.md`      | Reconcile docs with actual work         |
+| `/summary` | `workflows/summary.md`   | Project status snapshot (have vs need)  |
+| `/hotfix`  | `workflows/hotfix.md`    | Expedited bug fixes with traceability   |
+| `/init`    | `workflows/init.md`      | Initialize Nexus in a new repository    |
 
 ### Planning (`/plan`)
 

@@ -2,6 +2,7 @@
 name: devops
 description: DevOps Engineer focused on CI/CD, release automation, security, and GitHub Actions
 user-invocable: false
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: Security Audit
     agent: security-agent

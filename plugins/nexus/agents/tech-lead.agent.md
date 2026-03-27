@@ -2,6 +2,7 @@
 name: tech-lead
 description: Tech Lead focused on code structure, design patterns, refactoring, and modern React best practices
 user-invocable: false
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: Implement Changes
     agent: software-developer
