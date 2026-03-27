@@ -32,14 +32,14 @@ Nexus is designed to supercharge any new project with a team of specialized AI a
 
 - **VS Code** with GitHub Copilot extension
 
-### Using This Template
+### Installation
 
-1. Click **"Use this template"** on GitHub to create a new repository
-2. Clone your new repository
-3. Open in VS Code
-4. This repository is the Nexus source repo itself. Do not run `/init` here.
-5. In downstream repositories that adopt Nexus, run `/init` to ensure `.nexus/` and `AGENTS.md` exist, including `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, and `.nexus/tmp/`.
-6. Start with `/plan` to begin your project
+1. Open this URL directly in your browser: `vscode://chat-plugin/add-marketplace?ref=houke/nexus` to add the marketplace.
+2. Open VS Code and navigate to the Extensions view (`Cmd/Ctrl+Shift+X`)
+3. Search for **`@agentPlugins houke`** and install the **Nexus** plugin
+4. Open Copilot Chat and pick the `Nexus` agent
+5. Run `/nexus-workflows init` to scaffold `.nexus/` and `AGENTS.md` in your project
+6. Start with `/nexus-workflows plan` to begin your first feature
 
 ---
 
@@ -55,7 +55,7 @@ Every final Nexus response should also end with a user satisfaction check so the
 
 Nexus provides core workflows (via slash commands) that guide you through the entire software development lifecycle:
 
-### 1️⃣ Planning Phase → `/plan`
+### 1️⃣ Planning Phase → `/nexus-workflows plan`
 
 **When to use:** At the start of a new feature or project
 
@@ -64,7 +64,7 @@ The Planning workflow orchestrates a comprehensive planning session by invoking 
 **How to use:**
 
 1. Open Copilot Chat
-2. Type `/plan` followed by your feature description
+2. Type `/nexus-workflows plan` followed by your feature description
 3. Describe what you want to build
 
 **What happens:**
@@ -79,7 +79,7 @@ The Planning workflow orchestrates a comprehensive planning session by invoking 
 
 ---
 
-### 2️⃣ Execution Phase → `/execute`
+### 2️⃣ Execution Phase → `/nexus-workflows execute`
 
 **When to use:** After planning is complete and you're ready to build
 
@@ -88,7 +88,7 @@ The Execution workflow takes your action plans and coordinates implementation by
 **How to use:**
 
 1. Open Copilot Chat
-2. Type `/execute` followed by the feature to execute (or let it detect from `.nexus/toc.md`)
+2. Type `/nexus-workflows execute` followed by the feature to execute (or let it detect from `.nexus/toc.md`)
 
 **What happens:**
 
@@ -105,7 +105,7 @@ The Execution workflow takes your action plans and coordinates implementation by
 
 ---
 
-### 3️⃣ Review & Fix Phase → `/review`
+### 3️⃣ Review & Fix Phase → `/nexus-workflows review`
 
 **When to use:** After implementation, before merging
 
@@ -114,7 +114,7 @@ The Review workflow runs a comprehensive code review using ALL agent personas. T
 **How to use:**
 
 1. Open Copilot Chat
-2. Type `/review` optionally followed by files or features to review
+2. Type `/nexus-workflows review` optionally followed by files or features to review
 
 **What happens:**
 
@@ -128,7 +128,7 @@ The Review workflow runs a comprehensive code review using ALL agent personas. T
 
 ---
 
-### 4️⃣ Sync Phase → `/sync`
+### 4️⃣ Sync Phase → `/nexus-workflows sync`
 
 **When to use:** When work happens outside formal workflows
 
@@ -137,7 +137,7 @@ The Sync workflow reconciles documentation with reality when you've been chattin
 **How to use:**
 
 1. Open Copilot Chat
-2. Type `/sync`
+2. Type `/nexus-workflows sync`
 
 **What happens:**
 
@@ -152,7 +152,7 @@ The Sync workflow reconciles documentation with reality when you've been chattin
 
 > ⚠️ **Important:** Sync is your safety net when you bypass the formal workflow. It prevents documentation drift by keeping plans synchronized with what you've actually built.
 
-**When to run sync:**
+**When to run `/nexus-workflows sync`:**
 
 - ✅ After chatting directly with agents
 - ✅ When plan status seems out of date
@@ -161,7 +161,7 @@ The Sync workflow reconciles documentation with reality when you've been chattin
 
 ---
 
-### 5️⃣ Summary Phase → `/summary`
+### 5️⃣ Summary Phase → `/nexus-workflows summary`
 
 **When to use:** Periodically, to assess project status
 
@@ -170,7 +170,7 @@ The Summary workflow provides a snapshot of your project's current state by comp
 **How to use:**
 
 1. Open Copilot Chat
-2. Type `/summary`
+2. Type `/nexus-workflows summary`
 
 **What happens:**
 
@@ -181,11 +181,11 @@ The Summary workflow provides a snapshot of your project's current state by comp
 
 **Output:** A status report saved to `.nexus/features/<feature-slug>/summary.md`
 
-> 💡 **Pro tip:** Run `/summary` every few days or at the start of each work session to stay aligned with project goals.
+> 💡 **Pro tip:** Run `/nexus-workflows summary` every few days or at the start of each work session to stay aligned with project goals.
 
 ---
 
-### \* Hotfix Workflow → `/hotfix`
+### \* Hotfix Workflow → `/nexus-workflows hotfix`
 
 **When to use:** For small, well-understood bug fixes
 
@@ -228,11 +228,11 @@ Long execution sessions can save and resume progress using checkpoints.
 
 ### Commands
 
-| Command              | Action                                |
-| -------------------- | ------------------------------------- |
-| `/checkpoint save`   | Save current progress to execution.md |
-| `/checkpoint resume` | Continue from last checkpoint         |
-| `/checkpoint status` | Show completed vs pending items       |
+| Command                              | Action                                |
+| ------------------------------------ | ------------------------------------- |
+| `/nexus-workflows checkpoint save`   | Save current progress to execution.md |
+| `/nexus-workflows checkpoint resume` | Continue from last checkpoint         |
+| `/nexus-workflows checkpoint status` | Show completed vs pending items       |
 
 ### Automatic Triggers
 
@@ -310,21 +310,22 @@ This repository does not currently include a committed `.vscode/mcp.json` worksp
 ## 🚀 Quick Start Example
 
 ```
-1. Create a new repo from this template
-2. Open in VS Code
-3. Run `/plan`:
+1. Install the Nexus plugin (search @agentPlugins houke in Extensions)
+2. Open any project in VS Code
+3. Run /nexus-workflows init to scaffold .nexus/ and AGENTS.md
+4. Run /nexus-workflows plan:
    "I want to build a task management app with offline support"
-4. Review the generated plan in .nexus/features/<feature>/plan.md
-5. Check .nexus/toc.md to see your feature tracked
-6. Run `/execute` to start building
-7. Run `/review` before committing
-8. Run `/summary` to track progress
+5. Review the generated plan in .nexus/features/<feature>/plan.md
+6. Check .nexus/toc.md to see your feature tracked
+7. Run /nexus-workflows execute to start building
+8. Run /nexus-workflows review before committing
+9. Run /nexus-workflows summary to track progress
 
 # Alternative: Quick iteration workflow
-1. Run `/plan` for initial plan
+1. Run /nexus-workflows plan for initial plan
 2. Chat directly with agents: "@software-developer implement auth"
-3. Run `/sync` to update documentation
-4. Run `/review` for final audit
+3. Run /nexus-workflows sync to update documentation
+4. Run /nexus-workflows review for final audit
 ```
 
 ---
