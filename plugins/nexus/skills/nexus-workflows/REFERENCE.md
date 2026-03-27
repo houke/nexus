@@ -1,19 +1,22 @@
 # Nexus Quick Commands Cheatsheet
 
 > Your one-page reference for the Nexus workflow.
+>
+> Migrated from `.nexus/docs/CHEATSHEET.md` to the `nexus-workflows` skill.
 
 ---
 
 ## 🚀 Starting Work
 
-| I want to...          | Use Prompt        | How                                            |
-| --------------------- | ----------------- | ---------------------------------------------- |
-| Plan a new feature    | `nexus-planning`  | `Cmd+Shift+P` → "Chat: Run Prompt..." → Select |
-| Start implementing    | `nexus-execution` | Same as above                                  |
-| Review completed work | `nexus-review`    | Same as above                                  |
-| Get project status    | `nexus-summary`   | Same as above                                  |
-| Sync out-of-date docs | `nexus-sync`      | Same as above                                  |
-| Quick bug fix         | `nexus-hotfix`    | Same as above                                  |
+| I want to...          | Slash Command | How                                         |
+| --------------------- | ------------- | ------------------------------------------- |
+| Plan a new feature    | `/plan`       | Invoke @nexus or use slash command           |
+| Start implementing    | `/execute`    | Invoke @nexus or use slash command           |
+| Review completed work | `/review`     | Invoke @nexus or use slash command           |
+| Get project status    | `/summary`    | Invoke @nexus or use slash command           |
+| Sync out-of-date docs | `/sync`       | Invoke @nexus or use slash command           |
+| Quick bug fix         | `/hotfix`     | Invoke @nexus or use slash command           |
+| Initialize new repo   | `/init`       | Invoke @nexus or use slash command           |
 
 ---
 
@@ -22,7 +25,7 @@
 ### Direct Agent Commands
 
 | I want to...        | Talk to             | Example Prompt                                  |
-| ------------------- | ------------------- | ----------------------------------------------- |
+| -------------------- | ------------------- | ----------------------------------------------- |
 | Design a system     | @architect          | "Design the data model for user authentication" |
 | Write code          | @software-developer | "Implement the login form component"            |
 | Review code quality | @tech-lead          | "Review this hook for best practices"           |
@@ -57,14 +60,14 @@
 
 ## 📊 Feature Status
 
-| Status        | Meaning              | Set By            |
-| ------------- | -------------------- | ----------------- |
-| `draft`       | Planned, not started | `nexus-planning`  |
-| `in-progress` | Currently building   | `nexus-execution` |
-| `review`      | Under code review    | `nexus-review`    |
-| `complete`    | Done and approved    | `nexus-review`    |
-| `on-hold`     | Paused               | Manual            |
-| `archived`    | No longer needed     | Manual            |
+| Status        | Meaning              | Set By     |
+| ------------- | -------------------- | ---------- |
+| `draft`       | Planned, not started | `/plan`    |
+| `in-progress` | Currently building   | `/execute` |
+| `review`      | Under code review    | `/review`  |
+| `complete`    | Done and approved    | `/review`  |
+| `on-hold`     | Paused               | Manual     |
+| `archived`    | No longer needed     | Manual     |
 
 ---
 
@@ -128,11 +131,11 @@ function validateToken() { ... }
 
 | Problem                  | Solution                                 |
 | ------------------------ | ---------------------------------------- |
-| Docs out of sync         | Run `nexus-sync` prompt                  |
+| Docs out of sync         | Run `/sync` workflow                     |
 | Execution failed midway  | Use `/checkpoint resume`                 |
 | Agent not following plan | Re-read plan, add clarifying details     |
 | Tests breaking           | Run `git diff`, identify breaking change |
-| Need quick fix           | Use `nexus-hotfix` instead of full flow  |
+| Need quick fix           | Use `/hotfix` instead of full flow       |
 
 ---
 
@@ -154,27 +157,27 @@ Memory is stored in `.nexus/memory/<agent-name>.memory.md`
 ### New Feature (Full Flow)
 
 ```
-1. nexus-planning  → Creates plan.md
-2. nexus-execution → Creates execution.md
-3. nexus-review    → Creates review.md, marks complete
+1. /plan     → Creates plan.md
+2. /execute  → Creates execution.md
+3. /review   → Creates review.md, marks complete
 ```
 
 ### Quick Bug Fix
 
 ```
-1. nexus-hotfix → Diagnose, fix, verify in one session
+1. /hotfix → Diagnose, fix, verify in one session
 ```
 
 ### Catch Up Documentation
 
 ```
-1. nexus-sync → Reconciles docs with actual changes
+1. /sync → Reconciles docs with actual changes
 ```
 
 ### Check Progress
 
 ```
-1. nexus-summary → Shows have vs need
+1. /summary → Shows have vs need
 ```
 
 ---
@@ -198,18 +201,3 @@ Memory is stored in `.nexus/memory/<agent-name>.memory.md`
 | `AGENTS.md`                       | Agent system documentation |
 | `.github/copilot-instructions.md` | Orchestrator instructions  |
 | `.nexus/memory/*.memory.md`       | Agent preferences          |
-
----
-
-## 💡 Pro Tips
-
-1. **Start with planning** - Even small features benefit from structure
-2. **Use checkpoints** - Save progress on long sessions
-3. **Trust the agents** - They have specialized expertise
-4. **Sync regularly** - Keep docs in sync with reality
-5. **Read the plan** - Plans contain valuable context
-6. **Check metrics** - Identify bottlenecks and improve
-
----
-
-_Last updated: 2026-01-27_

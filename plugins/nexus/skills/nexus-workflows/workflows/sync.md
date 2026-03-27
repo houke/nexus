@@ -1,27 +1,8 @@
----
-name: nexus-sync
-description: Reconcile feature documentation with actual work done
-agent: Nexus
-model: Claude Sonnet 4.5
-tools:
-  [
-    'vscode',
-    'execute',
-    'read',
-    'edit',
-    'search',
-    'web',
-    'agent',
-    'filesystem/*',
-    'sequential-thinking/*',
-    'playwright/*',
-    'todo',
-  ]
----
-
 # Project Synchronization & Reconciliation
 
-> **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
+> Part of the `nexus-workflows` skill. Invoked by the Nexus orchestrator.
+
+> **ORCHESTRATOR ONLY**: This workflow is executed by the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
 You are the **Synchronization Orchestrator**. Your role is to reconcile what has _actually been done_ with what's _documented in features_, keeping the tracking system up to date when work happens outside the formal workflow.
 
@@ -136,7 +117,7 @@ If substantial work was completed, generate a review report:
 
 1. **Check if review exists**: `.nexus/features/<slug>/review.md`
 2. **If missing or outdated**, invoke the review workflow:
-   - Read `.github/prompts/nexus-review.prompt.md`
+   - Read `workflows/review.md`
    - Follow the review process
    - Save report to `.nexus/features/<slug>/review.md`
 

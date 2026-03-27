@@ -12,7 +12,7 @@ checkpoint: null # null | 'saved' | 'resumed'
 
 **Plan Reference**: [plan.md](./plan.md)
 
-> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `nexus-sync` to update retroactively.
+> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `/sync` workflow to update retroactively.
 
 ---
 
@@ -225,7 +225,7 @@ _(Used by sync workflow to reconcile untracked work)_
 ## Revision History
 
 | Date & Time         | Agent                   | Changes                       |
-| ------------------- | ----------------------- | ----------------------------- |
+| -------------------- | ----------------------- | ----------------------------- |
 | YYYY-MM-DD HH:MM:SS | @execution-orchestrator | Initial log created           |
 | YYYY-MM-DD HH:MM:SS | @sync-orchestrator      | Reconciled untracked work     |
 | YYYY-MM-DD HH:MM:SS | @orchestrator           | [Description of changes made] |

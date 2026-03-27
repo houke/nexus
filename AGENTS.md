@@ -12,8 +12,7 @@ Nexus is a template repository that provides a multi-agent orchestration system 
 .github/
 ├── plugin/
 │   └── marketplace.json             # Plugin marketplace catalog
-├── copilot-instructions.md      # Custom instructions for GitHub Copilot
-└── prompts/      # Workflow prompts for planning, execution, review, summary
+└── copilot-instructions.md      # Custom instructions for GitHub Copilot
 
 plugins/
 └── nexus/                   # Nexus agent plugin
@@ -32,9 +31,8 @@ plugins/
 │       ├── execution.md
 │       ├── review.md
 │       └── notes/
-├── templates/    # Document templates
 ├── memory/       # Agent preference files
-└── docs/         # Guides and reference
+└── tmp/          # Temporary working files
 
 .vscode/
 └── mcp.json      # MCP server configuration
@@ -141,42 +139,56 @@ Additional: `on-hold`, `archived`
 ## Core Workflows
 
 > 💡 **Orchestration Requirement**: All core workflows below are **restricted to the @Nexus agent**. These prompts are designed for orchestration and delegation, ensuring consistent quality and cross-agent coordination.
+>
+> **Canonical location**: `plugins/nexus/skills/nexus-workflows/` (the `nexus-workflows` skill).
 
-### Planning (`nexus-planning.prompt.md`)
+### Slash Commands
+
+| Command    | Workflow                                  | Purpose                                       |
+| ---------- | ----------------------------------------- | --------------------------------------------- |
+| `/plan`    | `workflows/planning.md`                   | Orchestrate comprehensive feature plans        |
+| `/execute` | `workflows/execution.md`                  | Coordinate implementation from plans           |
+| `/review`  | `workflows/review.md`                     | Code review with automatic fixes               |
+| `/sync`    | `workflows/sync.md`                       | Reconcile docs with actual work                |
+| `/summary` | `workflows/summary.md`                    | Project status snapshot (have vs need)         |
+| `/hotfix`  | `workflows/hotfix.md`                     | Expedited bug fixes with traceability          |
+| `/init`    | `workflows/init.md`                       | Initialize Nexus in a new repository           |
+
+### Planning (`/plan`)
 
 - Orchestrates all agents to create comprehensive plans
 - Creates `.nexus/features/<slug>/plan.md`
 - Updates toc.md with new feature (status: `draft`)
 - Plans should NOT execute code, only document decisions
 
-### Execution (`nexus-execution.prompt.md`)
+### Execution (`/execute`)
 
 - Takes plans and coordinates implementation
 - Creates `.nexus/features/<slug>/execution.md`
 - Updates plan status to `in-progress`
 - Updates toc.md
 
-### Review (`nexus-review.prompt.md`)
+### Review (`/review`)
 
 - Comprehensive code review and **automatic fix** phase
 - Creates `.nexus/features/<slug>/review.md`
 - Updates plan status to `complete`
 - Updates toc.md
 
-### Sync (`nexus-sync.prompt.md`)
+### Sync (`/sync`)
 
 - Reconciles documentation with actual work done
 - Use when work happens outside formal workflows
 - Updates all out-of-sync feature documents
 - Updates toc.md
 
-### Summary (`nexus-summary.prompt.md`)
+### Summary (`/summary`)
 
 - Project status snapshot comparing "have" vs "need"
 - Creates/updates `.nexus/features/<slug>/summary.md`
 - Updates toc.md
 
-### Hotfix (`nexus-hotfix.prompt.md`)
+### Hotfix (`/hotfix`)
 
 - Expedited workflow for small, well-understood bugs
 - Creates `.nexus/features/_hotfixes/<date>-<slug>.md`
@@ -184,26 +196,6 @@ Additional: `on-hold`, `archived`
 - Use instead of full workflow for quick fixes
 - Updates plan status to `complete`
 - Updates toc.md
-
-### Sync (`nexus-sync.prompt.md`)
-
-- Reconciles documentation with actual work done
-- Use when work happens outside formal workflows
-- Updates all out-of-sync feature documents
-- Updates toc.md
-
-### Summary (`nexus-summary.prompt.md`)
-
-- Project status snapshot comparing "have" vs "need"
-- Creates/updates `.nexus/features/<slug>/summary.md`
-- Updates toc.md
-
-### Hotfix (`nexus-hotfix.prompt.md`)
-
-- Expedited workflow for small, well-understood bugs
-- Creates `.nexus/features/_hotfixes/<date>-<slug>.md`
-- Minimal ceremony, full traceability
-- Use instead of full workflow for quick fixes
 
 ## Checkpoint System
 

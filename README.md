@@ -39,26 +39,25 @@ Nexus is a **template repository** designed to supercharge any new project with 
 1. Click **"Use this template"** on GitHub to create a new repository
 2. Clone your new repository
 3. Open in VS Code
-4. Start with the **Planning Prompt** to begin your project
+4. Start with `/plan` to begin your project
 
 ---
 
 ## 🔄 The Nexus Workflow
 
-Nexus provides five core prompts that guide you through the entire software development lifecycle:
+Nexus provides core workflows (via slash commands) that guide you through the entire software development lifecycle:
 
-### 1️⃣ Planning Phase → `nexus-planning.prompt.md`
+### 1️⃣ Planning Phase → `/plan`
 
 **When to use:** At the start of a new feature or project
 
-The Planning prompt orchestrates a comprehensive planning session by invoking ALL specialized agents. Each agent contributes their expertise to create a complete action plan.
+The Planning workflow orchestrates a comprehensive planning session by invoking ALL specialized agents. Each agent contributes their expertise to create a complete action plan.
 
 **How to use:**
 
-1. Open the Command Palette (`Cmd/Ctrl + Shift + P`)
-2. Select "Chat: Run Prompt..."
-3. Choose `nexus-planning`
-4. Describe what you want to build
+1. Open Copilot Chat
+2. Type `/plan` followed by your feature description
+3. Describe what you want to build
 
 **What happens:**
 
@@ -72,18 +71,16 @@ The Planning prompt orchestrates a comprehensive planning session by invoking AL
 
 ---
 
-### 2️⃣ Execution Phase → `nexus-execution.prompt.md`
+### 2️⃣ Execution Phase → `/execute`
 
 **When to use:** After planning is complete and you're ready to build
 
-The Execution prompt takes your action plans and coordinates implementation by delegating to the right agents at the right time.
+The Execution workflow takes your action plans and coordinates implementation by delegating to the right agents at the right time.
 
 **How to use:**
 
-1. Open the Command Palette
-2. Select "Chat: Run Prompt..."
-3. Choose `nexus-execution`
-4. Reference the feature to execute (or let it detect from `.nexus/toc.md`)
+1. Open Copilot Chat
+2. Type `/execute` followed by the feature to execute (or let it detect from `.nexus/toc.md`)
 
 **What happens:**
 
@@ -100,18 +97,16 @@ The Execution prompt takes your action plans and coordinates implementation by d
 
 ---
 
-### 3️⃣ Review & Fix Phase → `nexus-review.prompt.md`
+### 3️⃣ Review & Fix Phase → `/review`
 
 **When to use:** After implementation, before merging
 
-The Review prompt runs a comprehensive code review using ALL agent personas. This is an **active review**: each agent not only identifies issues but also **immediately implements fixes** for anything within their area of expertise.
+The Review workflow runs a comprehensive code review using ALL agent personas. This is an **active review**: each agent not only identifies issues but also **immediately implements fixes** for anything within their area of expertise.
 
 **How to use:**
 
-1. Open the Command Palette
-2. Select "Chat: Run Prompt..."
-3. Choose `nexus-review`
-4. Optionally specify files or features to review
+1. Open Copilot Chat
+2. Type `/review` optionally followed by files or features to review
 
 **What happens:**
 
@@ -125,17 +120,16 @@ The Review prompt runs a comprehensive code review using ALL agent personas. Thi
 
 ---
 
-### 4️⃣ Sync Phase → `nexus-sync.prompt.md`
+### 4️⃣ Sync Phase → `/sync`
 
 **When to use:** When work happens outside formal workflows
 
-The Sync prompt reconciles documentation with reality when you've been chatting directly with agents (e.g., "@software-developer fix this bug") instead of using the execution workflow.
+The Sync workflow reconciles documentation with reality when you've been chatting directly with agents (e.g., "@software-developer fix this bug") instead of using the execution workflow.
 
 **How to use:**
 
-1. Open the Command Palette
-2. Select "Chat: Run Prompt..."
-3. Choose `nexus-sync`
+1. Open Copilot Chat
+2. Type `/sync`
 
 **What happens:**
 
@@ -159,17 +153,16 @@ The Sync prompt reconciles documentation with reality when you've been chatting 
 
 ---
 
-### 5️⃣ Summary Phase → `nexus-summary.prompt.md`
+### 5️⃣ Summary Phase → `/summary`
 
 **When to use:** Periodically, to assess project status
 
-The Summary prompt provides a snapshot of your project's current state by comparing "what we have" vs "what we need."
+The Summary workflow provides a snapshot of your project's current state by comparing "what we have" vs "what we need."
 
 **How to use:**
 
-1. Open the Command Palette
-2. Select "Chat: Run Prompt..."
-3. Choose `nexus-summary`
+1. Open Copilot Chat
+2. Type `/summary`
 
 **What happens:**
 
@@ -180,15 +173,15 @@ The Summary prompt provides a snapshot of your project's current state by compar
 
 **Output:** A status report saved to `.nexus/features/<feature-slug>/summary.md`
 
-> 💡 **Pro tip:** Run the summary prompt every few days or at the start of each work session to stay aligned with project goals.
+> 💡 **Pro tip:** Run `/summary` every few days or at the start of each work session to stay aligned with project goals.
 
 ---
 
-### \* Hotfix Workflow → `nexus-hotfix.prompt.md`
+### \* Hotfix Workflow → `/hotfix`
 
 **When to use:** For small, well-understood bug fixes
 
-The Hotfix prompt provides an expedited path for quick fixes that still maintains traceability.
+The Hotfix workflow provides an expedited path for quick fixes that still maintains traceability.
 
 **What happens:**
 
@@ -250,14 +243,6 @@ The orchestrator automatically triggers checkpoints:
 .
 ├── .github/
 │   ├── copilot-instructions.md  # Custom instructions for Copilot
-│   ├── prompts/          # Core workflow prompts
-│   │   ├── nexus-planning.prompt.md
-│   │   ├── nexus-execution.prompt.md
-│   │   ├── nexus-review.prompt.md
-│   │   ├── nexus-sync.prompt.md
-│   │   ├── nexus-summary.prompt.md
-│   │   ├── nexus-hotfix.prompt.md
-│   │   └── nexus-init.prompt.md
 │   └── plugin/
 │       └── marketplace.json     # Plugin marketplace catalog
 ├── .nexus/               # Generated outputs
@@ -269,9 +254,8 @@ The orchestrator automatically triggers checkpoints:
 │   │   │   ├── review.md
 │   │   │   └── notes/
 │   │   └── _hotfixes/    # Quick fix documentation
-│   ├── templates/        # Document templates
 │   ├── memory/           # Agent memory files (persistent preferences)
-│   └── docs/             # Guides and reference
+│   └── tmp/              # Temporary working files
 ├── .vscode/
 │   └── mcp.json          # MCP server configuration
 ├── control-center/       # Next.js dashboard app
@@ -282,7 +266,7 @@ The orchestrator automatically triggers checkpoints:
 │       │   ├── architect.agent.md
 │       │   ├── software-developer.agent.md
 │       │   └── ...
-│       └── skills/       # Specialized skill instructions
+│       └── skills/       # Specialized skill instructions & workflows
 ├── AGENTS.md             # Agent instructions for AI coding tools
 └── README.md
 ```
@@ -437,7 +421,7 @@ Preferences are stored with context:
 ## 📚 Additional Resources
 
 - [AGENTS.md](./AGENTS.md) - Instructions for AI coding agents
-- [Workflow Guide](./.nexus/docs/workflow-guide.md) - Keeping plans in sync and managing document status
+- [Workflow Guide](./plugins/nexus/skills/nexus-workflows/docs/workflow-guide.md) - Keeping plans in sync and managing document status
 - [Copilot Instructions](./.github/copilot-instructions.md) - Custom instructions for GitHub Copilot
 - [GitHub Copilot Docs](https://docs.github.com/en/copilot)
 - [MCP Protocol](https://modelcontextprotocol.io)

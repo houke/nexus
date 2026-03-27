@@ -54,23 +54,23 @@ Multi-agent orchestration system for GitHub Copilot. Provides a team of speciali
 | `playwright`          | Browser automation for E2E testing via `@executeautomation/playwright-mcp-server`. |
 | `sequential-thinking` | Stepwise reasoning for complex multi-step orchestration.                           |
 
-## Workflow Prompts
+## Workflows
 
-The plugin ships with a set of orchestration prompts accessible from `.github/prompts/`:
+The plugin ships with orchestration workflows in `skills/nexus-workflows/workflows/`:
 
-| Prompt            | Description                                                     |
-| ----------------- | --------------------------------------------------------------- |
-| `nexus-init`      | Initialize a new repository with the full Nexus system.         |
-| `nexus-planning`  | Orchestrate a comprehensive planning session across all agents. |
-| `nexus-execution` | Coordinate feature implementation from a plan.                  |
-| `nexus-review`    | Comprehensive code review with automatic fixes.                 |
-| `nexus-hotfix`    | Expedited workflow for small, well-understood bugs.             |
-| `nexus-sync`      | Reconcile documentation with actual work done.                  |
-| `nexus-summary`   | Project status snapshot — "have" vs "need".                     |
+| Workflow       | Slash Command | Description                                                     |
+| -------------- | ------------- | --------------------------------------------------------------- |
+| `planning.md`  | `/plan`       | Orchestrate a comprehensive planning session across all agents. |
+| `execution.md` | `/execute`    | Coordinate feature implementation from a plan.                  |
+| `review.md`    | `/review`     | Comprehensive code review with automatic fixes.                 |
+| `hotfix.md`    | `/hotfix`     | Expedited workflow for small, well-understood bugs.             |
+| `sync.md`      | `/sync`       | Reconcile documentation with actual work done.                  |
+| `summary.md`   | `/summary`    | Project status snapshot — "have" vs "need".                     |
+| `init.md`      | `/init`       | Initialize a new repository with the full Nexus system.         |
 
 ## How It Works
 
-The **Nexus Orchestrator** (`@nexus`) acts as a team lead. When you invoke a workflow prompt, it:
+The **Nexus Orchestrator** (`@nexus`) acts as a team lead. When you invoke a workflow, it:
 
 1. Analyzes your request and determines which specialists are needed
 2. Delegates to each agent via `runSubagent` with tailored instructions

@@ -9,6 +9,7 @@
 | Feature           | Status | Files | Agents | Last Edited |
 | ----------------- | ------ | ----- | ------ | ----------- |
 | [agentlytics-vscode-analysis](features/agentlytics-vscode-analysis/) | draft | [plan](features/agentlytics-vscode-analysis/plan.md) | @nexus, @architect, @security-agent, @software-developer, @qa-engineer, @tech-lead | 2026-03-14 (v1.4) |
+| [nexus-workflows-skill](features/nexus-workflows-skill/) | draft | [plan](features/nexus-workflows-skill/plan.md) | @architect | 2026-03-26 |
 
 <!--
 USAGE:
@@ -36,9 +37,9 @@ LAST EDITED: Date of most recent change to any document in the feature folder
 
 ## Quick Links
 
-- **Templates**: [.nexus/templates/](templates/) - Document templates for new features
+- **Templates**: [plugins/nexus/skills/nexus-workflows/templates/](../../plugins/nexus/skills/nexus-workflows/templates/) - Document templates for new features
 - **Memory**: [.nexus/memory/](memory/) - Agent preference files
-- **Workflows**: [.github/prompts/](../.github/prompts/) - Workflow prompts
+- **Workflows**: [plugins/nexus/skills/nexus-workflows/workflows/](../../plugins/nexus/skills/nexus-workflows/workflows/) - Workflow prompts
 
 ## Status Legend
 
@@ -54,7 +55,7 @@ LAST EDITED: Date of most recent change to any document in the feature folder
 ## Adding a New Feature
 
 1. Create folder: `.nexus/features/<feature-slug>/`
-2. Copy template: `cp .nexus/templates/plan.template.md .nexus/features/<slug>/plan.md`
+2. Copy template from `plugins/nexus/skills/nexus-workflows/templates/plan.template.md` into `.nexus/features/<slug>/plan.md`
 3. Add row to table above
 4. Fill out the plan document
 5. Use `nexus-execution` prompt to begin implementation

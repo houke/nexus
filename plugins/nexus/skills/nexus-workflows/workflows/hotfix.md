@@ -1,25 +1,6 @@
----
-name: nexus-hotfix
-description: Expedited workflow for quick bug fixes with minimal ceremony but full traceability
-agent: Nexus
-model: Claude Sonnet 4.5
-tools:
-  [
-    'vscode',
-    'execute',
-    'read',
-    'edit',
-    'search',
-    'web',
-    'agent',
-    'filesystem/*',
-    'sequential-thinking/*',
-    'playwright/*',
-    'todo',
-  ]
----
-
 # Hotfix Workflow
+
+> Part of the `nexus-workflows` skill. Invoked by the Nexus orchestrator.
 
 > **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
@@ -171,68 +152,14 @@ Hotfixes are logged to the relevant feature folder OR a general hotfix log:
 .nexus/features/_hotfixes/YYYY-MM-DD-<bug-slug>.md
 ```
 
+Use the template from `templates/hotfix.template.md`.
+
 ### Update toc.md
 
 Add or update the hotfix entry:
 
 ```markdown
 | \_hotfixes | maintenance | hotfix-2026-01-27 | @software-developer, @qa-engineer | 2026-01-27 |
-```
-
-## Hotfix Template
-
-Use this template for the hotfix record:
-
-```markdown
----
-type: hotfix
-date: YYYY-MM-DD
-severity: critical | high | medium | low
-status: fixed
-agents: [@software-developer, @qa-engineer]
----
-
-# Hotfix: [Bug Summary]
-
-## Bug Description
-
-[What was broken and how it manifested]
-
-## Root Cause
-
-[Why it was broken - technical explanation]
-
-## Fix Applied
-
-[What was changed to fix it]
-
-### Files Modified
-
-| File           | Change        |
-| -------------- | ------------- |
-| `path/file.ts` | [Description] |
-
-### Tests Added
-
-| Test File           | Coverage        |
-| ------------------- | --------------- |
-| `path/file.test.ts` | [What's tested] |
-
-## Verification
-
-- [ ] Original bug no longer reproducible
-- [ ] All tests pass
-- [ ] No lint errors
-- [ ] No type errors
-- [ ] No regression in related functionality
-
-## Time Spent
-
-| Agent               | Task            | Duration |
-| ------------------- | --------------- | -------- |
-| @software-developer | Diagnosis + Fix | X min    |
-| @qa-engineer        | Validation      | X min    |
-| **Total**           |                 | X min    |
 ```
 
 ## Verification Gate

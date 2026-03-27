@@ -113,5 +113,5 @@ agents: ['@software-developer', '@qa-engineer']
 ## Revision History
 
 | Date & Time         | Agent                | Changes               |
-| ------------------- | -------------------- | --------------------- |
+| -------------------- | -------------------- | --------------------- |
 | YYYY-MM-DD HH:MM:SS | @hotfix-orchestrator | Initial hotfix record |

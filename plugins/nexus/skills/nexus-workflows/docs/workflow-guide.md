@@ -1,5 +1,7 @@
 # Workflow Guide: Feature-Based Development
 
+> Part of the `nexus-workflows` skill. Migrated from `.nexus/docs/workflow-guide.md`.
+
 A guide to managing features and keeping documentation in sync with actual work.
 
 ---
@@ -34,12 +36,12 @@ Every feature flows through these states:
 draft → in-progress → review → complete
 ```
 
-| Status        | Meaning                        | Set By            |
-| ------------- | ------------------------------ | ----------------- |
-| `draft`       | Planned but not started        | `nexus-planning`  |
-| `in-progress` | Currently being implemented    | `nexus-execution` |
-| `review`      | Implementation done, reviewing | `nexus-review`    |
-| `complete`    | Reviewed and finished          | `nexus-review`    |
+| Status        | Meaning                        | Set By     |
+| ------------- | ------------------------------ | ---------- |
+| `draft`       | Planned but not started        | `/plan`    |
+| `in-progress` | Currently being implemented    | `/execute` |
+| `review`      | Implementation done, reviewing | `/review`  |
+| `complete`    | Reviewed and finished          | `/review`  |
 
 Additional statuses:
 
@@ -68,27 +70,27 @@ The file `.nexus/toc.md` is the **master index** of all features:
 
 ### Starting a New Feature
 
-1. Run `nexus-planning` prompt
+1. Run `/plan` workflow
 2. Creates `.nexus/features/<slug>/plan.md`
 3. Updates `.nexus/toc.md` with new row (status: `draft`)
 
 ### Implementing a Feature
 
-1. Run `nexus-execution` prompt
+1. Run `/execute` workflow
 2. Creates `.nexus/features/<slug>/execution.md`
 3. Updates plan status to `in-progress`
 4. Updates toc.md
 
 ### Reviewing a Feature
 
-1. Run `nexus-review` prompt
+1. Run `/review` workflow
 2. Creates `.nexus/features/<slug>/review.md`
 3. Updates plan status to `complete`
 4. Updates toc.md
 
 ### Checking Status
 
-1. Run `nexus-summary` prompt
+1. Run `/summary` workflow
 2. Creates/updates `.nexus/features/<slug>/summary.md`
 3. Updates toc.md
 
@@ -107,7 +109,7 @@ When you bypass the formal **planning → execution → review** workflow and ta
 
 ## The Solution: Sync Workflow
 
-Use `nexus-sync` to reconcile documentation with actual work.
+Use `/sync` to reconcile documentation with actual work.
 
 ### When to Run Sync
 
@@ -115,18 +117,18 @@ Use `nexus-sync` to reconcile documentation with actual work.
 # Scenario 1: Direct agent work
 You: "@software-developer fix the auth bug"
 # → Work happens, but plan doesn't update
-# → Solution: Run nexus-sync prompt
+# → Solution: Run /sync workflow
 
 # Scenario 2: Multiple ad-hoc changes
 You: "@ux-designer tweak the header"
 You: "@visual-designer adjust colors"
 # → Multiple changes, no tracking
-# → Solution: Run nexus-sync prompt
+# → Solution: Run /sync workflow
 
 # Scenario 3: Before formal review
 You: "Let's run a code review"
 # → But work wasn't tracked via execution workflow
-# → Solution: Run nexus-sync first, then review
+# → Solution: Run /sync first, then /review
 ```
 
 ### What Sync Does
@@ -145,19 +147,16 @@ You: "Let's run a code review"
 ### Option A: Formal (Best for Large Features)
 
 ```
-1. Run nexus-planning prompt
-   → Creates features/<slug>/plan.md (status: draft)
-   → Updates toc.md
+1. /plan     → Creates features/<slug>/plan.md (status: draft)
+                → Updates toc.md
 
-2. Run nexus-execution prompt
-   → Creates features/<slug>/execution.md
-   → Updates plan status to in-progress
-   → Implements the feature
+2. /execute  → Creates features/<slug>/execution.md
+                → Updates plan status to in-progress
+                → Implements the feature
 
-3. Run nexus-review prompt
-   → Creates features/<slug>/review.md
-   → Audits and fixes issues
-   → Updates status to complete
+3. /review   → Creates features/<slug>/review.md
+                → Audits and fixes issues
+                → Updates status to complete
 ```
 
 ✅ **Fully tracked, no drift**
@@ -167,19 +166,17 @@ You: "Let's run a code review"
 ### Option B: Direct + Sync (Acceptable for Quick Work)
 
 ```
-1. Run nexus-planning prompt
-   → Creates plan (status: draft)
+1. /plan     → Creates plan (status: draft)
 
 2. Talk directly to agents
    You: "@software-developer implement auth"
    You: "@qa-engineer add tests"
    → Work happens, but not tracked
 
-3. Run nexus-sync prompt
-   → Detects changes
-   → Updates feature status
-   → Creates execution log retroactively
-   → Updates toc.md
+3. /sync     → Detects changes
+                → Updates feature status
+                → Creates execution log retroactively
+                → Updates toc.md
 ```
 
 ⚠️ **Works, but requires manual sync step**
@@ -219,7 +216,7 @@ And update toc.md to match.
 If you need to create a feature folder manually:
 
 1. Create the folder: `.nexus/features/<slug>/`
-2. Copy template: `cp .nexus/templates/plan.template.md .nexus/features/<slug>/plan.md`
+2. Copy template: use the plan template from the `nexus-workflows` skill at `templates/plan.template.md`
 3. Edit the plan
 4. Add row to `.nexus/toc.md`:
 
@@ -249,19 +246,19 @@ To keep features synchronized with reality:
 
 ## Quick Reference
 
-| I want to...               | Use this prompt                    |
-| -------------------------- | ---------------------------------- |
-| Start a new feature        | `nexus-planning`                   |
-| Implement a feature        | `nexus-execution`                  |
-| Fix something quickly      | Chat with agent, then `nexus-sync` |
-| Review and fix issues      | `nexus-review`                     |
-| Check feature status       | `nexus-summary`                    |
-| Update stale documentation | `nexus-sync`                       |
+| I want to...               | Use this workflow |
+| -------------------------- | ----------------- |
+| Start a new feature        | `/plan`           |
+| Implement a feature        | `/execute`        |
+| Fix something quickly      | Chat + `/sync`    |
+| Review and fix issues      | `/review`         |
+| Check feature status       | `/summary`        |
+| Update stale documentation | `/sync`           |
 
 ---
 
 ## See Also
 
-- [AGENTS.md](../../AGENTS.md) - Technical documentation for agents
-- [toc.md](../toc.md) - Master feature index
+- [AGENTS.md](../../../../AGENTS.md) - Technical documentation for agents
+- [toc.md](../../../../.nexus/toc.md) - Master feature index
 - [Templates](../templates/) - Document templates

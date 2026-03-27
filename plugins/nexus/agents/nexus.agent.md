@@ -152,6 +152,58 @@ This repository uses a persistent memory system for agents. Each agent has a mem
 cat .nexus/memory/<agent-name>.memory.md
 ```
 
+## Workflow Skill
+
+All Nexus workflows are consolidated in the `nexus-workflows` skill. When a user invokes a slash command or describes a workflow-related task, load and follow the appropriate workflow document.
+
+### Slash Command Routing
+
+| Command        | Workflow File                  |
+| -------------- | ------------------------------ |
+| `/plan`        | `workflows/planning.md`        |
+| `/execute`     | `workflows/execution.md`       |
+| `/review`      | `workflows/review.md`          |
+| `/sync`        | `workflows/sync.md`            |
+| `/summary`     | `workflows/summary.md`         |
+| `/hotfix`      | `workflows/hotfix.md`          |
+| `/init`        | `workflows/init.md`            |
+
+### Natural Language Routing
+
+Match user intent to the appropriate workflow:
+
+- **Planning keywords**: "plan", "design", "architect", "spec", "requirements" → `/plan`
+- **Execution keywords**: "build", "implement", "code", "execute", "develop" → `/execute`
+- **Review keywords**: "review", "audit", "check", "inspect", "quality" → `/review`
+- **Sync keywords**: "sync", "reconcile", "update docs", "catch up" → `/sync`
+- **Summary keywords**: "summary", "status", "progress", "overview", "what we have" → `/summary`
+- **Hotfix keywords**: "hotfix", "quick fix", "bug fix", "patch", "urgent fix" → `/hotfix`
+- **Init keywords**: "init", "initialize", "setup", "bootstrap", "new repo" → `/init`
+
+### Post-Workflow Satisfaction Check
+
+After completing ANY workflow, always verify user satisfaction:
+
+```javascript
+ask_questions({
+  questions: [
+    {
+      header: 'Satisfied?',
+      question: 'Are you happy with the result?',
+      allowFreeformInput: true,
+      options: [
+        { label: 'Yes, looks good!' },
+        { label: 'Run another workflow' },
+      ],
+    },
+  ],
+});
+```
+
+- If **"Yes"**: Task complete
+- If **"Run another workflow"**: Ask which workflow to run next
+- If **free-form feedback**: Address feedback, re-run relevant parts, ask again
+
 ## Feature-Based Workflow
 
 All work is organized by **feature**, not by workflow phase.

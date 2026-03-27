@@ -1,45 +1,10 @@
----
-name: nexus-summary
-description: Get a summary of everything we have vs everything we need for features
-agent: Nexus
-model: Claude Sonnet 4.5
-tools:
-  [
-    'vscode',
-    'execute',
-    'read',
-    'edit',
-    'search',
-    'web',
-    'agent',
-    'filesystem/*',
-    'sequential-thinking/*',
-    'playwright/*',
-    'todo',
-  ]
----
-
 # Project Summary Orchestrator
+
+> Part of the `nexus-workflows` skill. Invoked by the Nexus orchestrator.
 
 > **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
 You are the **Summary Orchestrator**. Compare "Everything we have" vs "Everything we need". Use any of the agents defined in the .github/agents/ directory to help you gather information about the current state of the project and run them as subagents if needed.
-
-## ⚠️ REQUIRED: Read Nexus Configuration
-
-**BEFORE starting**, read the `.nexusrc` file to get the Nexus repository path:
-
-```bash
-if [ -f ".nexusrc" ]; then
-  source .nexusrc
-  echo "✅ Nexus repo path: $NEXUS_REPO_PATH"
-else
-  echo "❌ .nexusrc not found. Run nexus-init first."
-  exit 1
-fi
-```
-
-Store this path - you'll use it to access templates: `$NEXUS_REPO_PATH/.nexus/templates/`
 
 ## Data Sources
 
@@ -120,13 +85,7 @@ If creating a project-wide summary, write to:
 .nexus/features/_nexus-summary/summary.md
 ```
 
-Use the template from `$NEXUS_REPO_PATH/.nexus/templates/summary.template.md`.
-
-To read it:
-
-```bash
-cat $NEXUS_REPO_PATH/.nexus/templates/summary.template.md
-```
+Use the template from `templates/summary.template.md`.
 
 ### Update Master TOC
 

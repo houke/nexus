@@ -26,7 +26,7 @@ status: 'draft' # draft → in-progress (execution) → review → complete
 > - `draft` → `in-progress`: When execution workflow starts
 > - `in-progress` → `review`: When ready for code review
 > - `review` → `complete`: When review workflow finishes
-> - If work happens outside formal workflows, run `nexus-sync` prompt to reconcile
+> - If work happens outside formal workflows, run `/sync` workflow to reconcile
 
 ## 1. Executive Summary
 
@@ -455,7 +455,7 @@ Related documents in this feature folder:
 ## Revision History
 
 | Date & Time         | Agent                  | Changes                       |
-| ------------------- | ---------------------- | ----------------------------- |
+| -------------------- | ---------------------- | ----------------------------- |
 | YYYY-MM-DD HH:MM:SS | @planning-orchestrator | Initial plan created          |
 | YYYY-MM-DD HH:MM:SS | @orchestrator          | [Description of changes made] |
 | YYYY-MM-DD HH:MM:SS | @[agent-name]          | [Agent-specific changes]      |

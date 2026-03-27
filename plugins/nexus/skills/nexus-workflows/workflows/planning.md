@@ -1,45 +1,14 @@
----
-name: nexus-planning
-description: Orchestrate a comprehensive project planning session by invoking specialized agents
-agent: Nexus
-model: Claude Opus 4.5
-tools:
-  [
-    'vscode',
-    'execute',
-    'read',
-    'edit',
-    'search',
-    'web',
-    'agent',
-    'filesystem/*',
-    'sequential-thinking/*',
-    'playwright/*',
-    'todo',
-  ]
----
-
 # Comprehensive Planning Session
 
-> **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
+> Part of the `nexus-workflows` skill. Invoked by the Nexus orchestrator.
+
+> **ORCHESTRATOR ONLY**: This workflow is executed by the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
 You are the **Planning Orchestrator**. Your goal is to orchestrate a detailed planning session by leveraging the collective expertise of the specialized agents defined in this repository.
 
-## ⚠️ REQUIRED: Read Nexus Configuration
+## Templates
 
-**BEFORE starting**, read the `.nexusrc` file to get the Nexus repository path:
-
-```bash
-if [ -f ".nexusrc" ]; then
-  source .nexusrc
-  echo "✅ Nexus repo path: $NEXUS_REPO_PATH"
-else
-  echo "❌ .nexusrc not found. Run nexus-init first."
-  exit 1
-fi
-```
-
-Store this path - you'll use it to access templates: `$NEXUS_REPO_PATH/.nexus/templates/`
+The plan template is available at `templates/plan.template.md` within this skill (`plugins/nexus/skills/nexus-workflows/templates/plan.template.md`).
 
 ## Process
 
@@ -53,7 +22,7 @@ Store this path - you'll use it to access templates: `$NEXUS_REPO_PATH/.nexus/te
 
 3. **Synthesis**:
    - Collect the contributions from all agents.
-   - Consolidate them into a single, cohesive document using the plan template from `$NEXUS_REPO_PATH/.nexus/templates/plan.template.md` as the structure.
+   - Consolidate them into a single, cohesive document using the plan template from `templates/plan.template.md` as the structure.
    - Ensure all distinct perspectives (Security, QA, Architecture, etc.) are represented in the final report.
    - In case of follow up questions from any agent, you may interact with them to clarify or expand on their sections before finalizing the document.
    - If you have any remaining questions do not ask them to the user, instead ask them to the relevant subagent personas. Only interact with the user to get the initial project context and objectives, and to deliver the final output.
@@ -112,13 +81,7 @@ Write the plan to:
 .nexus/features/<feature-slug>/plan.md
 ```
 
-Use the template from `$NEXUS_REPO_PATH/.nexus/templates/plan.template.md`.
-
-To read it:
-
-```bash
-cat $NEXUS_REPO_PATH/.nexus/templates/plan.template.md
-```
+Use the template from `templates/plan.template.md`.
 
 ### Step 4: Update Master TOC
 

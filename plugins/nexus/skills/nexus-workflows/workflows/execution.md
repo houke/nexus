@@ -1,45 +1,14 @@
----
-name: nexus-execution
-description: Execute action plans by coordinating specialized agents to implement features
-agent: Nexus
-model: Claude Opus 4.5
-tools:
-  [
-    'vscode',
-    'execute',
-    'read',
-    'edit',
-    'search',
-    'web',
-    'agent',
-    'filesystem/*',
-    'sequential-thinking/*',
-    'playwright/*',
-    'todo',
-  ]
----
-
 # Project Execution Orchestrator
 
-> **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
+> Part of the `nexus-workflows` skill. Invoked by the Nexus orchestrator.
+
+> **ORCHESTRATOR ONLY**: This workflow is executed by the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
 You are the **Execution Orchestrator**. Your role is to take feature plans from `.nexus/features/` and coordinate their implementation by delegating to specialized agents.
 
-## ⚠️ REQUIRED: Read Nexus Configuration
+## Templates
 
-**BEFORE starting**, read the `.nexusrc` file to get the Nexus repository path:
-
-```bash
-if [ -f ".nexusrc" ]; then
-  source .nexusrc
-  echo "✅ Nexus repo path: $NEXUS_REPO_PATH"
-else
-  echo "❌ .nexusrc not found. Run nexus-init first."
-  exit 1
-fi
-```
-
-Store this path - you'll use it to access templates: `$NEXUS_REPO_PATH/.nexus/templates/`
+The execution template is available at `templates/execution.template.md` within this skill (`plugins/nexus/skills/nexus-workflows/templates/execution.template.md`).
 
 ## Checkpoint Commands
 
@@ -271,8 +240,6 @@ rm -rf _temp_scaffold
 # ✅ ALTERNATIVE - Manual setup (preferred, use your package manager)
 npm init -y                           # Initialize package.json
 npm install -D vite typescript        # Add dependencies manually
-# pnpm: pnpm init -y && pnpm add -D vite typescript
-# yarn: yarn init -y && yarn add -D vite typescript
 # Create src/, tsconfig.json, vite.config.ts manually
 ```
 
@@ -475,7 +442,7 @@ Before declaring execution complete, **BOTH** @qa-engineer and @tech-lead **MUST
 
 @qa-engineer must perform a **comprehensive E2E review**:
 
-````markdown
+```markdown
 ## Task for @qa-engineer
 
 **Mode**: FULL E2E REVIEW
@@ -517,11 +484,8 @@ Before declaring execution complete, **BOTH** @qa-engineer and @tech-lead **MUST
 
 **Notes**: [Any observations or recommendations]
 ```
-````
 
 **Do NOT sign off** if ANY issues remain unresolved.
-
-````
 
 ### Phase 6: Tech Lead Sign-off (@tech-lead)
 
@@ -569,26 +533,13 @@ After QA sign-off, @tech-lead must perform a **full code review**:
 - [x] All issues resolved
 
 **Notes**: [Any observations or technical debt to track]
-````
+```
 
 **Do NOT sign off** if ANY issues remain unresolved.
-
-````
 
 ### Completion Gate
 
 **Execution is ONLY complete when BOTH sign-offs are present:**
-
-```markdown
-## Delivery Status
-
-- [ ] @qa-engineer sign-off: ⏳ Pending
-- [ ] @tech-lead sign-off: ⏳ Pending
-
-**Overall**: ❌ NOT READY FOR DELIVERY
-````
-
-Changes to:
 
 ```markdown
 ## Delivery Status
@@ -624,13 +575,7 @@ Write execution log to:
 .nexus/features/<feature-slug>/execution.md
 ```
 
-Use the template from `$NEXUS_REPO_PATH/.nexus/templates/execution.template.md`.
-
-To read it:
-
-```bash
-cat $NEXUS_REPO_PATH/.nexus/templates/execution.template.md
-```
+Use the template from `templates/execution.template.md`.
 
 ### Update Master TOC
 
@@ -698,75 +643,20 @@ ${PM:-npm} run lint -- --fix    # Auto-fix lint issues
 Before declaring execution complete:
 
 - [ ] All work items marked complete
-- [ ] All tests passing (`npm run test`)
-- [ ] No lint errors (`npm run lint`)
-- [ ] No type errors (`npm run typecheck`)
-- [ ] E2E tests passing (`npm run test:e2e`)
-- [ ] Manual testing performed
-- [ ] Documentation updated (if applicable)
-- [ ] Plan status updated to `in-progress`
-- [ ] Execution log written to feature folder
+- [ ] All acceptance criteria verified
+- [ ] All tests passing (unit + E2E)
+- [ ] No lint errors
+- [ ] No type errors
+- [ ] All package.json scripts verified
+- [ ] QA sign-off obtained
+- [ ] Tech Lead sign-off obtained
+- [ ] Execution log updated
 - [ ] toc.md updated
-- [ ] **@qa-engineer sign-off obtained** ✅
-- [ ] **@tech-lead sign-off obtained** ✅
-- [ ] **User satisfaction verified** ✅
+- [ ] User satisfaction verified
 
-## Mandatory QA & Tech-Lead Review Cycle
+## Mandatory User Satisfaction Verification
 
-**BEFORE** marking any implementation complete, you MUST delegate for reviews:
-
-### 1. QA Engineer Review
-
-Delegate to @qa-engineer using `runSubagent`:
-
-```javascript
-runSubagent({
-  agentName: 'qa-engineer',
-  description: 'Review implementation for testing and edge cases',
-  prompt: `Please review the implementation in .nexus/features/<slug>/execution.md and verify:
-  - All tests passing
-  - Edge cases covered
-  - Accessibility compliance
-  - No regression risks
-  
-  Provide either:
-  - ✅ SIGN-OFF: Approved with no issues
-  - 🔴 ISSUES FOUND: List what needs fixing`,
-});
-```
-
-### 2. Tech Lead Review
-
-Delegate to @tech-lead using `runSubagent`:
-
-```javascript
-runSubagent({
-  agentName: 'tech-lead',
-  description: 'Review code quality and architecture',
-  prompt: `Please review the implementation in .nexus/features/<slug>/execution.md and verify:
-  - Code quality standards met
-  - Architectural patterns followed
-  - No technical debt introduced
-  - Performance considerations addressed
-  
-  Provide either:
-  - ✅ SIGN-OFF: Approved with no issues
-  - 🔴 ISSUES FOUND: List what needs fixing`,
-});
-```
-
-### 3. Fix Issues (if any)
-
-If either agent finds issues:
-
-- Delegate back to @software-developer to fix issues
-- Re-run verification (tests, lint, typecheck)
-- Repeat QA + Tech-lead review cycle
-- Continue until both provide ✅ sign-off
-
-### 4. User Satisfaction Verification
-
-**AFTER** obtaining both sign-offs, verify user satisfaction using `ask_questions` tool:
+**AFTER** obtaining QA and Tech-lead sign-offs, you MUST verify user satisfaction using `ask_questions` tool:
 
 ```javascript
 ask_questions({
@@ -774,7 +664,7 @@ ask_questions({
     {
       header: 'Satisfied?',
       question:
-        "Are you happy with the completed implementation? (Select 'Other' to provide specific feedback)",
+        "Are you happy with the completed work? (Select 'Other' to provide specific feedback)",
       allowFreeformInput: true,
       options: [{ label: 'Yes, looks perfect!' }],
     },
@@ -784,14 +674,11 @@ ask_questions({
 
 ### Handling User Feedback
 
-- **If user selects "Yes"**: Work is complete, proceed to finalize
+- **If user selects "Yes"**: Work is complete, close the task
 - **If user provides feedback (Other/free input)**:
   1. Analyze the feedback
   2. Determine which agent needs to address it
   3. Delegate using `runSubagent` to fix the issues
-  4. Re-run verification steps
-  5. Re-run QA/Tech-lead cycle
-  6. Ask satisfaction question again
-  7. Repeat until user is satisfied
-
-**ONLY** after user confirms satisfaction can execution be marked complete.
+  4. Re-run QA/Tech-lead cycle
+  5. Ask satisfaction question again
+  6. Repeat until user is satisfied

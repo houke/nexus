@@ -1,45 +1,14 @@
----
-name: nexus-review
-description: Run a code review using all agent personas from .github/agents
-agent: Nexus
-model: Claude Opus 4.5
-tools:
-  [
-    'vscode',
-    'execute',
-    'read',
-    'edit',
-    'search',
-    'web',
-    'agent',
-    'filesystem/*',
-    'sequential-thinking/*',
-    'playwright/*',
-    'todo',
-  ]
----
-
 # Comprehensive Code Review & Fix
 
-> **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
+> Part of the `nexus-workflows` skill. Invoked by the Nexus orchestrator.
+
+> **ORCHESTRATOR ONLY**: This workflow is executed by the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
 You are the **Review Orchestrator**. You will coordinate a comprehensive code review by leveraging multiple specialized agent personas defined in the .github/agents directory. **This is not a passive review—each agent MUST fix the issues they find.**
 
-## ⚠️ REQUIRED: Read Nexus Configuration
+## Templates
 
-**BEFORE starting**, read the `.nexusrc` file to get the Nexus repository path:
-
-```bash
-if [ -f ".nexusrc" ]; then
-  source .nexusrc
-  echo "✅ Nexus repo path: $NEXUS_REPO_PATH"
-else
-  echo "❌ .nexusrc not found. Run nexus-init first."
-  exit 1
-fi
-```
-
-Store this path - you'll use it to access templates: `$NEXUS_REPO_PATH/.nexus/templates/`
+The review template is available at `templates/review.template.md` within this skill (`plugins/nexus/skills/nexus-workflows/templates/review.template.md`).
 
 ## Review & Fix Philosophy
 
@@ -247,13 +216,7 @@ Write the review to:
 .nexus/features/<feature-slug>/review.md
 ```
 
-Use the template from `$NEXUS_REPO_PATH/.nexus/templates/review.template.md`.
-
-To read it:
-
-```bash
-cat $NEXUS_REPO_PATH/.nexus/templates/review.template.md
-```
+Use the template from `templates/review.template.md`.
 
 ### Review Document Update Policy
 
@@ -284,73 +247,6 @@ Example:
 
 ```markdown
 | user-auth | complete | plan, execution, review | @architect, @software-developer, @qa-engineer | 2026-01-26 |
-```
-
-## Document Structure
-
-```markdown
----
-feature: <feature-slug>
-date: [YYYY-MM-DD]
-review-iteration: 1
-agents: [@agent1, @agent2, ...]
-issues-found: [total count]
-issues-fixed: [total count]
----
-
-# Review Report: [Feature Title]
-
-## Summary
-
-[2-3 paragraph executive summary: what was reviewed, total issues found/fixed, overall health improvement]
-
-## Metrics
-
-| Metric        | Before | After |
-| ------------- | ------ | ----- |
-| Issues Found  | -      | X     |
-| Issues Fixed  | -      | X     |
-| Test Coverage | X%     | Y%    |
-| Lint Errors   | X      | 0     |
-| Type Errors   | X      | 0     |
-
-## Agent Review & Fix Reports
-
-### @agent-name
-
-**Focus Areas**: [their expertise]
-
-#### Issues Found
-
-| #   | Issue         | Severity        | File      |
-| --- | ------------- | --------------- | --------- |
-| 1   | [description] | high/medium/low | [file.ts] |
-
-#### Fixes Applied
-
-| #   | Fix Description          | Files Changed       |
-| --- | ------------------------ | ------------------- |
-| 1   | [what was fixed and how] | [file.ts, other.ts] |
-
-#### Verification
-
-- Tests: ✅ Passing
-- Lint: ✅ Clean
-- Types: ✅ Clean
-
-#### Deferred Items
-
-[Issues requiring other agents, if any]
-
-...
-
-## Common Themes
-
-[Patterns that emerged across multiple reviews]
-
-## Remaining Action Items
-
-[Any items that could not be auto-fixed, with owners]
 ```
 
 ## Mandatory QA & Tech-Lead Sign-off
