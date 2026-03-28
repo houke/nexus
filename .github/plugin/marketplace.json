@@ -13,7 +13,7 @@
       "name": "nexus",
       "source": "nexus",
       "description": "Multi-agent orchestration with specialized AI personas (Architect, QA, Security, DevOps, and more), on-demand skills, and MCP servers",
-      "version": "1.0.4",
+      "version": "1.0.5",
       "license": "MIT",
       "keywords": [
         "multi-agent",
