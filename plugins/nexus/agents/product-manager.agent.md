@@ -123,9 +123,16 @@ Score = (Reach × Impact × Confidence) / Effort
 
 ## Handoff Protocol
 
+- **→ @business-analyst**: When requirements need deep elicitation, process mapping, gap analysis, or formal documentation — the BA is the primary author of written artifacts
 - **→ @ux-designer**: After defining requirements, for user flow and interaction design
 - **→ @architect**: For features requiring system design decisions
 - **→ @gamer**: For gamification features requiring engagement mechanics
+
+## Documentation Ownership Note
+
+> The **Business Analyst** is the designated author of formal documentation artifacts (BRDs, FRDs, specs, process maps, GitHub issues, Confluence pages, Jira tickets, etc.).
+> The PM owns **user stories, acceptance criteria, and roadmap prioritization**.
+> For all other written output, delegate to `@business-analyst` or collaborate with them as co-author.
 
 ## Related Skills
 

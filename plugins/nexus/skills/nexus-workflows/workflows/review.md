@@ -85,19 +85,33 @@ This context is essential for understanding **why** decisions were made, not jus
 
 ## Process
 
-For each agent persona defined in the .github/agents directory, you will:
+Use a **parallel wave model** instead of a strict one-agent-at-a-time loop.
 
-1. **Invoke a subagent** using the specific agent persona.
-2. **Request a detailed review** from that subagent with focus on their "Focus Areas" and "Guidelines".
-3. **Instruct the agent to FIX** every issue they find:
+### Wave 1: Parallel Review Pass (Required)
+
+1. Invoke independent reviewer agents in parallel (e.g., `@qa-engineer`, `@security-agent`, `@tech-lead`, `@ux-designer`, `@devops` when relevant).
+2. Request a detailed review from each subagent with focus on their "Focus Areas" and "Guidelines".
+3. Collect findings from all lanes.
+
+### Wave Gate: Triage and Ownership
+
+4. Deduplicate overlapping findings.
+5. Assign each finding to an owner agent (single owner per fix).
+6. Build fix batches that avoid file overlap when possible.
+
+### Wave 2: Parallel Fix Pass (Required)
+
+7. Instruct owner agents to FIX assigned issues in parallel:
 
 - Apply code changes directly using edit tools
 - Follow TDD: write/update tests for fixes
 - Run verification after fixes: `${PM:-npm} run test && ${PM:-npm} run lint && ${PM:-npm} run typecheck`
 
-4. **Document both findings AND fixes** in their report section.
+8. Document both findings AND fixes in each report section.
 
-5. **Synthesis**:
+### Wave 3: Synthesis
+
+9. Synthesis:
    - Collect all agent review reports.
    - Consolidate into the review document at `.nexus/features/<slug>/review.md` using the template structure.
 
@@ -106,7 +120,14 @@ For each agent persona defined in the .github/agents directory, you will:
 - Update toc.md with the new status and files.
 - **ALWAYS** append an entry to the "## Revision History" section when creating or updating the review with current timestamp (format: YYYY-MM-DD HH:MM:SS), agent identifier (@review-orchestrator or @orchestrator if from main chat, or specific @agent-name), and a brief description of what was reviewed/changed.
 
-6. **ALWAYS** write the final review to the feature folder.
+10. ALWAYS write the final review to the feature folder.
+
+### Parallelization Constraints
+
+- Parallelize only independent review/fix lanes.
+- If multiple lanes need the same files, serialize those fixes while keeping other lanes parallel.
+- Keep active concurrent lanes in a practical range (`2-4`) unless the user asks for more.
+- Keep the final global verification gate sequential and mandatory.
 
 ## Agent Fix Instructions
 
@@ -138,7 +159,7 @@ flag it for another agent but still propose the fix.
 
 ## Verification Gate
 
-After ALL agents complete their review-and-fix passes:
+After all parallel review/fix waves complete:
 
 ```bash
 # Use your package manager (npm, pnpm, yarn, or bun)

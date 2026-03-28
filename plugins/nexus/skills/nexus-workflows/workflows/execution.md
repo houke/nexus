@@ -264,7 +264,7 @@ npm install -D vite typescript        # Add dependencies manually
    - Invoke the appropriate subagent using the agent system (e.g., `@software-developer`, `@visual-designer`, `@qa-engineer`).
    - Provide them with full context including the plan, specific task, and constraints.
    - **INSTRUCTION**: Explicitly instruct each agent to **implement** their assigned work items based on their specific skills and expertise (as defined in their agent file).
-   - Wait for the subagent to complete their work before moving to dependent tasks.
+   - Run independent items in parallel waves; only wait at dependency gates.
    - Verify their output meets the acceptance criteria.
    - Log their contribution in the execution document.
 
@@ -319,10 +319,29 @@ npm install -D vite typescript        # Add dependencies manually
 
 ### Parallel vs Sequential
 
-- **Parallelize** independent work items (e.g., UI component + API service)
-- **Sequence** dependent items (e.g., data model before service layer)
+- **Parallelize by default** for independent work items (e.g., UI component + API service)
+- **Sequence** only dependency-critical items (e.g., data model before service layer)
 - **Always** invoke @software-developer for implementation code
 - **Always** invoke @qa-engineer for test coverage review
+- **Concurrency cap**: keep `2-4` active agent lanes unless the user explicitly requests more
+
+### Parallel Execution Model (Required)
+
+Use wave-based scheduling instead of strict one-item-at-a-time execution.
+
+1. **Build dependency graph**
+   - Parse action items and annotate dependencies (`depends_on`).
+   - Group into waves where no item depends on another item in the same wave.
+2. **Run Wave 1 in parallel**
+   - Typical examples: scaffold modules, define interfaces, create non-overlapping UI shells.
+3. **Dependency gate**
+   - Merge outputs, resolve conflicts, run verification gate.
+4. **Run Wave 2+ in parallel**
+   - Execute downstream work that depends on completed wave outputs.
+5. **Final integration gate**
+   - Full tests (unit + E2E), lint, typecheck, acceptance criteria validation.
+
+If two parallel lanes need the same files, serialize only those conflicting tasks and keep all other lanes parallel.
 
 ## Execution Workflow
 
@@ -361,13 +380,23 @@ The 🔧 icon indicates the answer came from execution phase (not planning).
 
 ### Phase 3: Implementation
 
-For each work item:
+Execute implementation in parallel waves:
 
 ```
-1. @software-developer: Implement feature with tests
-2. @qa-engineer: Review tests, add edge cases
-3. @visual-designer: Polish UI (if applicable)
-4. Run verification: ${PM:-npm} run test && ${PM:-npm} run lint && ${PM:-npm} run typecheck
+Wave A (parallel lanes)
+1. @software-developer: Implement backend/domain items + unit tests
+2. @ux-designer or @visual-designer: Implement/polish independent UI items
+3. @devops: CI/task updates unrelated to active code conflicts
+
+Wave Gate
+4. Merge contributions and run verification: ${PM:-npm} run test && ${PM:-npm} run lint && ${PM:-npm} run typecheck
+
+Wave B (parallel lanes)
+5. @software-developer: Integration items dependent on Wave A
+6. @qa-engineer: Add/expand test coverage, edge cases, accessibility checks
+
+Final Gate
+7. Run full verification again and update execution log
 ```
 
 ### Phase 4: Integration

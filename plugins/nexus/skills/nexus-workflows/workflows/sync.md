@@ -189,6 +189,24 @@ If you find work that doesn't belong to any feature:
 7. Report to user: "Synced. Feature now in-progress. 3 items remaining."
 ```
 
+## Documentation Authorship During Sync
+
+When this workflow creates or updates documentation artifacts (plan updates, execution logs, sync notes, feature summaries), apply the following authorship rule:
+
+- **Who writes**: Delegate all documentation writing to `@business-analyst` (primary) or `@product-manager` (secondary).
+- **Who provides inputs**: Technical agents (`@architect`, `@software-developer`, `@qa-engineer`) provide structured notes and findings; the BA/PM shapes these into the final written artifact.
+- **Platforms covered**: This applies equally to local markdown (`.nexus/features/`), GitHub issues/wiki, Jira, Confluence, and any other documentation platform.
+
+To create or update a document during sync, delegate to the BA:
+
+```
+runSubagent(
+  agentName: "business-analyst",
+  description: "Update feature documentation after sync",
+  prompt: "Here are the structured findings from the sync: [findings]. Please write/update the following document: [document path / platform]. Audience: [internal team / external stakeholders]."
+)
+```
+
 ## Output
 
 After sync, provide the user:

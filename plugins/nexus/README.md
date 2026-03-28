@@ -22,6 +22,7 @@ Multi-agent orchestration system for GitHub Copilot. Provides a team of speciali
 | `qa-engineer`        | QA Engineer — testing, edge cases, accessibility, Playwright E2E.                                                    |
 | `security-agent`     | Security Agent — OWASP Top 10, dependency auditing, secure storage.                                                  |
 | `product-manager`    | Product Manager — user stories, acceptance criteria, feature priorities.                                             |
+| `business-analyst`   | Business Analyst — requirements elicitation, process mapping, gap analysis, documentation authorship.               |
 | `ux-designer`        | UX Designer — user flows, information architecture, wireframes.                                                      |
 | `visual-designer`    | Visual Designer — UI polish, animations, typography, "the juice".                                                    |
 | `devops`             | DevOps Engineer — CI/CD, GitHub Actions, release automation, security hardening.                                     |

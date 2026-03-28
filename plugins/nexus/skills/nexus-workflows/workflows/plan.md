@@ -21,13 +21,14 @@ If either is missing:
 
 ## Process
 
-1. **Agent Discovery**: Identify all available agent personas (e.g., Architect, DevOps, QA, Security, Tech Lead, etc.) by scanning the agents directory. Check `.github/agents/` first (standard location in bootstrapped downstream repos); fall back to `plugins/nexus/agents/` if running within the Nexus source repository itself.
+1. **Agent Discovery**: Identify all available agent personas (e.g., Architect, DevOps, QA, Security, Tech Lead, Business Analyst, Product Manager, etc.) by scanning the agents directory. Check `.github/agents/` first (standard location in bootstrapped downstream repos); fall back to `plugins/nexus/agents/` if running within the Nexus source repository itself.
 
 2. **Orchestration**: For EACH identified agent, you must:
    - Invoke a sub-session or simulate that specific persona.
    - Provide them with the current project context and the user's objectives.
    - **INSTRUCTION**: Explicitly instruct each agent to **write** a section of the plan based on their specific skills and expertise (as defined in their agent file).
    - **CONSTRAINT**: "A plan should only be written and not be executed unless stated otherwise." Explicitly forbid agents from executing code changes, creating implementation files, or running commands that modify the project state. Their output must be markdown text only.
+   - **DOCUMENTATION RULE**: The `business-analyst` agent writes the requirements sections, process maps, gap analysis, and acceptance criteria sections of the plan. The `product-manager` writes the prioritization and success metrics sections. Other agents provide structured inputs to the BA/PM rather than writing prose documentation themselves.
 
 3. **Synthesis**:
    - Collect the contributions from all agents.

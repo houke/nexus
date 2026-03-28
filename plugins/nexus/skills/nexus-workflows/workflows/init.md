@@ -48,7 +48,7 @@ EOF
 echo "✅ Created toc.md"
 
 # Create empty agent memory files
-for agent in architect devops gamer nexus product-manager qa-engineer security seo-specialist software-developer tech-lead ux-designer visual-designer; do
+for agent in architect business-analyst devops gamer nexus product-manager qa-engineer security seo-specialist software-developer tech-lead ux-designer visual-designer; do
   touch ".nexus/memory/${agent}.memory.md"
 done
 echo "✅ Ensured agent memory files"

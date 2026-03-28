@@ -39,18 +39,23 @@ For any request that is not simple user-facing Q&A, your default behavior is to 
 
 ## Agent Selection Guidelines
 
-| Question/Task Type          | Primary Agent(s)   | Supporting Agent(s)         |
-| --------------------------- | ------------------ | --------------------------- |
-| Architecture, system design | architect          | tech-lead                   |
-| Implementation, coding      | software-developer | tech-lead                   |
-| Testing, QA                 | qa-engineer        | software-developer          |
-| Security concerns           | security-agent     | architect                   |
-| UI/UX design                | ux-designer        | visual-designer             |
-| Styling, animations         | visual-designer    | ux-designer                 |
-| Requirements, priorities    | product-manager    | ux-designer                 |
-| DevOps, deployment          | devops             | security-agent              |
-| Gamification                | gamer              | ux-designer                 |
-| Code review                 | tech-lead          | qa-engineer, security-agent |
+| Question/Task Type                        | Primary Agent(s)                | Supporting Agent(s)               |
+| ----------------------------------------- | ------------------------------- | --------------------------------- |
+| Architecture, system design               | architect                       | tech-lead                         |
+| Implementation, coding                    | software-developer              | tech-lead                         |
+| Testing, QA                               | qa-engineer                     | software-developer                |
+| Security concerns                         | security-agent                  | architect                         |
+| UI/UX design                              | ux-designer                     | visual-designer                   |
+| Styling, animations                       | visual-designer                 | ux-designer                       |
+| Requirements, priorities                  | business-analyst, product-manager | ux-designer                     |
+| Documentation writing (any platform)      | business-analyst                | product-manager                   |
+| Process mapping, gap analysis             | business-analyst                | product-manager                   |
+| Functional specs, BRD, FRD, ADR          | business-analyst                | product-manager                   |
+| GitHub issues/wiki, Confluence, Jira docs | business-analyst                | product-manager                   |
+| Feature roadmap, backlog priorities       | product-manager                 | business-analyst                  |
+| DevOps, deployment                        | devops                          | security-agent                    |
+| Gamification                              | gamer                           | ux-designer                       |
+| Code review                               | tech-lead                       | qa-engineer, security-agent       |
 
 ## Orchestrator Workflow
 

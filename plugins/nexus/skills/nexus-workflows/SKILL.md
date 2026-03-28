@@ -100,6 +100,31 @@ When a workflow is triggered (by slash command or keyword match):
 5. **Update toc.md** after any document creation or modification
 6. **Satisfaction check** — invoke `askQuestion` (see below)
 
+## Parallelization Policy
+
+Default to **parallel execution** for independent tasks in both `/nexus-workflows execute` and `/nexus-workflows review`.
+
+Use this scheduling model:
+
+1. Build a dependency graph from work items.
+2. Run independent items in parallel waves.
+3. Enforce hard dependency gates between waves.
+4. Run one consolidated verification gate after each wave (instead of after every tiny task).
+
+Parallelization rules:
+
+- Parallelize tasks only when they do not edit the same files or depend on unfinished outputs.
+- Cap active subagent lanes to a practical concurrency limit (`2-4` lanes recommended).
+- Reserve sequential execution for dependency-critical paths (schema -> service -> UI integration, etc.).
+- If conflicts appear, pause affected lanes, resolve conflicts, and continue from the next valid wave.
+
+For review workflow specifically:
+
+- Run domain reviews in parallel first (security, qa, ux, perf, accessibility, etc.).
+- Batch and deduplicate findings.
+- Execute fix wave in parallel by ownership area.
+- Keep final global test/lint/typecheck gate sequential and mandatory.
+
 ## Post-Workflow Satisfaction Check
 
 **REQUIRED** after EVERY workflow completes:
@@ -167,6 +192,27 @@ draft → in-progress → review → complete
 ├── summary.md     # Created by /nexus-workflows summary (optional)
 └── notes/         # Supporting materials
 ```
+
+## Documentation Authorship Rule
+
+> **The `business-analyst` and `product-manager` agents are the designated writers for all documentation artifacts** — regardless of platform.
+
+This rule applies universally across all workflows:
+
+| Platform / Artifact | Designated Author |
+| ------------------- | ----------------- |
+| Local markdown files (`.nexus/features/`, `docs/`, `README.md`) | `business-analyst` (primary), `product-manager` (secondary) |
+| GitHub issues, PR descriptions, GitHub Wiki | `business-analyst` (primary), `product-manager` (secondary) |
+| Confluence pages, Jira tickets, Atlassian docs | `business-analyst` (primary), `product-manager` (secondary) |
+| BRD, FRD, PRD, functional specifications | `business-analyst` |
+| User stories, acceptance criteria | `product-manager` (primary), `business-analyst` (supporting) |
+| ADRs, decision logs | `business-analyst` (co-authored with `architect`) |
+| Release notes, change logs, user guides | `business-analyst` |
+| Process maps, gap analysis, feasibility reports | `business-analyst` |
+
+**Protocol for other agents**: When an `architect`, `software-developer`, `qa-engineer`, or other technical agent has information that must be documented, they provide **structured notes** to the `business-analyst` or `product-manager`, who write the final artifact. Engineers write code; the BA writes about what it does and why.
+
+The **only** exception is inline code comments and code-level documentation (JSDoc, type annotations) — those remain the responsibility of the implementing agent.
 
 ## Safety Rules
 
