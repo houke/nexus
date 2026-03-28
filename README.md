@@ -34,12 +34,30 @@ Nexus is designed to supercharge any new project with a team of specialized AI a
 
 ### Installation
 
+#### VS Code Marketplace
+
 1. Open this URL directly in your browser: `vscode://chat-plugin/add-marketplace?ref=houke/nexus` to add the marketplace.
 2. Open VS Code and navigate to the Extensions view (`Cmd/Ctrl+Shift+X`)
 3. Search for **`@agentPlugins houke`** and install the **Nexus** plugin
 4. Open Copilot Chat and pick the `Nexus` agent
 5. Run `/nexus-workflows init` to scaffold `.nexus/` and `AGENTS.md` in your project
 6. Start with `/nexus-workflows plan` to begin your first feature
+
+#### Copilot CLI
+
+```bash
+# Install the marketplace
+copilot plugin marketplace add houke/nexus
+
+# Then install the plugin
+copilot plugin install nexus@houke-nexus
+```
+
+#### Verify installation
+
+```bash
+copilot plugin list
+```
 
 ---
 
@@ -303,7 +321,7 @@ Nexus currently declares these plugin-scoped MCP servers in `plugins/nexus/.mcp.
 - `sequential-thinking` - Complex problem decomposition
 - `playwright` - Browser automation for testing
 
-This repository does not currently include a committed `.vscode/mcp.json` workspace file or root Copilot compatibility config.
+This repository does not currently include a committed `.vscode/mcp.json` workspace file.
 
 ---
 
