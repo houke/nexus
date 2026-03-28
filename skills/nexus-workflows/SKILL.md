@@ -217,16 +217,16 @@ draft → in-progress → review → complete
 
 This rule applies universally across all workflows:
 
-| Platform / Artifact | Designated Author |
-| ------------------- | ----------------- |
-| Local markdown files (`.nexus/features/`, `docs/`, `README.md`) | `business-analyst` (primary), `product-manager` (secondary) |
-| GitHub issues, PR descriptions, GitHub Wiki | `business-analyst` (primary), `product-manager` (secondary) |
-| Confluence pages, Jira tickets, Atlassian docs | `business-analyst` (primary), `product-manager` (secondary) |
-| BRD, FRD, PRD, functional specifications | `business-analyst` |
-| User stories, acceptance criteria | `product-manager` (primary), `business-analyst` (supporting) |
-| ADRs, decision logs | `business-analyst` (co-authored with `architect`) |
-| Release notes, change logs, user guides | `business-analyst` |
-| Process maps, gap analysis, feasibility reports | `business-analyst` |
+| Platform / Artifact                                             | Designated Author                                            |
+| --------------------------------------------------------------- | ------------------------------------------------------------ |
+| Local markdown files (`.nexus/features/`, `docs/`, `README.md`) | `business-analyst` (primary), `product-manager` (secondary)  |
+| GitHub issues, PR descriptions, GitHub Wiki                     | `business-analyst` (primary), `product-manager` (secondary)  |
+| Confluence pages, Jira tickets, Atlassian docs                  | `business-analyst` (primary), `product-manager` (secondary)  |
+| BRD, FRD, PRD, functional specifications                        | `business-analyst`                                           |
+| User stories, acceptance criteria                               | `product-manager` (primary), `business-analyst` (supporting) |
+| ADRs, decision logs                                             | `business-analyst` (co-authored with `architect`)            |
+| Release notes, change logs, user guides                         | `business-analyst`                                           |
+| Process maps, gap analysis, feasibility reports                 | `business-analyst`                                           |
 
 **Protocol for other agents**: When an `architect`, `software-developer`, `qa-engineer`, or other technical agent has information that must be documented, they provide **structured notes** to the `business-analyst` or `product-manager`, who write the final artifact. Engineers write code; the BA writes about what it does and why.
 

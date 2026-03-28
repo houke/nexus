@@ -39,23 +39,23 @@ For any request that is not simple user-facing Q&A, your default behavior is to 
 
 ## Agent Selection Guidelines
 
-| Question/Task Type                        | Primary Agent(s)                | Supporting Agent(s)               |
-| ----------------------------------------- | ------------------------------- | --------------------------------- |
-| Architecture, system design               | architect                       | tech-lead                         |
-| Implementation, coding                    | software-developer              | tech-lead                         |
-| Testing, QA                               | qa-engineer                     | software-developer                |
-| Security concerns                         | security-agent                  | architect                         |
-| UI/UX design                              | ux-designer                     | visual-designer                   |
-| Styling, animations                       | visual-designer                 | ux-designer                       |
-| Requirements, priorities                  | business-analyst, product-manager | ux-designer                     |
-| Documentation writing (any platform)      | business-analyst                | product-manager                   |
-| Process mapping, gap analysis             | business-analyst                | product-manager                   |
-| Functional specs, BRD, FRD, ADR          | business-analyst                | product-manager                   |
-| GitHub issues/wiki, Confluence, Jira docs | business-analyst                | product-manager                   |
-| Feature roadmap, backlog priorities       | product-manager                 | business-analyst                  |
-| DevOps, deployment                        | devops                          | security-agent                    |
-| Gamification                              | gamer                           | ux-designer                       |
-| Code review                               | tech-lead                       | qa-engineer, security-agent       |
+| Question/Task Type                        | Primary Agent(s)                  | Supporting Agent(s)         |
+| ----------------------------------------- | --------------------------------- | --------------------------- |
+| Architecture, system design               | architect                         | tech-lead                   |
+| Implementation, coding                    | software-developer                | tech-lead                   |
+| Testing, QA                               | qa-engineer                       | software-developer          |
+| Security concerns                         | security-agent                    | architect                   |
+| UI/UX design                              | ux-designer                       | visual-designer             |
+| Styling, animations                       | visual-designer                   | ux-designer                 |
+| Requirements, priorities                  | business-analyst, product-manager | ux-designer                 |
+| Documentation writing (any platform)      | business-analyst                  | product-manager             |
+| Process mapping, gap analysis             | business-analyst                  | product-manager             |
+| Functional specs, BRD, FRD, ADR           | business-analyst                  | product-manager             |
+| GitHub issues/wiki, Confluence, Jira docs | business-analyst                  | product-manager             |
+| Feature roadmap, backlog priorities       | product-manager                   | business-analyst            |
+| DevOps, deployment                        | devops                            | security-agent              |
+| Gamification                              | gamer                             | ux-designer                 |
+| Code review                               | tech-lead                         | qa-engineer, security-agent |
 
 ## Orchestrator Workflow
 
@@ -213,15 +213,15 @@ This gate applies to both slash-command routing and natural-language routing.
 
 ### Slash Command Routing
 
-| Command                      | Workflow File            |
-| ---------------------------- | ------------------------ |
-| `/nexus-workflows plan`      | `workflows/plan.md`      |
-| `/nexus-workflows execute`   | `workflows/execution.md` |
-| `/nexus-workflows review`    | `workflows/review.md`    |
-| `/nexus-workflows sync`      | `workflows/sync.md`      |
-| `/nexus-workflows summary`   | `workflows/summary.md`   |
-| `/nexus-workflows hotfix`    | `workflows/hotfix.md`    |
-| `/nexus-workflows init`      | `workflows/init.md`      |
+| Command                    | Workflow File            |
+| -------------------------- | ------------------------ |
+| `/nexus-workflows plan`    | `workflows/plan.md`      |
+| `/nexus-workflows execute` | `workflows/execution.md` |
+| `/nexus-workflows review`  | `workflows/review.md`    |
+| `/nexus-workflows sync`    | `workflows/sync.md`      |
+| `/nexus-workflows summary` | `workflows/summary.md`   |
+| `/nexus-workflows hotfix`  | `workflows/hotfix.md`    |
+| `/nexus-workflows init`    | `workflows/init.md`      |
 
 ### Natural Language Routing
 
@@ -298,11 +298,11 @@ Long execution sessions can save and resume progress using checkpoints.
 
 ### Checkpoint Commands
 
-| Command                                | Action                        | When to Use                  |
-| -------------------------------------- | ----------------------------- | ---------------------------- |
-| `/nexus-workflows checkpoint save`     | Save progress to execution.md | Before ending a long session |
-| `/nexus-workflows checkpoint resume`   | Continue from saved state     | Starting a new session       |
-| `/nexus-workflows checkpoint status`   | Show completed vs pending     | Checking progress            |
+| Command                              | Action                        | When to Use                  |
+| ------------------------------------ | ----------------------------- | ---------------------------- |
+| `/nexus-workflows checkpoint save`   | Save progress to execution.md | Before ending a long session |
+| `/nexus-workflows checkpoint resume` | Continue from saved state     | Starting a new session       |
+| `/nexus-workflows checkpoint status` | Show completed vs pending     | Checking progress            |
 
 ### Automatic Triggers
 

@@ -23,7 +23,7 @@ jobs:
       - name: Determine version bump and generate changelog
         id: version
         run: |
-          PLUGIN_JSON="plugins/nexus/.github/plugin/plugin.json"
+          PLUGIN_JSON="plugin.json"
           CURRENT_VERSION=$(jq -r '.version' "$PLUGIN_JSON")
           if [ -z "$CURRENT_VERSION" ] || [ "$CURRENT_VERSION" = "null" ]; then
             echo "ERROR: could not read version from $PLUGIN_JSON" >&2; exit 1
@@ -109,20 +109,16 @@ jobs:
 
       - name: Update plugin manifest versions
         run: |
-          PLUGIN_JSON="plugins/nexus/.github/plugin/plugin.json"
-          MARKETPLACE_JSON=".github/plugin/marketplace.json"
+          PLUGIN_JSON="plugin.json"
 
           jq --arg v "${{ steps.version.outputs.new_version }}" '.version = $v' "$PLUGIN_JSON" > /tmp/plugin.json
           mv /tmp/plugin.json "$PLUGIN_JSON"
-
-          jq --arg v "${{ steps.version.outputs.new_version }}" '.plugins[0].version = $v' "$MARKETPLACE_JSON" > /tmp/marketplace.json
-          mv /tmp/marketplace.json "$MARKETPLACE_JSON"
 
       - name: Commit version bump and tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add plugins/nexus/.github/plugin/plugin.json .github/plugin/marketplace.json
+          git add plugin.json
           git commit -m "chore(release): v${{ steps.version.outputs.new_version }} [skip ci]"
           git tag "v${{ steps.version.outputs.new_version }}"
           git push origin main --tags
