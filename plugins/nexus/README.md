@@ -60,7 +60,7 @@ The plugin ships with orchestration workflows in `skills/nexus-workflows/workflo
 
 | Workflow       | Slash Command | Description                                                     |
 | -------------- | ------------- | --------------------------------------------------------------- |
-| `planning.md`  | `/plan`       | Orchestrate a comprehensive planning session across all agents. |
+| `plan.md`      | `/plan`       | Orchestrate a comprehensive planning session across all agents. |
 | `execution.md` | `/execute`    | Coordinate feature implementation from a plan.                  |
 | `review.md`    | `/review`     | Comprehensive code review with automatic fixes.                 |
 | `hotfix.md`    | `/hotfix`     | Expedited workflow for small, well-understood bugs.             |

@@ -194,31 +194,31 @@ Before starting substantive orchestration work in a downstream repository, ensur
 - `.nexus/toc.md`
 - `.nexus/tmp/`
 
-If `.nexus/` or `AGENTS.md` are missing, Nexus should run the `/init` workflow first before proceeding with planning, execution, review, sync, or summary work.
+If `.nexus/` or `AGENTS.md` are missing, Nexus should run the `/nexus-workflows init` workflow first before proceeding with planning, execution, review, sync, or summary work.
 
 ### Slash Command Routing
 
-| Command    | Workflow File            |
-| ---------- | ------------------------ |
-| `/plan`    | `workflows/planning.md`  |
-| `/execute` | `workflows/execution.md` |
-| `/review`  | `workflows/review.md`    |
-| `/sync`    | `workflows/sync.md`      |
-| `/summary` | `workflows/summary.md`   |
-| `/hotfix`  | `workflows/hotfix.md`    |
-| `/init`    | `workflows/init.md`      |
+| Command                      | Workflow File            |
+| ---------------------------- | ------------------------ |
+| `/nexus-workflows plan`      | `workflows/plan.md`      |
+| `/nexus-workflows execute`   | `workflows/execution.md` |
+| `/nexus-workflows review`    | `workflows/review.md`    |
+| `/nexus-workflows sync`      | `workflows/sync.md`      |
+| `/nexus-workflows summary`   | `workflows/summary.md`   |
+| `/nexus-workflows hotfix`    | `workflows/hotfix.md`    |
+| `/nexus-workflows init`      | `workflows/init.md`      |
 
 ### Natural Language Routing
 
 Match user intent to the appropriate workflow:
 
-- **Planning keywords**: "plan", "design", "architect", "spec", "requirements" → `/plan`
-- **Execution keywords**: "build", "implement", "code", "execute", "develop" → `/execute`
-- **Review keywords**: "review", "audit", "check", "inspect", "quality" → `/review`
-- **Sync keywords**: "sync", "reconcile", "update docs", "catch up" → `/sync`
-- **Summary keywords**: "summary", "status", "progress", "overview", "what we have" → `/summary`
-- **Hotfix keywords**: "hotfix", "quick fix", "bug fix", "patch", "urgent fix" → `/hotfix`
-- **Init keywords**: "init", "initialize", "setup", "bootstrap", "new repo" → `/init`
+- **Planning keywords**: "plan", "design", "architect", "spec", "requirements" → `/nexus-workflows plan`
+- **Execution keywords**: "build", "implement", "code", "execute", "develop" → `/nexus-workflows execute`
+- **Review keywords**: "review", "audit", "check", "inspect", "quality" → `/nexus-workflows review`
+- **Sync keywords**: "sync", "reconcile", "update docs", "catch up" → `/nexus-workflows sync`
+- **Summary keywords**: "summary", "status", "progress", "overview", "what we have" → `/nexus-workflows summary`
+- **Hotfix keywords**: "hotfix", "quick fix", "bug fix", "patch", "urgent fix" → `/nexus-workflows hotfix`
+- **Init keywords**: "init", "initialize", "setup", "bootstrap", "new repo" → `/nexus-workflows init`
 
 ### Post-Workflow Satisfaction Check
 
@@ -277,11 +277,11 @@ Long execution sessions can save and resume progress using checkpoints.
 
 ### Checkpoint Commands
 
-| Command              | Action                        | When to Use                  |
-| -------------------- | ----------------------------- | ---------------------------- |
-| `/checkpoint save`   | Save progress to execution.md | Before ending a long session |
-| `/checkpoint resume` | Continue from saved state     | Starting a new session       |
-| `/checkpoint status` | Show completed vs pending     | Checking progress            |
+| Command                                | Action                        | When to Use                  |
+| -------------------------------------- | ----------------------------- | ---------------------------- |
+| `/nexus-workflows checkpoint save`     | Save progress to execution.md | Before ending a long session |
+| `/nexus-workflows checkpoint resume`   | Continue from saved state     | Starting a new session       |
+| `/nexus-workflows checkpoint status`   | Show completed vs pending     | Checking progress            |
 
 ### Automatic Triggers
 

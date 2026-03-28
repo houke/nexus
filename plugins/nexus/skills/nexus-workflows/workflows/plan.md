@@ -12,7 +12,7 @@ The plan template is available at `templates/plan.template.md` within this skill
 
 ## Process
 
-1. **Agent Discovery**: Scan the `.github/agents` directory to identify all available agent personas (e.g., Architect, DevOps, QA, Security, Tech Lead, etc.).
+1. **Agent Discovery**: Identify all available agent personas (e.g., Architect, DevOps, QA, Security, Tech Lead, etc.) by scanning the agents directory. Check `.github/agents/` first (standard location in bootstrapped downstream repos); fall back to `plugins/nexus/agents/` if running within the Nexus source repository itself.
 
 2. **Orchestration**: For EACH identified agent, you must:
    - Invoke a sub-session or simulate that specific persona.

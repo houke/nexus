@@ -2,8 +2,10 @@
 name: nexus-workflows
 description: >
   Nexus workflow orchestration system. Provides planning, execution, review, sync,
-  summary, hotfix, and init workflows. Invoke via slash commands (/plan, /execute,
-  /review, /sync, /summary, /hotfix, /init) or natural language triggers.
+  summary, hotfix, and init workflows. Invoke via slash commands
+  (/nexus-workflows plan, /nexus-workflows execute, /nexus-workflows review,
+  /nexus-workflows sync, /nexus-workflows summary, /nexus-workflows hotfix,
+  /nexus-workflows init) or natural language triggers.
   Use when users want to plan features, execute plans, review code, sync docs,
   check project status, apply hotfixes, or initialize new repos.
   Keywords: plan, build, implement, review, audit, sync, status, summary, hotfix,
@@ -17,19 +19,17 @@ Unified workflow orchestration for the Nexus multi-agent system.
 
 ## Slash Commands
 
-| Command    | Workflow  | Template Used         | Output Location                                                                   |
-| ---------- | --------- | --------------------- | --------------------------------------------------------------------------------- |
-| `/plan`    | Planning  | plan.template.md      | .nexus/features/<slug>/plan.md                                                    |
-| `/execute` | Execution | execution.template.md | .nexus/features/<slug>/execution.md                                               |
-| `/review`  | Review    | review.template.md    | .nexus/features/<slug>/review.md                                                  |
-| `/sync`    | Sync      | —                     | Updates existing feature docs                                                     |
-| `/summary` | Summary   | summary.template.md   | .nexus/features/<slug>/summary.md                                                 |
-| `/hotfix`  | Hotfix    | hotfix.template.md    | .nexus/features/\_hotfixes/<date>-<slug>.md                                       |
-| `/init`    | Init      | —                     | .nexus/, AGENTS.md, .gitignore scaffolding, features/.gitkeep, agent memory files |
+| Command                    | Workflow  | Template Used         | Output Location                                                                   |
+| -------------------------- | --------- | --------------------- | --------------------------------------------------------------------------------- |
+| `/nexus-workflows plan`    | Planning  | plan.template.md      | .nexus/features/<slug>/plan.md                                                    |
+| `/nexus-workflows execute` | Execution | execution.template.md | .nexus/features/<slug>/execution.md                                               |
+| `/nexus-workflows review`  | Review    | review.template.md    | .nexus/features/<slug>/review.md                                                  |
+| `/nexus-workflows sync`    | Sync      | —                     | Updates existing feature docs                                                     |
+| `/nexus-workflows summary` | Summary   | summary.template.md   | .nexus/features/<slug>/summary.md                                                 |
+| `/nexus-workflows hotfix`  | Hotfix    | hotfix.template.md    | .nexus/features/\_hotfixes/<date>-<slug>.md                                       |
+| `/nexus-workflows init`    | Init      | —                     | .nexus/, AGENTS.md, .gitignore scaffolding, features/.gitkeep, agent memory files |
 
-`/init` ensures `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md` exist.
-
-Also accepts long-form: `/nexus-workflows plan`, `/nexus-workflows execute`, etc.
+`/nexus-workflows init` ensures `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md` exist.
 
 ## Keyword Routing
 
@@ -40,7 +40,7 @@ the appropriate workflow:
 
 **Triggers**: plan, planning, "plan this", "plan the", design, scope, requirements,
 "what should we build", specify, spec, "acceptance criteria", PRD, "user stories"
-**Action**: Load `workflows/planning.md` and execute
+**Action**: Load `workflows/plan.md` and execute
 
 ### Execution Workflow
 
@@ -80,12 +80,16 @@ scaffold, "new project", onboard
 
 ### Checkpoint Commands
 
-**Triggers**: "/checkpoint save", "/checkpoint resume", "/checkpoint status"
+**Triggers**: "/nexus-workflows checkpoint save", "/nexus-workflows checkpoint resume", "/nexus-workflows checkpoint status"
 **Action**: Handled within the active execution workflow (see `workflows/execution.md`)
 
 ## Workflow Execution Protocol
 
 When a workflow is triggered (by slash command or keyword match):
+
+> **Naming convention**: `<name>` is the sub-command from the slash command.
+> For example, `/nexus-workflows plan` → `workflows/plan.md` → `templates/plan.template.md`.
+> All workflow and template files use this consistent naming.
 
 1. **Load workflow definition** from `workflows/<name>.md`
 2. **Load corresponding template** from `templates/<name>.template.md` (if applicable)
@@ -124,12 +128,12 @@ ask_questions({
       header: 'Next Workflow',
       question: 'Which workflow would you like to run next?',
       options: [
-        { label: '/plan — Plan a new feature' },
-        { label: '/execute — Execute a plan' },
-        { label: '/review — Review implementation' },
-        { label: '/sync — Sync documentation' },
-        { label: '/summary — Project status' },
-        { label: '/hotfix — Quick bug fix' },
+        { label: '/nexus-workflows plan — Plan a new feature' },
+        { label: '/nexus-workflows execute — Execute a plan' },
+        { label: '/nexus-workflows review — Review implementation' },
+        { label: '/nexus-workflows sync — Sync documentation' },
+        { label: '/nexus-workflows summary — Project status' },
+        { label: '/nexus-workflows hotfix — Quick bug fix' },
       ],
     },
   ],
@@ -142,23 +146,23 @@ ask_questions({
 draft → in-progress → review → complete
 ```
 
-| Status        | Set By   | Meaning                     |
-| ------------- | -------- | --------------------------- |
-| `draft`       | /plan    | Planned but not started     |
-| `in-progress` | /execute | Currently being implemented |
-| `review`      | /review  | Under code review           |
-| `complete`    | /review  | Reviewed and finished       |
-| `on-hold`     | Manual   | Paused                      |
-| `archived`    | Manual   | No longer relevant          |
+| Status        | Set By                   | Meaning                     |
+| ------------- | ------------------------ | --------------------------- |
+| `draft`       | /nexus-workflows plan    | Planned but not started     |
+| `in-progress` | /nexus-workflows execute | Currently being implemented |
+| `review`      | /nexus-workflows review  | Under code review           |
+| `complete`    | /nexus-workflows review  | Reviewed and finished       |
+| `on-hold`     | Manual                   | Paused                      |
+| `archived`    | Manual                   | No longer relevant          |
 
 ### Feature Folder Structure
 
 ```
 .nexus/features/<feature-slug>/
-├── plan.md        # Created by /plan
-├── execution.md   # Created by /execute
-├── review.md      # Created by /review
-├── summary.md     # Created by /summary (optional)
+├── plan.md        # Created by /nexus-workflows plan
+├── execution.md   # Created by /nexus-workflows execute
+├── review.md      # Created by /nexus-workflows review
+├── summary.md     # Created by /nexus-workflows summary (optional)
 └── notes/         # Supporting materials
 ```
 

@@ -10,15 +10,15 @@
 
 | I want to...          | Slash Command | How                                                                 |
 | --------------------- | ------------- | ------------------------------------------------------------------- |
-| Plan a new feature    | `/plan`       | Invoke @nexus or use slash command                                  |
-| Start implementing    | `/execute`    | Invoke @nexus or use slash command                                  |
-| Review completed work | `/review`     | Invoke @nexus or use slash command                                  |
-| Get project status    | `/summary`    | Invoke @nexus or use slash command                                  |
-| Sync out-of-date docs | `/sync`       | Invoke @nexus or use slash command                                  |
-| Quick bug fix         | `/hotfix`     | Invoke @nexus or use slash command                                  |
-| Initialize new repo   | `/init`       | Initialize lightweight Nexus scaffolding in a downstream repository |
+| Plan a new feature    | `/nexus-workflows plan`       | Invoke @nexus or use slash command                                  |
+| Start implementing    | `/nexus-workflows execute`    | Invoke @nexus or use slash command                                  |
+| Review completed work | `/nexus-workflows review`     | Invoke @nexus or use slash command                                  |
+| Get project status    | `/nexus-workflows summary`    | Invoke @nexus or use slash command                                  |
+| Sync out-of-date docs | `/nexus-workflows sync`       | Invoke @nexus or use slash command                                  |
+| Quick bug fix         | `/nexus-workflows hotfix`     | Invoke @nexus or use slash command                                  |
+| Initialize new repo   | `/nexus-workflows init`       | Initialize lightweight Nexus scaffolding in a downstream repository |
 
-`/init` ensures these exist: `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md`.
+`/nexus-workflows init` ensures these exist: `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md`.
 
 ---
 
@@ -64,10 +64,10 @@
 
 | Status        | Meaning              | Set By     |
 | ------------- | -------------------- | ---------- |
-| `draft`       | Planned, not started | `/plan`    |
-| `in-progress` | Currently building   | `/execute` |
-| `review`      | Under code review    | `/review`  |
-| `complete`    | Done and approved    | `/review`  |
+| `draft`       | Planned, not started | `/nexus-workflows plan`    |
+| `in-progress` | Currently building   | `/nexus-workflows execute` |
+| `review`      | Under code review    | `/nexus-workflows review`  |
+| `complete`    | Done and approved    | `/nexus-workflows review`  |
 | `on-hold`     | Paused               | Manual     |
 | `archived`    | No longer needed     | Manual     |
 
@@ -101,9 +101,9 @@ During long execution sessions:
 
 | Command              | Action                        |
 | -------------------- | ----------------------------- |
-| `/checkpoint save`   | Save current progress         |
-| `/checkpoint resume` | Continue from last checkpoint |
-| `/checkpoint status` | Show what's done vs pending   |
+| `/nexus-workflows checkpoint save`   | Save current progress         |
+| `/nexus-workflows checkpoint resume` | Continue from last checkpoint |
+| `/nexus-workflows checkpoint status` | Show what's done vs pending   |
 
 ---
 
@@ -133,11 +133,11 @@ function validateToken() { ... }
 
 | Problem                  | Solution                                 |
 | ------------------------ | ---------------------------------------- |
-| Docs out of sync         | Run `/sync` workflow                     |
-| Execution failed midway  | Use `/checkpoint resume`                 |
+| Docs out of sync         | Run `/nexus-workflows sync` workflow                     |
+| Execution failed midway  | Use `/nexus-workflows checkpoint resume`                 |
 | Agent not following plan | Re-read plan, add clarifying details     |
 | Tests breaking           | Run `git diff`, identify breaking change |
-| Need quick fix           | Use `/hotfix` instead of full flow       |
+| Need quick fix           | Use `/nexus-workflows hotfix` instead of full flow       |
 
 ---
 
@@ -159,27 +159,27 @@ Memory is stored in `.nexus/memory/<agent-name>.memory.md`
 ### New Feature (Full Flow)
 
 ```
-1. /plan     → Creates plan.md
-2. /execute  → Creates execution.md
-3. /review   → Creates review.md, marks complete
+1. /nexus-workflows plan     → Creates plan.md
+2. /nexus-workflows execute  → Creates execution.md
+3. /nexus-workflows review   → Creates review.md, marks complete
 ```
 
 ### Quick Bug Fix
 
 ```
-1. /hotfix → Diagnose, fix, verify in one session
+1. /nexus-workflows hotfix → Diagnose, fix, verify in one session
 ```
 
 ### Catch Up Documentation
 
 ```
-1. /sync → Reconciles docs with actual changes
+1. /nexus-workflows sync → Reconciles docs with actual changes
 ```
 
 ### Check Progress
 
 ```
-1. /summary → Shows have vs need
+1. /nexus-workflows summary → Shows have vs need
 ```
 
 ---
