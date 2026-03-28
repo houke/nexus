@@ -239,6 +239,12 @@ Match user intent to the appropriate workflow:
 
 After completing ANY workflow, always verify user satisfaction. This same rule also applies to Q&A-only Nexus responses.
 
+If a workflow is expected to create or update output files, invoke `ask_questions`
+only AFTER those expected files are persisted for the current run (including
+required `.nexus/toc.md` updates when applicable).
+
+For Q&A-only responses (no workflow outputs expected), satisfaction can be asked immediately.
+
 ```javascript
 ask_questions({
   questions: [

@@ -54,6 +54,16 @@ the appropriate workflow:
 "quality check", "look at the code", critique
 **Action**: Load `workflows/review.md` and execute
 
+### Workflow-First Routing Priority
+
+If a user request matches any workflow trigger keyword (plan/execute/review/sync/summary/hotfix/init), workflow routing has higher priority than Q&A-only response mode.
+
+You MUST:
+
+1. Route to the matched `/nexus-workflows <name>` workflow (not Q&A-only response mode)
+2. Complete required workflow persistence/output steps first
+3. Ask satisfaction only after workflow output has been written
+
 ### Sync Workflow
 
 **Triggers**: sync, synchronize, reconcile, "update docs", "catch up",
@@ -128,6 +138,14 @@ For review workflow specifically:
 ## Post-Workflow Satisfaction Check
 
 **REQUIRED** after EVERY workflow completes:
+
+If the workflow is expected to produce or update output files, this check is
+valid only after those files have been written/updated for the current run
+(for example: `plan.md`, `execution.md`, `review.md`, `summary.md`, `hotfix` docs,
+and any required `.nexus/toc.md` updates).
+
+This ordering also applies when workflow intent is detected via keywords: do not
+invoke `ask_questions` until required workflow persistence is complete.
 
 ```javascript
 ask_questions({
