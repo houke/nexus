@@ -60,15 +60,17 @@ The plugin ships with orchestration workflows in `skills/nexus-workflows/workflo
 
 | Workflow       | Slash Command | Description                                                     |
 | -------------- | ------------- | --------------------------------------------------------------- |
-| `plan.md`      | `/plan`       | Orchestrate a comprehensive planning session across all agents. |
-| `execution.md` | `/execute`    | Coordinate feature implementation from a plan.                  |
-| `review.md`    | `/review`     | Comprehensive code review with automatic fixes.                 |
-| `hotfix.md`    | `/hotfix`     | Expedited workflow for small, well-understood bugs.             |
-| `sync.md`      | `/sync`       | Reconcile documentation with actual work done.                  |
-| `summary.md`   | `/summary`    | Project status snapshot — "have" vs "need".                     |
-| `init.md`      | `/init`       | Ensure a downstream repository has `.nexus/`, `AGENTS.md`, `features/.gitkeep`, agent memory files, `toc.md`, and `tmp/`. |
+| `plan.md`      | `/nexus-workflows plan`      | Orchestrate a comprehensive planning session across all agents. |
+| `execution.md` | `/nexus-workflows execute`   | Coordinate feature implementation from a plan.                  |
+| `review.md`    | `/nexus-workflows review`    | Comprehensive code review with automatic fixes.                 |
+| `hotfix.md`    | `/nexus-workflows hotfix`    | Expedited workflow for small, well-understood bugs.             |
+| `sync.md`      | `/nexus-workflows sync`      | Reconcile documentation with actual work done.                  |
+| `summary.md`   | `/nexus-workflows summary`   | Project status snapshot — "have" vs "need".                     |
+| `init.md`      | `/nexus-workflows init`      | Ensure a downstream repository has `.nexus/`, `AGENTS.md`, `features/.gitkeep`, agent memory files, `toc.md`, and `tmp/`. |
 
-`/init` ensures `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md` exist before Nexus starts substantive orchestration work.
+`/nexus-workflows init` ensures `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md` exist before Nexus starts substantive orchestration work.
+
+For safety, Nexus workflows run a scaffold preflight: if `.nexus/` or `AGENTS.md` is missing, Nexus runs `/nexus-workflows init` automatically, then resumes the originally requested workflow.
 
 ## How It Works
 

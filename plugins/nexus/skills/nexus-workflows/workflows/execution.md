@@ -10,6 +10,15 @@ You are the **Execution Orchestrator**. Your role is to take feature plans from 
 
 The execution template is available at `templates/execution.template.md` within this skill (`plugins/nexus/skills/nexus-workflows/templates/execution.template.md`).
 
+## Mandatory Scaffold Preflight
+
+Before running this workflow, check whether both `.nexus/` and `AGENTS.md` exist.
+
+If either is missing:
+
+1. Run `/nexus-workflows init` first.
+2. After init completes, resume this execution workflow.
+
 ## Checkpoint Commands
 
 The execution workflow supports checkpoints for saving and resuming long sessions.
@@ -20,13 +29,13 @@ When the user types one of these commands, execute the corresponding action:
 
 | Command              | Action                                              |
 | -------------------- | --------------------------------------------------- |
-| `/checkpoint save`   | Save current progress to execution.md               |
-| `/checkpoint resume` | Read execution.md and continue from last checkpoint |
-| `/checkpoint status` | Show completed vs pending action items              |
+| `/nexus-workflows checkpoint save`   | Save current progress to execution.md               |
+| `/nexus-workflows checkpoint resume` | Read execution.md and continue from last checkpoint |
+| `/nexus-workflows checkpoint status` | Show completed vs pending action items              |
 
-### `/checkpoint save` Implementation
+### `/nexus-workflows checkpoint save` Implementation
 
-When user types `/checkpoint save`:
+When user types `/nexus-workflows checkpoint save`:
 
 1. Read the current execution.md file
 2. Update the `## Checkpoints` section with:
@@ -39,9 +48,9 @@ When user types `/checkpoint save`:
 4. Add entry to Checkpoint History table
 5. Confirm to user what was saved
 
-### `/checkpoint resume` Implementation
+### `/nexus-workflows checkpoint resume` Implementation
 
-When user types `/checkpoint resume`:
+When user types `/nexus-workflows checkpoint resume`:
 
 1. Read the execution.md file
 2. Parse the `## Checkpoints > Latest Checkpoint` section
@@ -50,9 +59,9 @@ When user types `/checkpoint resume`:
 5. Continue execution from the "Next Steps" listed
 6. Add entry to Checkpoint History table
 
-### `/checkpoint status` Implementation
+### `/nexus-workflows checkpoint status` Implementation
 
-When user types `/checkpoint status`:
+When user types `/nexus-workflows checkpoint status`:
 
 1. Read the plan.md to get all action items
 2. Read the execution.md to get completed items
@@ -64,7 +73,7 @@ When user types `/checkpoint status`:
 
 ### Automatic Checkpoint Triggers
 
-You should automatically trigger `/checkpoint save` when:
+You should automatically trigger `/nexus-workflows checkpoint save` when:
 
 1. **Time-based**: After 30+ minutes of continuous work
 2. **Milestone-based**: After completing a major action item (IMPL-XXX)
@@ -84,7 +93,7 @@ Agents can request checkpoints by outputting:
 **Next Steps**: [What to do on resume]
 ```
 
-When you see this, execute `/checkpoint save` with the provided information.
+When you see this, execute `/nexus-workflows checkpoint save` with the provided information.
 
 ## Feature Status Management
 

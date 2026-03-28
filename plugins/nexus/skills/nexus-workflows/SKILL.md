@@ -91,6 +91,8 @@ When a workflow is triggered (by slash command or keyword match):
 > For example, `/nexus-workflows plan` → `workflows/plan.md` → `templates/plan.template.md`.
 > All workflow and template files use this consistent naming.
 
+> **Mandatory scaffold preflight (except init):** Before loading any workflow other than `/nexus-workflows init`, check for both `.nexus/` and `AGENTS.md`. If either is missing, run `/nexus-workflows init` first, then resume the originally requested workflow.
+
 1. **Load workflow definition** from `workflows/<name>.md`
 2. **Load corresponding template** from `templates/<name>.template.md` (if applicable)
 3. **Delegate to subagents** per the workflow's orchestration instructions

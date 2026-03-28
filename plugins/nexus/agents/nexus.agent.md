@@ -196,6 +196,16 @@ Before starting substantive orchestration work in a downstream repository, ensur
 
 If `.nexus/` or `AGENTS.md` are missing, Nexus should run the `/nexus-workflows init` workflow first before proceeding with planning, execution, review, sync, or summary work.
 
+### Session Preflight Gate
+
+Treat this as a mandatory preflight on workflow entry (including the first workflow request in a session):
+
+1. Check whether `.nexus/` and `AGENTS.md` exist.
+2. If either is missing, run `/nexus-workflows init` first.
+3. After init finishes, continue with the originally requested workflow.
+
+This gate applies to both slash-command routing and natural-language routing.
+
 ### Slash Command Routing
 
 | Command                      | Workflow File            |

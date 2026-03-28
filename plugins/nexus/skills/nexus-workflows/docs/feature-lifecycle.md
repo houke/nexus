@@ -14,14 +14,14 @@ draft → in-progress → review → complete
 
 ```
   ┌─────────┐
-  │  draft   │  Created by /plan workflow
+     │  draft   │  Created by /nexus-workflows plan workflow
   └────┬─────┘
-       │ /execute starts
+     │ /nexus-workflows execute starts
        ▼
   ┌─────────────┐
   │ in-progress  │  Active implementation
   └────┬─────────┘
-       │ /review starts
+     │ /nexus-workflows review starts
        ▼
   ┌─────────┐
   │  review  │  Under code review
@@ -49,10 +49,10 @@ draft → in-progress → review → complete
 
 | Status        | Meaning                        | Set By     | Next State    |
 | ------------- | ------------------------------ | ---------- | ------------- |
-| `draft`       | Planned but not started        | `/plan`    | `in-progress` |
-| `in-progress` | Currently being implemented    | `/execute` | `review`      |
-| `review`      | Implementation done, reviewing | `/review`  | `complete`    |
-| `complete`    | Reviewed and finished          | `/review`  | —             |
+| `draft`       | Planned but not started        | `/nexus-workflows plan`    | `in-progress` |
+| `in-progress` | Currently being implemented    | `/nexus-workflows execute` | `review`      |
+| `review`      | Implementation done, reviewing | `/nexus-workflows review`  | `complete`    |
+| `complete`    | Reviewed and finished          | `/nexus-workflows review`  | —             |
 | `on-hold`     | Paused                         | Manual     | Any           |
 | `archived`    | No longer relevant             | Manual     | —             |
 
@@ -62,10 +62,10 @@ Each feature has its own folder in `.nexus/features/`:
 
 ```
 .nexus/features/<feature-slug>/
-├── plan.md        # Created by /plan — What we're building and why
-├── execution.md   # Created by /execute — Implementation tracking
-├── review.md      # Created by /review — Code review findings
-├── summary.md     # Created by /summary — Status snapshot (optional)
+├── plan.md        # Created by /nexus-workflows plan — What we're building and why
+├── execution.md   # Created by /nexus-workflows execute — Implementation tracking
+├── review.md      # Created by /nexus-workflows review — Code review findings
+├── summary.md     # Created by /nexus-workflows summary — Status snapshot (optional)
 └── notes/         # Supporting materials, research, sketches
 ```
 
@@ -91,7 +91,7 @@ The file `.nexus/toc.md` is the **single source of truth** for all features.
 
 ### draft → in-progress
 
-Triggered when the `/execute` workflow starts:
+Triggered when the `/nexus-workflows execute` workflow starts:
 
 1. Plan frontmatter `status` field is updated to `in-progress`
 2. `execution.md` is created in the feature folder
@@ -99,7 +99,7 @@ Triggered when the `/execute` workflow starts:
 
 ### in-progress → review
 
-Triggered when the `/review` workflow starts:
+Triggered when the `/nexus-workflows review` workflow starts:
 
 1. Plan frontmatter `status` field is updated to `review`
 2. `review.md` is created in the feature folder
@@ -107,7 +107,7 @@ Triggered when the `/review` workflow starts:
 
 ### review → complete
 
-Triggered when the `/review` workflow completes successfully:
+Triggered when the `/nexus-workflows review` workflow completes successfully:
 
 1. Plan frontmatter `status` field is updated to `complete`
 2. `review.md` is finalized with sign-offs
@@ -129,4 +129,4 @@ And update `toc.md` to match.
 
 ## Handling Drift
 
-When work happens outside formal workflows, feature status can drift out of sync. Use the `/sync` workflow to reconcile documentation with actual work done. See `docs/workflow-guide.md` for details.
+When work happens outside formal workflows, feature status can drift out of sync. Use the `/nexus-workflows sync` workflow to reconcile documentation with actual work done. See `docs/workflow-guide.md` for details.

@@ -141,14 +141,14 @@ Provide user with next steps:
 1. **Commit the changes**: `git commit -m "chore: initialize Nexus project scaffolding"`
 
 2. **Start using Nexus**:
-   - **Plan a feature**: `/plan` or invoke `@nexus`
-   - **Execute work**: `/execute`
-   - **Review code**: `/review`
-   - **Get project status**: `/summary`
+  - **Plan a feature**: `/nexus-workflows plan` or invoke `@nexus`
+  - **Execute work**: `/nexus-workflows execute`
+  - **Review code**: `/nexus-workflows review`
+  - **Get project status**: `/nexus-workflows summary`
 
 3. **Understand scope**:
 
-- `/init` is for downstream repositories that adopt Nexus
+- `/nexus-workflows init` is for downstream repositories that adopt Nexus
 - The Nexus source repository itself does not need to be initialized by Nexus
 
 4. **Customize agents**: Edit the files in `.nexus/memory/` with repository-specific preferences
@@ -211,4 +211,4 @@ git add -f .nexus/ AGENTS.md .gitignore
 - Agent memory files are initialized empty for the new repository
 - The features folder includes a `.gitkeep` so the scaffold survives in git before the first feature is created
 - The toc.md starts empty, ready for first feature tracking
-- `/init` is for downstream repositories that want Nexus scaffolding; it is not intended for the Nexus source repository
+- `/nexus-workflows init` is for downstream repositories that want Nexus scaffolding; it is not intended for the Nexus source repository

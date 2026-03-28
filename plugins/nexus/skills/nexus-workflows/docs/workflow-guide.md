@@ -38,10 +38,10 @@ draft → in-progress → review → complete
 
 | Status        | Meaning                        | Set By     |
 | ------------- | ------------------------------ | ---------- |
-| `draft`       | Planned but not started        | `/plan`    |
-| `in-progress` | Currently being implemented    | `/execute` |
-| `review`      | Implementation done, reviewing | `/review`  |
-| `complete`    | Reviewed and finished          | `/review`  |
+| `draft`       | Planned but not started        | `/nexus-workflows plan`    |
+| `in-progress` | Currently being implemented    | `/nexus-workflows execute` |
+| `review`      | Implementation done, reviewing | `/nexus-workflows review`  |
+| `complete`    | Reviewed and finished          | `/nexus-workflows review`  |
 
 Additional statuses:
 
@@ -70,27 +70,27 @@ The file `.nexus/toc.md` is the **master index** of all features:
 
 ### Starting a New Feature
 
-1. Run `/plan` workflow
+1. Run `/nexus-workflows plan` workflow
 2. Creates `.nexus/features/<slug>/plan.md`
 3. Updates `.nexus/toc.md` with new row (status: `draft`)
 
 ### Implementing a Feature
 
-1. Run `/execute` workflow
+1. Run `/nexus-workflows execute` workflow
 2. Creates `.nexus/features/<slug>/execution.md`
 3. Updates plan status to `in-progress`
 4. Updates toc.md
 
 ### Reviewing a Feature
 
-1. Run `/review` workflow
+1. Run `/nexus-workflows review` workflow
 2. Creates `.nexus/features/<slug>/review.md`
 3. Updates plan status to `complete`
 4. Updates toc.md
 
 ### Checking Status
 
-1. Run `/summary` workflow
+1. Run `/nexus-workflows summary` workflow
 2. Creates/updates `.nexus/features/<slug>/summary.md`
 3. Updates toc.md
 
@@ -109,7 +109,7 @@ When you bypass the formal **planning → execution → review** workflow and ta
 
 ## The Solution: Sync Workflow
 
-Use `/sync` to reconcile documentation with actual work.
+Use `/nexus-workflows sync` to reconcile documentation with actual work.
 
 ### When to Run Sync
 
@@ -117,18 +117,18 @@ Use `/sync` to reconcile documentation with actual work.
 # Scenario 1: Direct agent work
 You: "@software-developer fix the auth bug"
 # → Work happens, but plan doesn't update
-# → Solution: Run /sync workflow
+# → Solution: Run /nexus-workflows sync workflow
 
 # Scenario 2: Multiple ad-hoc changes
 You: "@ux-designer tweak the header"
 You: "@visual-designer adjust colors"
 # → Multiple changes, no tracking
-# → Solution: Run /sync workflow
+# → Solution: Run /nexus-workflows sync workflow
 
 # Scenario 3: Before formal review
 You: "Let's run a code review"
 # → But work wasn't tracked via execution workflow
-# → Solution: Run /sync first, then /review
+# → Solution: Run /nexus-workflows sync first, then /nexus-workflows review
 ```
 
 ### What Sync Does
@@ -147,14 +147,14 @@ You: "Let's run a code review"
 ### Option A: Formal (Best for Large Features)
 
 ```
-1. /plan     → Creates features/<slug>/plan.md (status: draft)
+1. /nexus-workflows plan     → Creates features/<slug>/plan.md (status: draft)
                 → Updates toc.md
 
-2. /execute  → Creates features/<slug>/execution.md
+2. /nexus-workflows execute  → Creates features/<slug>/execution.md
                 → Updates plan status to in-progress
                 → Implements the feature
 
-3. /review   → Creates features/<slug>/review.md
+3. /nexus-workflows review   → Creates features/<slug>/review.md
                 → Audits and fixes issues
                 → Updates status to complete
 ```
@@ -166,14 +166,14 @@ You: "Let's run a code review"
 ### Option B: Direct + Sync (Acceptable for Quick Work)
 
 ```
-1. /plan     → Creates plan (status: draft)
+1. /nexus-workflows plan     → Creates plan (status: draft)
 
 2. Talk directly to agents
    You: "@software-developer implement auth"
    You: "@qa-engineer add tests"
    → Work happens, but not tracked
 
-3. /sync     → Detects changes
+3. /nexus-workflows sync     → Detects changes
                 → Updates feature status
                 → Creates execution log retroactively
                 → Updates toc.md
@@ -248,12 +248,12 @@ To keep features synchronized with reality:
 
 | I want to...               | Use this workflow |
 | -------------------------- | ----------------- |
-| Start a new feature        | `/plan`           |
-| Implement a feature        | `/execute`        |
-| Fix something quickly      | Chat + `/sync`    |
-| Review and fix issues      | `/review`         |
-| Check feature status       | `/summary`        |
-| Update stale documentation | `/sync`           |
+| Start a new feature        | `/nexus-workflows plan`           |
+| Implement a feature        | `/nexus-workflows execute`        |
+| Fix something quickly      | Chat + `/nexus-workflows sync`    |
+| Review and fix issues      | `/nexus-workflows review`         |
+| Check feature status       | `/nexus-workflows summary`        |
+| Update stale documentation | `/nexus-workflows sync`           |
 
 ---
 

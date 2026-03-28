@@ -10,11 +10,11 @@ Long execution sessions can save and resume progress using checkpoints. This pre
 
 | Command              | Action                        | When to Use                  |
 | -------------------- | ----------------------------- | ---------------------------- |
-| `/checkpoint save`   | Save progress to execution.md | Before ending a long session |
-| `/checkpoint resume` | Continue from saved state     | Starting a new session       |
-| `/checkpoint status` | Show completed vs pending     | Checking progress            |
+| `/nexus-workflows checkpoint save`   | Save progress to execution.md | Before ending a long session |
+| `/nexus-workflows checkpoint resume` | Continue from saved state     | Starting a new session       |
+| `/nexus-workflows checkpoint status` | Show completed vs pending     | Checking progress            |
 
-## `/checkpoint save`
+## `/nexus-workflows checkpoint save`
 
 When triggered:
 
@@ -29,7 +29,7 @@ When triggered:
 4. Add entry to Checkpoint History table
 5. Confirm to user what was saved
 
-## `/checkpoint resume`
+## `/nexus-workflows checkpoint resume`
 
 When triggered:
 
@@ -40,7 +40,7 @@ When triggered:
 5. Continue execution from the "Next Steps" listed
 6. Add entry to Checkpoint History table
 
-## `/checkpoint status`
+## `/nexus-workflows checkpoint status`
 
 When triggered:
 
@@ -74,7 +74,7 @@ Agents can request checkpoints by outputting:
 **Next Steps**: [What to do on resume]
 ```
 
-When the orchestrator sees this, it executes `/checkpoint save` with the provided information.
+When the orchestrator sees this, it executes `/nexus-workflows checkpoint save` with the provided information.
 
 ## Checkpoint Data Format
 

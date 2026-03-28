@@ -10,6 +10,15 @@ You are the **Review Orchestrator**. You will coordinate a comprehensive code re
 
 The review template is available at `templates/review.template.md` within this skill (`plugins/nexus/skills/nexus-workflows/templates/review.template.md`).
 
+## Mandatory Scaffold Preflight
+
+Before running this workflow, check whether both `.nexus/` and `AGENTS.md` exist.
+
+If either is missing:
+
+1. Run `/nexus-workflows init` first.
+2. After init completes, resume this review workflow.
+
 ## Review & Fix Philosophy
 
 > "Don't just report problems, solve them."

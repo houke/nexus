@@ -1,0 +1,132 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version bump and generate changelog
+        id: version
+        run: |
+          PLUGIN_JSON="plugins/nexus/.github/plugin/plugin.json"
+          CURRENT_VERSION=$(jq -r '.version' "$PLUGIN_JSON")
+          if [ -z "$CURRENT_VERSION" ] || [ "$CURRENT_VERSION" = "null" ]; then
+            echo "ERROR: could not read version from $PLUGIN_JSON" >&2; exit 1
+          fi
+          echo "current_version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+
+          # Find last tag (fallback to first commit if none)
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || true)
+          if [ -z "$LAST_TAG" ]; then
+            RANGE="$(git rev-list --max-parents=0 HEAD | head -1)..HEAD"
+          else
+            RANGE="${LAST_TAG}..HEAD"
+          fi
+
+          # Collect commits since last tag
+          COMMITS=$(git log "$RANGE" --pretty=format:"%s|%h" --no-merges)
+
+          # Determine bump type from conventional commits
+          BUMP="patch"
+          while IFS= read -r line; do
+            subject="${line%%|*}"
+            # Check for BREAKING CHANGE in commit body
+            hash="${line##*|}"
+            body=$(git log -1 --pretty=format:"%b" "$hash" 2>/dev/null)
+            if echo "$subject" | grep -qE '^[a-z]+(\(.+\))?!:' || echo "$body" | grep -q 'BREAKING CHANGE'; then
+              BUMP="major"
+              break
+            fi
+            if echo "$subject" | grep -qE '^feat(\(.+\))?:'; then
+              BUMP="minor"
+            fi
+          done <<< "$COMMITS"
+
+          # Bump version
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+          case "$BUMP" in
+            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH + 1)) ;;
+          esac
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+
+          # Generate changelog grouped by type
+          {
+            echo "## What's Changed"
+            echo ""
+
+            # Collect entries by category
+            FEATS="" FIXES="" DOCS="" REFACTORS="" CHORES="" OTHER=""
+            while IFS= read -r line; do
+              [ -z "$line" ] && continue
+              subject="${line%%|*}"
+              hash="${line##*|}"
+              if echo "$subject" | grep -qE '^feat(\(.+\))?!?:'; then
+                FEATS="${FEATS}${FEATS:+$'\n'}- ${subject} (${hash})"
+              elif echo "$subject" | grep -qE '^fix(\(.+\))?!?:'; then
+                FIXES="${FIXES}${FIXES:+$'\n'}- ${subject} (${hash})"
+              elif echo "$subject" | grep -qE '^docs(\(.+\))?:'; then
+                DOCS="${DOCS}${DOCS:+$'\n'}- ${subject} (${hash})"
+              elif echo "$subject" | grep -qE '^refactor(\(.+\))?:'; then
+                REFACTORS="${REFACTORS}${REFACTORS:+$'\n'}- ${subject} (${hash})"
+              elif echo "$subject" | grep -qE '^chore(\(.+\))?:'; then
+                CHORES="${CHORES}${CHORES:+$'\n'}- ${subject} (${hash})"
+              else
+                OTHER="${OTHER}${OTHER:+$'\n'}- ${subject} (${hash})"
+              fi
+            done <<< "$COMMITS"
+
+            [ -n "$FEATS" ] && printf "### Features\n%b\n\n" "$FEATS"
+            [ -n "$FIXES" ] && printf "### Bug Fixes\n%b\n\n" "$FIXES"
+            [ -n "$DOCS" ] && printf "### Documentation\n%b\n\n" "$DOCS"
+            [ -n "$REFACTORS" ] && printf "### Refactors\n%b\n\n" "$REFACTORS"
+            [ -n "$CHORES" ] && printf "### Chores\n%b\n\n" "$CHORES"
+            [ -n "$OTHER" ] && printf "### Other\n%b\n\n" "$OTHER"
+
+            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${LAST_TAG:-$(git rev-list --max-parents=0 HEAD | head -1)}...v${NEW_VERSION}"
+          } > /tmp/changelog.md
+
+          echo "changelog_file=/tmp/changelog.md" >> "$GITHUB_OUTPUT"
+          cat /tmp/changelog.md
+
+      - name: Update plugin.json version
+        run: |
+          PLUGIN_JSON="plugins/nexus/.github/plugin/plugin.json"
+          jq --arg v "${{ steps.version.outputs.new_version }}" '.version = $v' "$PLUGIN_JSON" > /tmp/plugin.json
+          mv /tmp/plugin.json "$PLUGIN_JSON"
+
+      - name: Commit version bump and tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugins/nexus/.github/plugin/plugin.json
+          git commit -m "chore(release): v${{ steps.version.outputs.new_version }} [skip ci]"
+          git tag "v${{ steps.version.outputs.new_version }}"
+          git push origin main --tags
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.new_version }}
+          name: v${{ steps.version.outputs.new_version }}
+          body_path: ${{ steps.version.outputs.changelog_file }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

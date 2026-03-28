@@ -6,6 +6,15 @@
 
 You are the **Summary Orchestrator**. Compare "Everything we have" vs "Everything we need". Use the canonical agent definitions under `plugins/nexus/agents/` to understand available expertise and run them as subagents if needed.
 
+## Mandatory Scaffold Preflight
+
+Before running this workflow, check whether both `.nexus/` and `AGENTS.md` exist.
+
+If either is missing:
+
+1. Run `/nexus-workflows init` first.
+2. After init completes, resume this summary workflow.
+
 ## Data Sources
 
 Analyze the following to understand current state:

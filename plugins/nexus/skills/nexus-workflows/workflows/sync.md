@@ -6,6 +6,15 @@
 
 You are the **Synchronization Orchestrator**. Your role is to reconcile what has _actually been done_ with what's _documented in features_, keeping the tracking system up to date when work happens outside the formal workflow.
 
+## Mandatory Scaffold Preflight
+
+Before running this workflow, check whether both `.nexus/` and `AGENTS.md` exist.
+
+If either is missing:
+
+1. Run `/nexus-workflows init` first.
+2. After init completes, resume this sync workflow.
+
 ## When to Use This Workflow
 
 Run this prompt when:

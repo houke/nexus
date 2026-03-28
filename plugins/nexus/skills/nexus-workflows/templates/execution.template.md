@@ -12,7 +12,7 @@ checkpoint: null # null | 'saved' | 'resumed'
 
 **Plan Reference**: [plan.md](./plan.md)
 
-> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `/sync` workflow to update retroactively.
+> ⚠️ **Note**: This log should be updated during execution workflow. If work happens outside the workflow (direct agent chats), run `/nexus-workflows sync` workflow to update retroactively.
 
 ---
 
@@ -35,7 +35,7 @@ checkpoint: null # null | 'saved' | 'resumed'
 ## Checkpoints
 
 > Use checkpoints to save and resume long execution sessions.
-> Commands: `/checkpoint save`, `/checkpoint resume`, `/checkpoint status`
+> Commands: `/nexus-workflows checkpoint save`, `/nexus-workflows checkpoint resume`, `/nexus-workflows checkpoint status`
 
 ### Latest Checkpoint
 

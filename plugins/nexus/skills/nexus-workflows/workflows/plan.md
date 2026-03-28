@@ -10,6 +10,15 @@ You are the **Planning Orchestrator**. Your goal is to orchestrate a detailed pl
 
 The plan template is available at `templates/plan.template.md` within this skill (`plugins/nexus/skills/nexus-workflows/templates/plan.template.md`).
 
+## Mandatory Scaffold Preflight
+
+Before running this workflow, check whether both `.nexus/` and `AGENTS.md` exist.
+
+If either is missing:
+
+1. Run `/nexus-workflows init` first.
+2. After init completes, resume this planning workflow.
+
 ## Process
 
 1. **Agent Discovery**: Identify all available agent personas (e.g., Architect, DevOps, QA, Security, Tech Lead, etc.) by scanning the agents directory. Check `.github/agents/` first (standard location in bootstrapped downstream repos); fall back to `plugins/nexus/agents/` if running within the Nexus source repository itself.
