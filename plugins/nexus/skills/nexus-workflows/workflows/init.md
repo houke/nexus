@@ -147,8 +147,9 @@ Provide user with next steps:
    - **Get project status**: `/summary`
 
 3. **Understand scope**:
-  - `/init` is for downstream repositories that adopt Nexus
-  - The Nexus source repository itself does not need to be initialized by Nexus
+
+- `/init` is for downstream repositories that adopt Nexus
+- The Nexus source repository itself does not need to be initialized by Nexus
 
 4. **Customize agents**: Edit the files in `.nexus/memory/` with repository-specific preferences
 ```

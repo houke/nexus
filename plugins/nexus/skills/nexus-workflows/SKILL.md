@@ -17,15 +17,15 @@ Unified workflow orchestration for the Nexus multi-agent system.
 
 ## Slash Commands
 
-| Command    | Workflow  | Template Used          | Output Location                            |
-|------------|-----------|------------------------|--------------------------------------------|
-| `/plan`    | Planning  | plan.template.md       | .nexus/features/<slug>/plan.md             |
-| `/execute` | Execution | execution.template.md  | .nexus/features/<slug>/execution.md        |
-| `/review`  | Review    | review.template.md     | .nexus/features/<slug>/review.md           |
-| `/sync`    | Sync      | —                      | Updates existing feature docs              |
-| `/summary` | Summary   | summary.template.md    | .nexus/features/<slug>/summary.md          |
-| `/hotfix`  | Hotfix    | hotfix.template.md     | .nexus/features/_hotfixes/<date>-<slug>.md |
-| `/init`    | Init      | —                      | .nexus/, AGENTS.md, .gitignore scaffolding, features/.gitkeep, agent memory files |
+| Command    | Workflow  | Template Used         | Output Location                                                                   |
+| ---------- | --------- | --------------------- | --------------------------------------------------------------------------------- |
+| `/plan`    | Planning  | plan.template.md      | .nexus/features/<slug>/plan.md                                                    |
+| `/execute` | Execution | execution.template.md | .nexus/features/<slug>/execution.md                                               |
+| `/review`  | Review    | review.template.md    | .nexus/features/<slug>/review.md                                                  |
+| `/sync`    | Sync      | —                     | Updates existing feature docs                                                     |
+| `/summary` | Summary   | summary.template.md   | .nexus/features/<slug>/summary.md                                                 |
+| `/hotfix`  | Hotfix    | hotfix.template.md    | .nexus/features/\_hotfixes/<date>-<slug>.md                                       |
+| `/init`    | Init      | —                     | .nexus/, AGENTS.md, .gitignore scaffolding, features/.gitkeep, agent memory files |
 
 `/init` ensures `.nexus/features/.gitkeep`, `.nexus/memory/<agent>.memory.md`, `.nexus/toc.md`, `.nexus/tmp/`, and `AGENTS.md` exist.
 
@@ -37,41 +37,49 @@ When users use natural language, match against these keyword groups to auto-sele
 the appropriate workflow:
 
 ### Planning Workflow
+
 **Triggers**: plan, planning, "plan this", "plan the", design, scope, requirements,
 "what should we build", specify, spec, "acceptance criteria", PRD, "user stories"
 **Action**: Load `workflows/planning.md` and execute
 
 ### Execution Workflow
+
 **Triggers**: execute, build, implement, code, develop, "start building",
 "start coding", "implement the plan", ship, create, construct
 **Action**: Load `workflows/execution.md` and execute
 
 ### Review Workflow
+
 **Triggers**: review, audit, check, inspect, "code review", examine, verify,
 "quality check", "look at the code", critique
 **Action**: Load `workflows/review.md` and execute
 
 ### Sync Workflow
+
 **Triggers**: sync, synchronize, reconcile, "update docs", "catch up",
 "out of date", "docs are stale", "update documentation", drift
 **Action**: Load `workflows/sync.md` and execute
 
 ### Summary Workflow
+
 **Triggers**: summary, status, "where are we", progress, overview,
 "what's done", "project status", "how far along", snapshot
 **Action**: Load `workflows/summary.md` and execute
 
 ### Hotfix Workflow
+
 **Triggers**: hotfix, "quick fix", "bug fix", patch, "small fix",
 "fix this bug", "urgent fix", "production bug"
 **Action**: Load `workflows/hotfix.md` and execute
 
 ### Init Workflow
+
 **Triggers**: init, initialize, setup, "set up nexus", bootstrap,
 scaffold, "new project", onboard
 **Action**: Load `workflows/init.md` and execute
 
 ### Checkpoint Commands
+
 **Triggers**: "/checkpoint save", "/checkpoint resume", "/checkpoint status"
 **Action**: Handled within the active execution workflow (see `workflows/execution.md`)
 
@@ -92,35 +100,40 @@ When a workflow is triggered (by slash command or keyword match):
 
 ```javascript
 ask_questions({
-  questions: [{
-    header: "Satisfied?",
-    question: "The [workflow-name] workflow is complete. Are you happy with the result? (Select 'Other' for feedback)",
-    allowFreeformInput: true,
-    options: [
-      { label: "Yes, looks good!" },
-      { label: "Run another workflow" }
-    ]
-  }]
-})
+  questions: [
+    {
+      header: 'Satisfied?',
+      question:
+        "The [workflow-name] workflow is complete. Are you happy with the result? (Select 'Other' for feedback)",
+      allowFreeformInput: true,
+      options: [
+        { label: 'Yes, looks good!' },
+        { label: 'Run another workflow' },
+      ],
+    },
+  ],
+});
 ```
 
 If user selects "Run another workflow", present the workflow menu:
 
 ```javascript
 ask_questions({
-  questions: [{
-    header: "Next Workflow",
-    question: "Which workflow would you like to run next?",
-    options: [
-      { label: "/plan — Plan a new feature" },
-      { label: "/execute — Execute a plan" },
-      { label: "/review — Review implementation" },
-      { label: "/sync — Sync documentation" },
-      { label: "/summary — Project status" },
-      { label: "/hotfix — Quick bug fix" }
-    ]
-  }]
-})
+  questions: [
+    {
+      header: 'Next Workflow',
+      question: 'Which workflow would you like to run next?',
+      options: [
+        { label: '/plan — Plan a new feature' },
+        { label: '/execute — Execute a plan' },
+        { label: '/review — Review implementation' },
+        { label: '/sync — Sync documentation' },
+        { label: '/summary — Project status' },
+        { label: '/hotfix — Quick bug fix' },
+      ],
+    },
+  ],
+});
 ```
 
 ## Feature Lifecycle Reference
@@ -129,14 +142,14 @@ ask_questions({
 draft → in-progress → review → complete
 ```
 
-| Status        | Set By     | Meaning                     |
-|---------------|------------|-----------------------------|
-| `draft`       | /plan      | Planned but not started     |
-| `in-progress` | /execute   | Currently being implemented |
-| `review`      | /review    | Under code review           |
-| `complete`    | /review    | Reviewed and finished       |
-| `on-hold`     | Manual     | Paused                      |
-| `archived`    | Manual     | No longer relevant          |
+| Status        | Set By   | Meaning                     |
+| ------------- | -------- | --------------------------- |
+| `draft`       | /plan    | Planned but not started     |
+| `in-progress` | /execute | Currently being implemented |
+| `review`      | /review  | Under code review           |
+| `complete`    | /review  | Reviewed and finished       |
+| `on-hold`     | Manual   | Paused                      |
+| `archived`    | Manual   | No longer relevant          |
 
 ### Feature Folder Structure
 
@@ -166,6 +179,7 @@ Templates are in `templates/` within this skill directory. When a workflow needs
 a template, read it from the co-located `templates/` directory:
 
 Available templates:
+
 - `templates/plan.template.md` — Feature planning document
 - `templates/execution.template.md` — Execution log with checkpoints
 - `templates/review.template.md` — Code review report

@@ -337,6 +337,7 @@ Nexus organizes all work by **feature**, not by workflow phase. Each feature get
 ### Feature Structure
 
 ```
+.nexus/features/.gitkeep
 .nexus/features/<feature-slug>/
 ├── plan.md        # What we're building and why
 ├── execution.md   # Implementation tracking
@@ -373,7 +374,7 @@ The file `.nexus/toc.md` is the **single source of truth** for all features:
 
 ## 🧠 Agent Memory System
 
-Each agent has a persistent memory file that stores user preferences and learned patterns.
+Each agent has a persistent memory file at `.nexus/memory/<agent>.memory.md` that stores user preferences and learned patterns.
 
 ### Memory Files
 
