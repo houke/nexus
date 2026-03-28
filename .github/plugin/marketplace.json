@@ -1,7 +1,7 @@
 {
-  "name": "nexus",
+  "name": "houke-nexus",
   "owner": {
-    "name": "Nexus"
+    "name": "Houke"
   },
   "metadata": {
     "description": "Multi-agent orchestration system for VS Code Copilot — specialized AI personas, workflow prompts, and on-demand skills",
