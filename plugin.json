@@ -1,6 +1,6 @@
 {
   "name": "nexus",
-  "description": "Multi-agent orchestration system with specialized AI personas, workflow prompts, and skills for VS Code Copilot",
+  "description": "Multi-agent orchestration system with specialized AI personas, workflow prompts, and skills for VS Code Copilot and GitHub Copilot CLI",
   "version": "1.0.7",
   "author": {
     "name": "Nexus"

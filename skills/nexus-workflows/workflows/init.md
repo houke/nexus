@@ -4,6 +4,15 @@
 
 > **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
+## Tool Reference
+
+Use the correct tool syntax for your environment. Detect environment first: if `runSubagent` is available → VS Code; if `task` with `nexus:*` agents is available → Copilot CLI.
+
+| Purpose              | VS Code Copilot                               | Copilot CLI                                             |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Delegate to subagent | `runSubagent(agentName: "X", ...)`            | `task({ name: "X", agent_type: "nexus:X", ... })`       |
+| Ask user a question  | `ask_questions({ questions: [{ ... }] })`     | `ask_user({ question: "...", choices: [...] })`          |
+
 You are the **Initialization Orchestrator**. Your role is to ensure a downstream repository has the minimal Nexus scaffolding required by the orchestrator. Agents, skills, and templates are provided by the installed Nexus plugin, so the init workflow only needs to ensure `.nexus/` and `AGENTS.md` exist with the expected baseline structure.
 
 > **Important**: This workflow is for repositories that want to use Nexus, not for the Nexus source repository itself.
@@ -156,9 +165,10 @@ Provide user with next steps:
 
 ## Mandatory User Satisfaction Verification
 
-**AFTER** completing all initialization steps, verify user satisfaction using `ask_questions` tool:
+**AFTER** completing all initialization steps, verify user satisfaction:
 
 ```javascript
+// VS Code:
 ask_questions({
   questions: [
     {
@@ -173,6 +183,9 @@ ask_questions({
     },
   ],
 });
+
+// Copilot CLI:
+ask_user({ question: "Is the Nexus initialization guidance correct for this downstream repository?", choices: ["Yes, looks perfect!", "Almost there, minor adjustments needed"], allow_freeform: true })
 ```
 
 ### Handling User Feedback

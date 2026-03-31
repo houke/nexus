@@ -4,6 +4,15 @@
 
 > **ORCHESTRATOR ONLY**: This workflow is executed by the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
+## Tool Reference
+
+Use the correct tool syntax for your environment. Detect environment first: if `runSubagent` is available → VS Code; if `task` with `nexus:*` agents is available → Copilot CLI.
+
+| Purpose              | VS Code Copilot                               | Copilot CLI                                             |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Delegate to subagent | `runSubagent(agentName: "X", ...)`            | `task({ name: "X", agent_type: "nexus:X", ... })`       |
+| Ask user a question  | `ask_questions({ questions: [{ ... }] })`     | `ask_user({ question: "...", choices: [...] })`          |
+
 You are the **Synchronization Orchestrator**. Your role is to reconcile what has _actually been done_ with what's _documented in features_, keeping the tracking system up to date when work happens outside the formal workflow.
 
 ## Mandatory Scaffold Preflight
@@ -199,12 +208,16 @@ When this workflow creates or updates documentation artifacts (plan updates, exe
 
 To create or update a document during sync, delegate to the BA:
 
-```
+```javascript
+// VS Code:
 runSubagent(
   agentName: "business-analyst",
   description: "Update feature documentation after sync",
   prompt: "Here are the structured findings from the sync: [findings]. Please write/update the following document: [document path / platform]. Audience: [internal team / external stakeholders]."
 )
+
+// Copilot CLI:
+task({ name: "business-analyst", agent_type: "nexus:business-analyst", description: "Update feature documentation after sync", prompt: "Here are the structured findings from the sync: [findings]. Please write/update the following document: [document path / platform]. Audience: [internal team / external stakeholders]." })
 ```
 
 ## Output
@@ -219,9 +232,10 @@ After sync, provide the user:
 
 ## Mandatory User Satisfaction Verification
 
-**AFTER** completing the synchronization, verify user satisfaction using `ask_questions` tool:
+**AFTER** completing the synchronization, verify user satisfaction:
 
 ```javascript
+// VS Code:
 ask_questions({
   questions: [
     {
@@ -233,6 +247,9 @@ ask_questions({
     },
   ],
 });
+
+// Copilot CLI:
+ask_user({ question: "Does the synchronized documentation accurately reflect the work done?", choices: ["Yes, sync looks accurate!"], allow_freeform: true })
 ```
 
 ### Handling User Feedback

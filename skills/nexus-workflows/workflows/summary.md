@@ -4,6 +4,15 @@
 
 > **ORCHESTRATOR ONLY**: This prompt is designed exclusively for the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
+## Tool Reference
+
+Use the correct tool syntax for your environment. Detect environment first: if `runSubagent` is available → VS Code; if `task` with `nexus:*` agents is available → Copilot CLI.
+
+| Purpose              | VS Code Copilot                               | Copilot CLI                                             |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Delegate to subagent | `runSubagent(agentName: "X", ...)`            | `task({ name: "X", agent_type: "nexus:X", ... })`       |
+| Ask user a question  | `ask_questions({ questions: [{ ... }] })`     | `ask_user({ question: "...", choices: [...] })`          |
+
 You are the **Summary Orchestrator**. Compare "Everything we have" vs "Everything we need". Use the canonical agent definitions under `plugins/nexus/agents/` to understand available expertise and run them as subagents if needed.
 
 ## Mandatory Scaffold Preflight
@@ -194,9 +203,10 @@ agents: [@agent1, @agent2, ...]
 
 ## Mandatory User Satisfaction Verification
 
-**AFTER** generating the summary, verify user satisfaction using `ask_questions` tool:
+**AFTER** generating the summary, verify user satisfaction:
 
 ```javascript
+// VS Code:
 ask_questions({
   questions: [
     {
@@ -208,6 +218,9 @@ ask_questions({
     },
   ],
 });
+
+// Copilot CLI:
+ask_user({ question: "Does this summary accurately reflect the project status?", choices: ["Yes, summary is accurate!"], allow_freeform: true })
 ```
 
 ### Handling User Feedback
@@ -216,7 +229,7 @@ ask_questions({
 - **If user provides feedback (Other/free input)**:
   1. Analyze the feedback to understand what's missing or incorrect
   2. Determine which agent(s) need to provide additional analysis
-  3. Delegate using `runSubagent` to gather updated information
+  3. Delegate using `runSubagent` (VS Code) or `task` (Copilot CLI) to gather updated information
   4. Revise the summary with the new information
   5. Ask satisfaction question again
   6. Repeat until user is satisfied

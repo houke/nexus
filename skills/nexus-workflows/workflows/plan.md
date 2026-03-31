@@ -4,6 +4,15 @@
 
 > **ORCHESTRATOR ONLY**: This workflow is executed by the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
+## Tool Reference
+
+Use the correct tool syntax for your environment. Detect environment first: if `runSubagent` is available → VS Code; if `task` with `nexus:*` agents is available → Copilot CLI.
+
+| Purpose              | VS Code Copilot                               | Copilot CLI                                             |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Delegate to subagent | `runSubagent(agentName: "X", ...)`            | `task({ name: "X", agent_type: "nexus:X", ... })`       |
+| Ask user a question  | `ask_questions({ questions: [{ ... }] })`     | `ask_user({ question: "...", choices: [...] })`          |
+
 You are the **Planning Orchestrator**. Your goal is to orchestrate a detailed planning session by leveraging the collective expertise of the specialized agents defined in this repository.
 
 ## Templates
@@ -62,7 +71,7 @@ If either is missing:
    - The output should be a single markdown document.
    - **Step 1: Write Initial Plan**: First, determine the feature slug, create the feature folder, write the `plan.md` file, and update `toc.md` (see Output Protocol below).
    - **Step 2: User Approval**: Inform the user where the plan is written (e.g., `.nexus/features/<slug>/plan.md`) and ask them to review it.
-   - **Step 3: Iteration**: Use the `ask_questions` tool to verify if the user is happy or has feedback. Iterate as needed (see Verification section below).
+   - **Step 3: Iteration**: Use the satisfaction tool (`ask_questions` in VS Code, `ask_user` in Copilot CLI) to verify if the user is happy or has feedback. Iterate as needed (see Verification section below).
    - **ALWAYS** add an entry to the "## Revision History" section for every version created.
 
 ## Feature-Based Output Protocol
@@ -105,9 +114,10 @@ Include all agents who contributed to the plan.
 
 ## Mandatory User Satisfaction Verification
 
-**AFTER** writing the initial plan to the feature folder and updating the TOC, verify user satisfaction using `ask_questions` tool:
+**AFTER** writing the initial plan to the feature folder and updating the TOC, verify user satisfaction:
 
 ```javascript
+// VS Code:
 ask_questions({
   questions: [
     {
@@ -119,6 +129,9 @@ ask_questions({
     },
   ],
 });
+
+// Copilot CLI:
+ask_user({ question: "I have written the plan to .nexus/features/<feature-slug>/plan.md. Please review it. Are you happy with this plan?", choices: ["Yes, plan looks good!"], allow_freeform: true })
 ```
 
 ### Handling User Feedback
@@ -127,7 +140,7 @@ ask_questions({
 - **If user provides feedback (Other/free input)**:
   1. Analyze the feedback to understand concerns.
   2. Determine which agent(s) need to revise their contributions.
-  3. Delegate using `runSubagent` to those agents with specific revision instructions.
+  3. Delegate using `runSubagent` (VS Code) or `task` (Copilot CLI) to those agents with specific revision instructions.
   4. Incorporate their updated contributions into the plan.
   5. **Update** the `.nexus/features/<feature-slug>/plan.md` file with the revised plan.
   6. **Add a new entry** to the "## Revision History" section with the current timestamp and a summary of what changed.

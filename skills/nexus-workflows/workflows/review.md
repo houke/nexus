@@ -4,6 +4,15 @@
 
 > **ORCHESTRATOR ONLY**: This workflow is executed by the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
+## Tool Reference
+
+Use the correct tool syntax for your environment. Detect environment first: if `runSubagent` is available → VS Code; if `task` with `nexus:*` agents is available → Copilot CLI.
+
+| Purpose              | VS Code Copilot                               | Copilot CLI                                             |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Delegate to subagent | `runSubagent(agentName: "X", ...)`            | `task({ name: "X", agent_type: "nexus:X", ... })`       |
+| Ask user a question  | `ask_questions({ questions: [{ ... }] })`     | `ask_user({ question: "...", choices: [...] })`          |
+
 You are the **Review Orchestrator**. You will coordinate a comprehensive code review by leveraging multiple specialized agent personas defined in the .github/agents directory. **This is not a passive review—each agent MUST fix the issues they find.**
 
 ## Templates
@@ -285,9 +294,10 @@ Example:
 
 ### 1. QA Engineer Sign-off
 
-Delegate to @qa-engineer using `runSubagent`:
+Delegate to @qa-engineer:
 
 ```javascript
+// VS Code:
 runSubagent({
   agentName: 'qa-engineer',
   description: 'Final quality validation after fixes',
@@ -300,13 +310,17 @@ runSubagent({
   - ✅ SIGN-OFF: Approved
   - 🔴 ISSUES: List blockers`,
 });
+
+// Copilot CLI:
+task({ name: "qa-engineer", agent_type: "nexus:qa-engineer", description: "Final quality validation after fixes", prompt: "Please review the final state of the feature after all review fixes and verify:\n- All automated tests passing\n- No new regressions introduced by fixes\n- Quality standards maintained\n\nProvide either:\n- ✅ SIGN-OFF: Approved\n- 🔴 ISSUES: List blockers" })
 ```
 
 ### 2. Tech Lead Sign-off
 
-Delegate to @tech-lead using `runSubagent`:
+Delegate to @tech-lead:
 
 ```javascript
+// VS Code:
 runSubagent({
   agentName: 'tech-lead',
   description: 'Final architectural sign-off',
@@ -319,6 +333,9 @@ runSubagent({
   - ✅ SIGN-OFF: Approved
   - 🔴 ISSUES: List blockers`,
 });
+
+// Copilot CLI:
+task({ name: "tech-lead", agent_type: "nexus:tech-lead", description: "Final architectural sign-off", prompt: "Please review the final state of the feature after all review fixes and verify:\n- Architectural integrity maintained\n- Patterns and standards followed\n- No technical debt introduced by fixes\n\nProvide either:\n- ✅ SIGN-OFF: Approved\n- 🔴 ISSUES: List blockers" })
 ```
 
 ### 3. Resolve Sign-off issues
@@ -338,9 +355,10 @@ The user must be able to read the actual written review before being asked wheth
 
 ## Mandatory User Satisfaction Verification
 
-**AFTER** the review document has been written and all reviews and fixes are complete, verify user satisfaction using `ask_questions` tool:
+**AFTER** the review document has been written and all reviews and fixes are complete, verify user satisfaction:
 
 ```javascript
+// VS Code:
 ask_questions({
   questions: [
     {
@@ -352,6 +370,9 @@ ask_questions({
     },
   ],
 });
+
+// Copilot CLI:
+ask_user({ question: "Is the written review and its fixes complete and accurate?", choices: ["Yes, review looks complete!"], allow_freeform: true })
 ```
 
 ### Handling User Feedback
@@ -360,7 +381,7 @@ ask_questions({
 - **If user provides feedback (Other/free input)**:
   1. Analyze the feedback to understand concerns
   2. Determine which agent needs to address it
-  3. Delegate using `runSubagent` to the appropriate agent
+  3. Delegate using `runSubagent` (VS Code) or `task` (Copilot CLI) to the appropriate agent
   4. Have them fix the issues
   5. Re-run verification (tests, lint, typecheck)
   6. Update the review report with additional fixes

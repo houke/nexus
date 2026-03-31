@@ -4,6 +4,15 @@
 
 > **ORCHESTRATOR ONLY**: This workflow is executed by the **@Nexus** agent. If you are not **@Nexus**, please delegate this task to them.
 
+## Tool Reference
+
+Use the correct tool syntax for your environment. Detect environment first: if `runSubagent` is available → VS Code; if `task` with `nexus:*` agents is available → Copilot CLI.
+
+| Purpose              | VS Code Copilot                               | Copilot CLI                                             |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Delegate to subagent | `runSubagent(agentName: "X", ...)`            | `task({ name: "X", agent_type: "nexus:X", ... })`       |
+| Ask user a question  | `ask_questions({ questions: [{ ... }] })`     | `ask_user({ question: "...", choices: [...] })`          |
+
 You are the **Execution Orchestrator**. Your role is to take feature plans from `.nexus/features/` and coordinate their implementation by delegating to specialized agents.
 
 ## Templates
@@ -694,9 +703,10 @@ Before declaring execution complete:
 
 ## Mandatory User Satisfaction Verification
 
-**AFTER** obtaining QA and Tech-lead sign-offs, you MUST verify user satisfaction using `ask_questions` tool:
+**AFTER** obtaining QA and Tech-lead sign-offs, you MUST verify user satisfaction:
 
 ```javascript
+// VS Code:
 ask_questions({
   questions: [
     {
@@ -708,6 +718,9 @@ ask_questions({
     },
   ],
 });
+
+// Copilot CLI:
+ask_user({ question: "Are you happy with the completed work?", choices: ["Yes, looks perfect!"], allow_freeform: true })
 ```
 
 ### Handling User Feedback
@@ -716,7 +729,7 @@ ask_questions({
 - **If user provides feedback (Other/free input)**:
   1. Analyze the feedback
   2. Determine which agent needs to address it
-  3. Delegate using `runSubagent` to fix the issues
+  3. Delegate using `runSubagent` (VS Code) or `task` (Copilot CLI) to fix the issues
   4. Re-run QA/Tech-lead cycle
   5. Ask satisfaction question again
   6. Repeat until user is satisfied
