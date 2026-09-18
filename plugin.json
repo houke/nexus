@@ -2,12 +2,18 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "nexus",
   "description": "Multi-agent orchestration system with specialized AI personas, workflow prompts, and skills for VS Code Copilot and GitHub Copilot CLI",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "author": {
     "name": "Houke"
   },
   "license": "MIT",
-  "keywords": ["multi-agent", "orchestration", "ai", "workflow", "copilot"],
+  "keywords": [
+    "multi-agent",
+    "orchestration",
+    "ai",
+    "workflow",
+    "copilot"
+  ],
   "repository": "https://github.com/houke/nexus",
   "homepage": "https://github.com/houke/nexus"
 }
