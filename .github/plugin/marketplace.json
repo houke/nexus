@@ -1,0 +1,25 @@
+{
+  "name": "houke-nexus",
+  "description": "Multi-agent orchestration system for VS Code Copilot and GitHub Copilot CLI",
+  "owner": {
+    "name": "Houke",
+    "url": "https://github.com/houke"
+  },
+  "plugins": [
+    {
+      "name": "nexus",
+      "displayName": "Nexus",
+      "source": "./plugins/nexus",
+      "description": "Multi-agent orchestration system with specialized AI personas, workflow prompts, and skills",
+      "version": "1.0.8",
+      "author": {
+        "name": "Houke"
+      },
+      "homepage": "https://github.com/houke/nexus",
+      "repository": "https://github.com/houke/nexus",
+      "license": "MIT",
+      "keywords": ["multi-agent", "orchestration", "ai", "workflow", "copilot"],
+      "category": "productivity"
+    }
+  ]
+}

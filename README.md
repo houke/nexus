@@ -1,6 +1,6 @@
 # Nexus
 
-Multi-agent orchestration plugin for GitHub Copilot.
+Multi-agent orchestration plugin for GitHub Copilot. Conforms to the [Agent Plugins 1.0](https://agent-plugins.org/) open standard.
 
 Nexus provides a team of specialized AI personas that collaborate to plan, build, and review software through a consistent workflow system.
 
@@ -106,6 +106,22 @@ Nexus organizes work under `.nexus/` using feature folders:
     _hotfixes/
   memory/
   tmp/
+```
+
+## Repository Structure
+
+```
+nexus/
+  .github/
+    plugin/
+      marketplace.json       # Copilot marketplace catalog
+  plugins/
+    nexus/
+      plugin.json            # Agent Plugins 1.0 manifest
+      mcp.json               # Portable MCP server definitions
+      skills/                # Auto-discovered skills
+      com.github.copilot/
+        agents/              # Copilot-specific agents
 ```
 
 ## License
